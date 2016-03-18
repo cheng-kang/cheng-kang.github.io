@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-18T12:48:52.000Z</updated>
+  <updated>2016-03-18T12:51:44.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,13 +16,59 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Fire Blog 中文说明</title>
+    <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
+    <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
+    <published>2016-03-18T12:51:29.000Z</published>
+    <updated>2016-03-18T12:51:44.000Z</updated>
+    
+    <content type="html">&lt;p&gt;###起源&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因为简单免费而且访问速度快（比我自己的阿里云快多了【翻白眼】），所以越来越多的人使用&lt;code&gt;Github Pages&lt;/code&gt;搭建技术博客。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注：也可以绑定自己的域名。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;两个星期之前，自己才通过朋友的博客知道这个好东西。&lt;/p&gt;
+&lt;p&gt;官方提供&lt;code&gt;Jekyll&lt;/code&gt;的支持,可以快速搭建不用到数据库的博客。用法是配置好之后，每次将写好的博客&lt;code&gt;markdown&lt;/code&gt;文件上&lt;code&gt;push&lt;/code&gt;到&lt;code&gt;github&lt;/code&gt;里面。&lt;/p&gt;
+&lt;p&gt;不过当时也没过多在意，一是我自己有一个放在阿里云上的&lt;code&gt;wordpress&lt;/code&gt;博客，二是觉得每次还要上传文件嫌麻烦。&lt;/p&gt;
+&lt;p&gt;直到有一天我在&lt;code&gt;Youtube&lt;/code&gt;上看相声视频的时候给我推送了一个广告（不得不说广告投得蛮准的，很多时候我都把广告看完了，尤其是那个参加空军的广告：）女王，我要当兵），是一个在线数据库服务，叫&lt;code&gt;firebase&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;firebase&lt;/code&gt;提供免费的基础服务，可以通过&lt;code&gt;js&lt;/code&gt;进行数据库操作。&lt;/p&gt;
+&lt;p&gt;我突然就想起来&lt;code&gt;Github Pages&lt;/code&gt;如果用上这个，不就有数据库了吗。&lt;/p&gt;
+&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;/p&gt;
+&lt;p&gt;###简介&lt;/p&gt;
+&lt;p&gt;名字叫&lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;1 从&lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;项目主页&lt;/a&gt;&lt;code&gt;fork&lt;/code&gt;项目代码&lt;/p&gt;
+&lt;p&gt;2 修改&lt;code&gt;fork&lt;/code&gt;下来的项目的项目名称为 &lt;code&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;3 等待一两分钟，访问刚刚设置的&lt;code&gt;https://username.github.io&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;4 点击那个隐藏的后台登录入口&lt;/p&gt;
+&lt;p&gt;5 使用&lt;code&gt;Github&lt;/code&gt;账号登录&lt;/p&gt;
+&lt;p&gt;6 按要求修改配置文件&lt;/p&gt;
+&lt;p&gt;7 &lt;code&gt;Tada！&lt;/code&gt;然后你的博客就创建好了！&lt;/p&gt;
+&lt;p&gt;###其他的话&lt;br&gt;我自己还没跟开源项目挂上过勾。&lt;/p&gt;
+&lt;p&gt;我想开源项目应该就是能够帮上别人，也希望有人一起来完善。&lt;/p&gt;
+&lt;p&gt;这个项目的本意就是这样。&lt;/p&gt;
+&lt;p&gt;希望&lt;code&gt;Fire Blog&lt;/code&gt;成为大家的一个选择，也希望其他程序员来添砖加瓦、建议指正。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###起源&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>FireBlog Instruction</title>
     <link href="http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/"/>
     <id>http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/</id>
     <published>2016-03-18T12:47:49.000Z</published>
-    <updated>2016-03-18T12:48:52.000Z</updated>
+    <updated>2016-03-18T12:50:55.000Z</updated>
     
-    <content type="html">&lt;p&gt;###Why&lt;br&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
+    <content type="html">&lt;p&gt;###Why&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
 &lt;p&gt;Since it’s easy, free and fast, more and more people start to use this service.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;P.S. You can also use your own domain name.&lt;/p&gt;
@@ -34,7 +80,8 @@
 &lt;p&gt;&lt;code&gt;firebase&lt;/code&gt; offers a basic free service, by which you could operate on the database by &lt;code&gt;js&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;And it suddenly came to me that I could combine this with &lt;code&gt;Github Pages&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So I decided to write a blog framework based on &lt;code&gt;Github Pages&lt;/code&gt;, &lt;code&gt;AngularJS&lt;/code&gt; and &lt;code&gt;firebase&lt;/code&gt;. If I succeed, then people with no idea about programming will be able to set up their own blogs by just &lt;code&gt;fork&lt;/code&gt; the project and log in with their &lt;code&gt;Github&lt;/code&gt; account.&lt;/p&gt;
-&lt;p&gt;###Intro&lt;br&gt;It’s named &lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;###Intro&lt;/p&gt;
+&lt;p&gt;It’s named &lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;1 &lt;code&gt;fork&lt;/code&gt; the source code from &lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the project home page&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2 change the name of the project you’ve &lt;code&gt;forked&lt;/code&gt; to &lt;code&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;3 drink your coffee and visit &lt;code&gt;https://username.github.io&lt;/code&gt;&lt;/p&gt;
@@ -50,7 +97,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;###Why&lt;br&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; se
+      &lt;p&gt;###Why&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a
     
     </summary>
     
