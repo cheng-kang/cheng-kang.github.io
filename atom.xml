@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-18T12:57:04.000Z</updated>
+  <updated>2016-03-18T13:00:33.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
     <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
     <published>2016-03-18T12:51:29.000Z</published>
-    <updated>2016-03-18T12:57:04.000Z</updated>
+    <updated>2016-03-18T13:00:33.000Z</updated>
     
     <content type="html">&lt;p&gt;###起源&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
