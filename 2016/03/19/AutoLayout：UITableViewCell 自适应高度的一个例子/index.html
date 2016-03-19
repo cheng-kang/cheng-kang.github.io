@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> AutoLayout：UITableViewCell 自适应高度的一个例子 · CHENG KANG</title><meta name="description" content="AutoLayout：UITableViewCell 自适应高度的一个例子 - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">AutoLayout：UITableViewCell 自适应高度的一个例子</h1><div class="post-time">Mar 19, 2016</div><div class="post-content"><h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>我在模拟微博客户端。</p>
+<p>要实现：<br>当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。<br>当一条微博只包含一张图的时候，图片会比较大。</p>
+<h3 id="AutoLayout：实现-一张大图-和-九宫格-的样式"><a href="#AutoLayout：实现-一张大图-和-九宫格-的样式" class="headerlink" title="AutoLayout：实现 一张大图 和 九宫格 的样式"></a>AutoLayout：实现 一张大图 和 九宫格 的样式</h3><p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png" alt=""></p>
+<p>如图所示，九宫格图片为<code>Nine Pics</code>，底部按钮为<code>3-button-panel</code>（这个命名很奇怪我知道：D），单张大图为<code>One Pic</code>。</p>
+<p>九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。</p>
+<p>单张大图的长宽为 200px/200px。</p>
+<p>先不管单张大图的<code>UIImageView</code>，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 <strong>stackview</strong>。<br>设置<code>Nine Pics</code>和<code>3-button-panel</code>的间距为 8px。</p>
+<p>然后调整<code>One Pic</code>大小为合适大小，用 Constrains 束缚住。通过键盘把<code>One Pic</code>移动到和<code>Nine Pics</code>左上角对齐的位置。（移动位置为了看起来更直观。所有的约束不是由在<code>storyboard</code>上显示的位置决定的。）<br>将<code>One Pic</code>左、上设置成和<code>Nice Pics</code>一样的约束：左边 8px，上面 8px。</p>
+<p>这个时候因为单张大图的高比九宫格的高小，所以看上去<code>One Pic</code>和<code>3-button-panel</code>的间距一定是大于 8px。</p>
+<p>但是约束的神奇就是这样。</p>
+<p>我们现在设置<code>One Pic</code>和<code>3-button-panel</code>的间距为 8px。</p>
+<p>这个时候，在<code>3-button-panel</code>上就有两个上方的约束。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2011.29.17%20PM.png" alt=""></p>
+<p>当我们要显示单张大图的时候，通过代码隐藏九宫格<code>self.ninePicsView.hidden = true</code>。此时，<code>AutoLayout</code>就会忽略<code>3-button-panel</code>和<code>Nine Pics</code>之间的约束，而<code>3-button-panel</code>和<code>One Pic</code>之间的约束正常。</p>
+<p>如图：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.30%20PM.png" alt=""></p>
+<h3 id="九宫格图片数量变化时手动适应高度"><a href="#九宫格图片数量变化时手动适应高度" class="headerlink" title="九宫格图片数量变化时手动适应高度"></a>九宫格图片数量变化时手动适应高度</h3><p>九宫格图片数量不够时，当然是通过<code>hidden=true</code>隐藏多余的格子。</p>
+<p>但是可能是由于我用的<strong>stackview</strong>，所以隐藏第三排或者第二排和第三排之后，整个 view 的高度并没有改变。（我没有尝试不用 stackview的情况，因为不想破坏辛辛苦苦做好的 storyboard ：D。等有时间我再新建一个项目试试。）</p>
+<p>所以需要手动改一下。</p>
+<p>方法是，建立一个 Constraint Outlet，根据情况修改它的值。</p>
+<p>之前我们设置了<code>3-button-panel</code>和<code>Nine Pics</code>之间的距离是 8px。我们建立一个这样的 IBOutlet：<code>@IBOutlet weak var constraintButtonPanelAndNinePic: NSLayoutConstraint!</code>。这个时候，我们就可以通过代码来修改约束值。</p>
+<p>比如当有 6 张图片时，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.seventhPic.hidden = true</span><br><span class="line">self.eighthPic.hidden = true</span><br><span class="line">self.ninethPic.hidden = true</span><br></pre></td></tr></table></figure></p>
+<p>隐藏多余的格子，然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.constraintButtonPanelAndNinePic.constant = -75</span><br></pre></td></tr></table></figure></p>
+<p>这个时候，<code>3-button-panel</code>和<code>Nine Pics</code>的相对位置就正确了。</p>
+<h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.30%20PM.png" alt=""><br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.16%20PM.png" alt=""><br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2011.49.07%20PM.png" alt=""></p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/" class="next">NEXT</a></div><div data-thread-key="2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/" data-title="AutoLayout：UITableViewCell 自适应高度的一个例子" data-url="http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
+var disqus_identifier = '2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/';
+var disqus_title = 'AutoLayout：UITableViewCell 自适应高度的一个例子';
+var disqus_url = 'http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
