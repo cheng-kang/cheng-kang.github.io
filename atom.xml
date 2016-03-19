@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-19T20:52:39.000Z</updated>
+  <updated>2016-03-19T20:57:40.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,14 +16,14 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>UISearchBarView（一）修改背景层和层的背景颜色和边框颜色</title>
+    <title>UISearchBar（一）修改背景层和 input 层的背景颜色和边框颜色</title>
     <link href="http://cheng-kang.github.io/2016/03/19/UISearchBarView%EF%BC%88%E4%B8%80%EF%BC%89%E4%BF%AE%E6%94%B9%E8%83%8C%E6%99%AF%E5%B1%82%E5%92%8C%20input%20%E5%B1%82%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%E5%92%8C%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/"/>
     <id>http://cheng-kang.github.io/2016/03/19/UISearchBarView（一）修改背景层和 input 层的背景颜色和边框颜色/</id>
     <published>2016-03-19T20:51:09.000Z</published>
-    <updated>2016-03-19T20:52:39.000Z</updated>
+    <updated>2016-03-19T20:57:40.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBarView&lt;/code&gt;相关的颜色。&lt;/p&gt;
+&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBar&lt;/code&gt;相关的颜色。&lt;/p&gt;
 &lt;p&gt;另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;因为微博客户端首页上面的 search bar 高度很小，自己尝试修改没成功，于是 google 了一下。&lt;/p&gt;
@@ -35,7 +35,7 @@
 &lt;p&gt;我加了两行打印，把子视图简单地打印出来。得到的结果：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb6204a09c0; frame = (390 0; 195 25); autoresize = RM+BM; gestureRecognizers = &amp;lt;NSArray: 0x7fb622479cf0&amp;gt;; layer = &amp;lt;CALayer: 0x7fb6204806e0&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb622122760; frame = (0 0; 320 44); clipsToBounds = YES; autoresize = W+H; layer = &amp;lt;CALayer: 0x7fb622120180&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarBackground: 0x7fb622123340; frame = (0 0; 320 44); opaque = NO; userInteractionEnabled = NO; layer = &amp;lt;CALayer: 0x7fb622123800&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarTextField: 0x7fb622124bf0; frame = (8 8; 304 28); text = &amp;apos;&amp;apos;; clipsToBounds = YES; opaque = NO; layer = &amp;lt;CALayer: 0x7fb622120290&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;不去深究，简而言之，在它的第二层子视图(subview)中至少包含了一个&lt;code&gt;UIView&lt;/code&gt;和一个&lt;code&gt;UiTextField&lt;/code&gt;，分别是 search bar 的背景视图和文本输入框。&lt;/p&gt;
 &lt;p&gt;Search bar 的样式就是它们定义的。所以我们对它们进行修改就能达到目的。&lt;/p&gt;
-&lt;h3 id=&quot;试验&quot;&gt;&lt;a href=&quot;#试验&quot; class=&quot;headerlink&quot; title=&quot;试验&quot;&gt;&lt;/a&gt;试验&lt;/h3&gt;&lt;p&gt;假设： @IBOutlet weak var searchBar: UISearchBarView!&lt;/p&gt;
+&lt;h3 id=&quot;试验&quot;&gt;&lt;a href=&quot;#试验&quot; class=&quot;headerlink&quot; title=&quot;试验&quot;&gt;&lt;/a&gt;试验&lt;/h3&gt;&lt;p&gt;假设： @IBOutlet weak var searchBar: UISearchBar!&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;searchBar.tintColor: 设置输入框光标颜色&lt;/li&gt;
 &lt;li&gt;searchBar.barTintColor: 设置外层背景颜色&lt;/li&gt;
