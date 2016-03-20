@@ -1,0 +1,42 @@
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../static/img/tag-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1 style="color:white;">{{tagname==undefined?"Tag":tagname}}</h1>
+                        <hr class="small">
+                        <span class="subheading">
+                            {{$parent.l['blogs_from_tag']}} {{tagname==undefined?"Tag":tagname}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="archives" ng-repeat="(key, value) in tags[tagname] | orderBy:'-key' track by $index">
+                    {{years[$index] = (key | date:"yyyy");""}}
+                    <h3 class="section-heading" ng-if="$index==0||years[$index-1]!=years[$index]">
+                        {{years[$index]}}
+                    </h3>
+                    <li class="row">
+                        <div class="col-sm-9">
+                            <a href="#/p={{key}}">{{value}}</a>
+                        </div>
+                        <div class="col-sm-3 text-muted">
+                            <time>{{key | date:"MM-dd @ H:mm"}}</time>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <hr>

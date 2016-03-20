@@ -1,0 +1,73 @@
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../static/img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1 style="color:white;">{{$parent.option.username==undefined?$parent.l['new_user']:$parent.option.username}}</h1>
+                        <hr class="small">
+                        <span class="subheading">{{$parent.option.motto==undefined?$parent.l['welcome']:$parent.option.motto}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <p class="text-center">
+                <h3>{{$parent.l['edit_blog']}}:</h3>
+            </p>
+            <hr>
+        	<input ng-model="title" type="text" class="form-control" placeholder="{{$parent.l['title_input_placeholder']}}" style="border:2px solid rgb(41,41,41)">
+        	<hr>
+            
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$parent.l['category']}}: <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="(key, value) in allCats">
+                            <a href="" ng-click="selectCat(key)">{{key}}</a>
+                        </li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control" aria-label="..." ng-model="cat" placeholder="{{$parent.l['category_input_placeholder']}}">
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$parent.l['tag']}}: <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="(key, value) in allTags">
+                            <a href="" ng-click="addTag(key)">{{key}}</a>
+                        </li>
+                    </ul>
+                  </div><!-- /btn-group -->
+                  <input type="text" class="form-control" aria-label="..." ng-model="tags" placeholder="{{$parent.l['tag_input_placeholder']">
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+            <hr>
+            
+	        <div id="epiceditor"></div>
+        	<hr>
+	        <input ng-click="editBlog()" class="btn btn-default" type="submit" value="{{$parent.l['submit']}}">
+		</div>
+    </article>
+
+    <hr>
+<script src="../static/epiceditor/js/epiceditor.js"></script>
+<script type="text/javascript">
+	var opts = {
+			autogrow: {
+				minHeight: 500
+				}
+		}
+	var editor = new EpicEditor(opts).load();
+</script>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fireblogApp" ng-controller="OptionCtrl">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="FireBlog: A blog system based on github-pages, angularjs, firebase and bootstrap.">
+    <meta name="author" content="CHENGKANG">
+    <link rel="icon" href="/favicon-16.ico" sizes="16x16">
+    <link rel="icon" href="/favicon-32.ico" sizes="32x32">
+
+    <title>FIRE BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="./static/css/clean-blog.css" rel="stylesheet">
+    <link href="./static/css/style.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <!--   
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/font1.css" rel="stylesheet">
+    <link href="css/font2.css" rel="stylesheet"> 
+    -->
+    
+    
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> 
+   
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">{{option.navbar_text==undefined?"FIRE BLOG":option.navbar_text}}</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right" ng-if="!AuthService.isLoggedIn()">
+                    <li>
+                        <a href="#/" id="home_link">{{l['home']}}</a>
+                    </li>
+                    <li>
+                        <a href="#/archive" id="archives_link">{{l['archive']}}</a>
+                    </li>
+                    <li>
+                        <a href="#/cats" id="cats_link">{{l['category']}}</a>
+                    </li>
+                    <li>
+                        <a href="#/tags" id="tags_link">{{l['tag']}}</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right" ng-if="AuthService.isLoggedIn()">
+                    <li>
+                        <a href="#/admin/config" id="config_link">{{l['config']}}</a>
+                    </li>
+                    <li>
+                        <a href="#/admin/archive" id="archives_link">{{l['archive']}}</a>
+                    </li>
+                    <li>
+                        <a href="" ng-click="AuthService.logout()">{{l['logout']}}</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <div ng-view></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li ng-if="option.twitter!=''&&option.twitter!=undefined">
+                            <a href="{{option.twitter}}" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li ng-if="option.facebook!=''&&option.facebook!=undefined">
+                            <a href="{{option.facebook}}" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li ng-if="option.github!=''&&option.github!=undefined">
+                            <a href="http://github.com/{{option.github}}" title="{{option.github}}" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li ng-if="option.weibo_link!=''&&option.weibo_link!=undefined">
+                            <a href="{{option.weibo_link}}" title="{{option.weibo}}" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright <a href="#/admin/login">&copy;</a> {{option.sitename==undefined?"FIRE BLOG":option.sitename}} 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="./static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="./static/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="./static/js/clean-blog.min.js"></script>
+    
+    <script src="./static/js/angular.min.js"></script>
+    <script src="./static/js/firebase.js"></script>
+    <script src="./static/js/angularfire.min.js"></script>
+    <script src="./static/js/angular-route.min.js"></script>
+    <script src="./static/js/angular-sanitize.min.js"></script>
+    
+    <!--
+    <script src="http://apps.bdimg.com/libs/angular.js/1.5.0-beta.0/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular-sanitize.min.js"></script>
+    -->
+     
+     
+
+    <script src="./app/config.js"></script>
+    <script src="./app/language.js"></script>
+    <script src="./app/app.js"></script>
+    <script src="./app/controllers.js"></script>
+    <script src="./app/services.js"></script>
+    <script src="./app/filters.js"></script>
+
+</body>
+
+</html>
