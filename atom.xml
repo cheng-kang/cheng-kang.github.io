@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-20T22:54:32.000Z</updated>
+  <updated>2016-03-21T03:18:07.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cheng-kang.github.io/2016/03/20/AutoLayout%EF%BC%9Aconstraint%20priority%20%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%88%E4%B9%9D%E5%AE%AB%E6%A0%BC%E7%BB%AD%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%9B%B4%E4%BC%98%E6%96%B9%E6%A1%88%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/</id>
     <published>2016-03-20T22:49:31.000Z</published>
-    <updated>2016-03-20T22:54:32.000Z</updated>
+    <updated>2016-03-21T03:18:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;这两个项目的源码均在我的 github，如有需要直接下载下来试一试。&lt;/p&gt;
@@ -32,7 +32,7 @@
 &lt;p&gt;之前因为觉得麻烦，没有在那个项目里面尝试把九宫格图片分别作为九个&lt;code&gt;UIImageView&lt;/code&gt;来处理（而非一个&lt;code&gt;StackView&lt;/code&gt;）。这次我新建了一个项目，来尝试这种情况。&lt;/p&gt;
 &lt;p&gt;依然是九宫格格子长宽 75px/75px，单张大图长宽 200px/200px。&lt;/p&gt;
 &lt;p&gt;效果如下图。用了一些不同的颜色让各个 view 更明显。因为我用的图片背景都是白色，所以我把单张大图右移了一些以示区分。右边那一块白色就是单张大图。（上下两块区域的文字位置没调好，但这不是重点：D）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-20%20at%208.33.20%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-20%20at%208.33.20%20PM.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;相同的高度？&quot;&gt;&lt;a href=&quot;#相同的高度？&quot; class=&quot;headerlink&quot; title=&quot;相同的高度？&quot;&gt;&lt;/a&gt;相同的高度？&lt;/h3&gt;&lt;p&gt;一看图就能发现，单张大图和九宫格是一样高的。&lt;/p&gt;
 &lt;p&gt;我用&lt;code&gt;print(onePic.frame.height)&lt;/code&gt;单张大图高度打印下来看，结果是 200.0。没有问题。&lt;/p&gt;
 &lt;p&gt;难道是九宫格变小了？&lt;code&gt;print(firstImg.frame.height)&lt;/code&gt;结果是 75.0。也没问题。&lt;/p&gt;
@@ -97,10 +97,25 @@
       &lt;blockquote&gt;
 &lt;p&gt;这两个项目的源码均在我的 github，如有需要直接下载下来试一试。&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Weibo&quot; target=&quot;_bl
+&lt;li&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Weibo&quot;&gt;模仿微博客户端&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Dynamic%20Table%20View%20Test&quot;&gt;自适应高度测试用项目&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;之前因为觉得麻烦，没有在那个项目里面尝试把九宫格图片分别作为九个&lt;code&gt;UIImageView&lt;/code&gt;来处理（而非一个&lt;code&gt;StackView&lt;/code&gt;）。这次我新建了一个项目，来尝试这种情况。&lt;/p&gt;
+&lt;p&gt;依然是九宫格格子长宽 75px/75px，单张大图长宽 200px/200px。&lt;/p&gt;
+&lt;p&gt;效果如下图。用了一些不同的颜色让各个 view 更明显。因为我用的图片背景都是白色，所以我把单张大图右移了一些以示区分。右边那一块白色就是单张大图。（上下两块区域的文字位置没调好，但这不是重点：D）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-20%20at%208.33.20%20PM.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
     
     </summary>
     
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="constraint priority" scheme="http://cheng-kang.github.io/tags/constraint-priority/"/>
     
   </entry>
   
@@ -109,7 +124,7 @@
     <link href="http://cheng-kang.github.io/2016/03/19/AutoLayout%EF%BC%9AUITableViewCell%20%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%BA%A6%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90/"/>
     <id>http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/</id>
     <published>2016-03-19T23:51:24.000Z</published>
-    <updated>2016-03-19T23:51:36.000Z</updated>
+    <updated>2016-03-21T03:19:13.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
 &lt;p&gt;要实现：&lt;br&gt;当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。&lt;br&gt;当一条微博只包含一张图的时候，图片会比较大。&lt;/p&gt;
@@ -117,8 +132,7 @@
 &lt;p&gt;如图所示，九宫格图片为&lt;code&gt;Nine Pics&lt;/code&gt;，底部按钮为&lt;code&gt;3-button-panel&lt;/code&gt;（这个命名很奇怪我知道：D），单张大图为&lt;code&gt;One Pic&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。&lt;/p&gt;
 &lt;p&gt;单张大图的长宽为 200px/200px。&lt;/p&gt;
-&lt;p&gt;先不管单张大图的&lt;code&gt;UIImageView&lt;/code&gt;，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 &lt;strong&gt;stackview&lt;/strong&gt;。&lt;br&gt;设置&lt;code&gt;Nine Pics&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;/p&gt;
-&lt;p&gt;然后调整&lt;code&gt;One Pic&lt;/code&gt;大小为合适大小，用 Constrains 束缚住。通过键盘把&lt;code&gt;One Pic&lt;/code&gt;移动到和&lt;code&gt;Nine Pics&lt;/code&gt;左上角对齐的位置。（移动位置为了看起来更直观。所有的约束不是由在&lt;code&gt;storyboard&lt;/code&gt;上显示的位置决定的。）&lt;br&gt;将&lt;code&gt;One Pic&lt;/code&gt;左、上设置成和&lt;code&gt;Nice Pics&lt;/code&gt;一样的约束：左边 8px，上面 8px。&lt;/p&gt;
+&lt;p&gt;先不管单张大图的&lt;code&gt;UIImageView&lt;/code&gt;，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 &lt;strong&gt;stackview&lt;/strong&gt;。&lt;br&gt;设置&lt;code&gt;Nine Pics&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;然后调整&lt;code&gt;One Pic&lt;/code&gt;大小为合适大小，用 Constrains 束缚住。通过键盘把&lt;code&gt;One Pic&lt;/code&gt;移动到和&lt;code&gt;Nine Pics&lt;/code&gt;左上角对齐的位置。（移动位置为了看起来更直观。所有的约束不是由在&lt;code&gt;storyboard&lt;/code&gt;上显示的位置决定的。）&lt;br&gt;将&lt;code&gt;One Pic&lt;/code&gt;左、上设置成和&lt;code&gt;Nice Pics&lt;/code&gt;一样的约束：左边 8px，上面 8px。&lt;/p&gt;
 &lt;p&gt;这个时候因为单张大图的高比九宫格的高小，所以看上去&lt;code&gt;One Pic&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距一定是大于 8px。&lt;/p&gt;
 &lt;p&gt;但是约束的神奇就是这样。&lt;/p&gt;
 &lt;p&gt;我们现在设置&lt;code&gt;One Pic&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;/p&gt;
@@ -140,10 +154,25 @@
     <summary type="html">
     
       &lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
-&lt;p&gt;要实现：&lt;br&gt;当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。&lt;br&gt;当一条
+&lt;p&gt;要实现：&lt;br&gt;当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。&lt;br&gt;当一条微博只包含一张图的时候，图片会比较大。&lt;/p&gt;
+&lt;h3 id=&quot;AutoLayout：实现-一张大图-和-九宫格-的样式&quot;&gt;&lt;a href=&quot;#AutoLayout：实现-一张大图-和-九宫格-的样式&quot; class=&quot;headerlink&quot; title=&quot;AutoLayout：实现 一张大图 和 九宫格 的样式&quot;&gt;&lt;/a&gt;AutoLayout：实现 一张大图 和 九宫格 的样式&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如图所示，九宫格图片为&lt;code&gt;Nine Pics&lt;/code&gt;，底部按钮为&lt;code&gt;3-button-panel&lt;/code&gt;（这个命名很奇怪我知道：D），单张大图为&lt;code&gt;One Pic&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。&lt;/p&gt;
+&lt;p&gt;单张大图的长宽为 200px/200px。&lt;/p&gt;
+&lt;p&gt;先不管单张大图的&lt;code&gt;UIImageView&lt;/code&gt;，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 &lt;strong&gt;stackview&lt;/strong&gt;。&lt;br&gt;设置&lt;code&gt;Nine Pics&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;br&gt;
     
     </summary>
     
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="九宫格" scheme="http://cheng-kang.github.io/tags/%E4%B9%9D%E5%AE%AB%E6%A0%BC/"/>
+    
+      <category term="自适应高度" scheme="http://cheng-kang.github.io/tags/%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%BA%A6/"/>
     
   </entry>
   
@@ -152,7 +181,7 @@
     <link href="http://cheng-kang.github.io/2016/03/19/UISearchBar%EF%BC%88%E4%B8%80%EF%BC%89%E4%BF%AE%E6%94%B9%E8%83%8C%E6%99%AF%E5%B1%82%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E5%B1%82%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%E5%92%8C%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/"/>
     <id>http://cheng-kang.github.io/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/</id>
     <published>2016-03-19T20:51:09.000Z</published>
-    <updated>2016-03-19T21:02:13.000Z</updated>
+    <updated>2016-03-21T03:21:32.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBar&lt;/code&gt;相关的颜色。&lt;/p&gt;
@@ -163,8 +192,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;把这个函数放在&lt;code&gt;viewDidAppear&lt;/code&gt;会不会有点问题？是不是放在&lt;code&gt;viewWillAppear&lt;/code&gt;比较好？&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;才发现 search bar 的结构很复杂。&lt;/p&gt;
-&lt;p&gt;我加了两行打印，把子视图简单地打印出来。得到的结果：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb6204a09c0; frame = (390 0; 195 25); autoresize = RM+BM; gestureRecognizers = &amp;lt;NSArray: 0x7fb622479cf0&amp;gt;; layer = &amp;lt;CALayer: 0x7fb6204806e0&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb622122760; frame = (0 0; 320 44); clipsToBounds = YES; autoresize = W+H; layer = &amp;lt;CALayer: 0x7fb622120180&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarBackground: 0x7fb622123340; frame = (0 0; 320 44); opaque = NO; userInteractionEnabled = NO; layer = &amp;lt;CALayer: 0x7fb622123800&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarTextField: 0x7fb622124bf0; frame = (8 8; 304 28); text = &amp;apos;&amp;apos;; clipsToBounds = YES; opaque = NO; layer = &amp;lt;CALayer: 0x7fb622120290&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;才发现 search bar 的结构很复杂。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;我加了两行打印，把子视图简单地打印出来。得到的结果：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb6204a09c0; frame = (390 0; 195 25); autoresize = RM+BM; gestureRecognizers = &amp;lt;NSArray: 0x7fb622479cf0&amp;gt;; layer = &amp;lt;CALayer: 0x7fb6204806e0&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UIView: 0x7fb622122760; frame = (0 0; 320 44); clipsToBounds = YES; autoresize = W+H; layer = &amp;lt;CALayer: 0x7fb622120180&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarBackground: 0x7fb622123340; frame = (0 0; 320 44); opaque = NO; userInteractionEnabled = NO; layer = &amp;lt;CALayer: 0x7fb622123800&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;UISearchBarTextField: 0x7fb622124bf0; frame = (8 8; 304 28); text = &amp;apos;&amp;apos;; clipsToBounds = YES; opaque = NO; layer = &amp;lt;CALayer: 0x7fb622120290&amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;不去深究，简而言之，在它的第二层子视图(subview)中至少包含了一个&lt;code&gt;UIView&lt;/code&gt;和一个&lt;code&gt;UiTextField&lt;/code&gt;，分别是 search bar 的背景视图和文本输入框。&lt;/p&gt;
 &lt;p&gt;Search bar 的样式就是它们定义的。所以我们对它们进行修改就能达到目的。&lt;/p&gt;
 &lt;h3 id=&quot;试验&quot;&gt;&lt;a href=&quot;#试验&quot; class=&quot;headerlink&quot; title=&quot;试验&quot;&gt;&lt;/a&gt;试验&lt;/h3&gt;&lt;p&gt;假设： @IBOutlet weak var searchBar: UISearchBar!&lt;/p&gt;
@@ -209,12 +237,28 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code
+&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBar&lt;/code&gt;相关的颜色。&lt;/p&gt;
+&lt;p&gt;另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因为微博客户端首页上面的 search bar 高度很小，自己尝试修改没成功，于是 google 了一下。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/30858969/can-the-height-of-the-uisearchbar-textfield-be-modified&quot;&gt;《StackOverflow: Can the height of the UISearchbar TextField be modified?》&lt;/a&gt; 中提到一种方案：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;override func viewDidAppear(animated: Bool) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    super.viewDidAppear(animated)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for subView in searchBar.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        print(subView)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        for subsubView in subView.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            print(subsubView)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            if let textField = subsubView as? UITextField &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;								textField.font = UIFont.systemFontOfSize(20)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;把这个函数放在&lt;code&gt;viewDidAppear&lt;/code&gt;会不会有点问题？是不是放在&lt;code&gt;viewWillAppear&lt;/code&gt;比较好？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;才发现 search bar 的结构很复杂。&lt;br&gt;
     
     </summary>
     
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="UISearchBar" scheme="http://cheng-kang.github.io/tags/UISearchBar/"/>
+    
+      <category term="color" scheme="http://cheng-kang.github.io/tags/color/"/>
     
   </entry>
   
@@ -223,7 +267,7 @@
     <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
     <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
     <published>2016-03-18T12:51:29.000Z</published>
-    <updated>2016-03-18T13:00:33.000Z</updated>
+    <updated>2016-03-21T03:20:23.000Z</updated>
     
     <content type="html">&lt;p&gt;###起源&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
@@ -237,7 +281,7 @@
 &lt;p&gt;直到有一天我在&lt;code&gt;Youtube&lt;/code&gt;上看相声视频的时候给我推送了一个广告（不得不说广告投得蛮准的，很多时候我都把广告看完了，尤其是那个参加空军的广告：）女王，我要当兵），是一个在线数据库服务，叫&lt;code&gt;firebase&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;firebase&lt;/code&gt;提供免费的基础服务，可以通过&lt;code&gt;js&lt;/code&gt;进行数据库操作。&lt;/p&gt;
 &lt;p&gt;我突然就想起来&lt;code&gt;Github Pages&lt;/code&gt;如果用上这个，不就有数据库了吗。&lt;/p&gt;
-&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;/p&gt;
+&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;名字叫&lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;1 从&lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;项目主页&lt;/a&gt;&lt;code&gt;fork&lt;/code&gt;项目代码&lt;/p&gt;
 &lt;p&gt;2 修改&lt;code&gt;fork&lt;/code&gt;下来的项目的项目名称为 &lt;code&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
@@ -255,10 +299,25 @@
     <summary type="html">
     
       &lt;p&gt;###起源&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因为简单免费而且访问速度快（比我自己的阿里云快多了【翻白眼】），所以越来越多的人使用&lt;code&gt;Github Pages&lt;/code&gt;搭建技术博客。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注：也可以绑定自己的域名。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;两个星期之前，自己才通过朋友的博客知道这个好东西。&lt;/p&gt;
+&lt;p&gt;官方提供&lt;code&gt;Jekyll&lt;/code&gt;的支持,可以快速搭建不用到数据库的博客。用法是配置好之后，每次将写好的博客&lt;code&gt;markdown&lt;/code&gt;文件上&lt;code&gt;push&lt;/code&gt;到&lt;code&gt;github&lt;/code&gt;里面。&lt;/p&gt;
+&lt;p&gt;不过当时也没过多在意，一是我自己有一个放在阿里云上的&lt;code&gt;wordpress&lt;/code&gt;博客，二是觉得每次还要上传文件嫌麻烦。&lt;/p&gt;
+&lt;p&gt;直到有一天我在&lt;code&gt;Youtube&lt;/code&gt;上看相声视频的时候给我推送了一个广告（不得不说广告投得蛮准的，很多时候我都把广告看完了，尤其是那个参加空军的广告：）女王，我要当兵），是一个在线数据库服务，叫&lt;code&gt;firebase&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;firebase&lt;/code&gt;提供免费的基础服务，可以通过&lt;code&gt;js&lt;/code&gt;进行数据库操作。&lt;/p&gt;
+&lt;p&gt;我突然就想起来&lt;code&gt;Github Pages&lt;/code&gt;如果用上这个，不就有数据库了吗。&lt;/p&gt;
+&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;br&gt;
     
     </summary>
     
+      <category term="Tech" scheme="http://cheng-kang.github.io/categories/Tech/"/>
+    
+    
+      <category term="fireblog" scheme="http://cheng-kang.github.io/tags/fireblog/"/>
     
   </entry>
   
@@ -267,7 +326,7 @@
     <link href="http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/"/>
     <id>http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/</id>
     <published>2016-03-18T12:47:49.000Z</published>
-    <updated>2016-03-18T12:58:31.000Z</updated>
+    <updated>2016-03-21T03:20:46.000Z</updated>
     
     <content type="html">&lt;p&gt;###Why&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
@@ -281,9 +340,8 @@
 &lt;p&gt;Then one day I was pused a ad about &lt;code&gt;fireblog&lt;/code&gt; when I was watching video on &lt;code&gt;Youtube&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;firebase&lt;/code&gt; offers a basic free service, by which you could operate on the database by &lt;code&gt;js&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;And it suddenly came to me that I could combine this with &lt;code&gt;Github Pages&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;So I decided to write a blog framework based on &lt;code&gt;Github Pages&lt;/code&gt;, &lt;code&gt;AngularJS&lt;/code&gt; and &lt;code&gt;firebase&lt;/code&gt;. If I succeed, then people with no idea about programming will be able to set up their own blogs by just &lt;code&gt;fork&lt;/code&gt; the project and log in with their &lt;code&gt;Github&lt;/code&gt; account.&lt;/p&gt;
-&lt;h3 id=&quot;Intro&quot;&gt;&lt;a href=&quot;#Intro&quot; class=&quot;headerlink&quot; title=&quot;Intro&quot;&gt;&lt;/a&gt;Intro&lt;/h3&gt;&lt;p&gt;It’s named &lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;1 &lt;code&gt;fork&lt;/code&gt; the source code from &lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the project home page&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;So I decided to write a blog framework based on &lt;code&gt;Github Pages&lt;/code&gt;, &lt;code&gt;AngularJS&lt;/code&gt; and &lt;code&gt;firebase&lt;/code&gt;. If I succeed, then people with no idea about programming will be able to set up their own blogs by just &lt;code&gt;forking&lt;/code&gt; the project and logging in with their &lt;code&gt;Github&lt;/code&gt; account.&lt;/p&gt;
+&lt;h3 id=&quot;Intro&quot;&gt;&lt;a href=&quot;#Intro&quot; class=&quot;headerlink&quot; title=&quot;Intro&quot;&gt;&lt;/a&gt;Intro&lt;/h3&gt;&lt;p&gt;It’s named &lt;code&gt;Fire Blog&lt;/code&gt;。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;br&gt;1 &lt;code&gt;fork&lt;/code&gt; the source code from &lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;the project home page&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2 change the name of the project you’ve &lt;code&gt;forked&lt;/code&gt; to &lt;code&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;3 drink your coffee and visit &lt;code&gt;https://username.github.io&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;4 click that ‘hidden’ login-page entry button&lt;/p&gt;
@@ -299,10 +357,26 @@
     <summary type="html">
     
       &lt;p&gt;###Why&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a
+&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
+&lt;p&gt;Since it’s easy, free and fast, more and more people start to use this service.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;P.S. You can also use your own domain name.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Two weeks ago, I noticed the magic &lt;code&gt;Github Pages&lt;/code&gt; supprisingly.&lt;/p&gt;
+&lt;p&gt;There is official support for &lt;code&gt;Jekyll&lt;/code&gt;, by which you could easily set up a blog without database. You need to push the markdown file of your blog to your git repository.&lt;/p&gt;
+&lt;p&gt;I didn’t pay much attention to it though. After all I have my own &lt;code&gt;wordpress&lt;/code&gt; blog on Ali Cloud and hate the idea of manually pushing .md files everytime.&lt;/p&gt;
+&lt;p&gt;Then one day I was pused a ad about &lt;code&gt;fireblog&lt;/code&gt; when I was watching video on &lt;code&gt;Youtube&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;firebase&lt;/code&gt; offers a basic free service, by which you could operate on the database by &lt;code&gt;js&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;And it suddenly came to me that I could combine this with &lt;code&gt;Github Pages&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So I decided to write a blog framework based on &lt;code&gt;Github Pages&lt;/code&gt;, &lt;code&gt;AngularJS&lt;/code&gt; and &lt;code&gt;firebase&lt;/code&gt;. If I succeed, then people with no idea about programming will be able to set up their own blogs by just &lt;code&gt;forking&lt;/code&gt; the project and logging in with their &lt;code&gt;Github&lt;/code&gt; account.&lt;/p&gt;
+&lt;h3 id=&quot;Intro&quot;&gt;&lt;a href=&quot;#Intro&quot; class=&quot;headerlink&quot; title=&quot;Intro&quot;&gt;&lt;/a&gt;Intro&lt;/h3&gt;&lt;p&gt;It’s named &lt;code&gt;Fire Blog&lt;/code&gt;。&lt;br&gt;
     
     </summary>
     
+      <category term="Tech" scheme="http://cheng-kang.github.io/categories/Tech/"/>
+    
+    
+      <category term="fireblog" scheme="http://cheng-kang.github.io/tags/fireblog/"/>
     
   </entry>
   

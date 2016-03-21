@@ -4,8 +4,7 @@
 <p>如图所示，九宫格图片为<code>Nine Pics</code>，底部按钮为<code>3-button-panel</code>（这个命名很奇怪我知道：D），单张大图为<code>One Pic</code>。</p>
 <p>九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。</p>
 <p>单张大图的长宽为 200px/200px。</p>
-<p>先不管单张大图的<code>UIImageView</code>，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 <strong>stackview</strong>。<br>设置<code>Nine Pics</code>和<code>3-button-panel</code>的间距为 8px。</p>
-<p>然后调整<code>One Pic</code>大小为合适大小，用 Constrains 束缚住。通过键盘把<code>One Pic</code>移动到和<code>Nine Pics</code>左上角对齐的位置。（移动位置为了看起来更直观。所有的约束不是由在<code>storyboard</code>上显示的位置决定的。）<br>将<code>One Pic</code>左、上设置成和<code>Nice Pics</code>一样的约束：左边 8px，上面 8px。</p>
+<p>先不管单张大图的<code>UIImageView</code>，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 <strong>stackview</strong>。<br>设置<code>Nine Pics</code>和<code>3-button-panel</code>的间距为 8px。<br><a id="more"></a><br>然后调整<code>One Pic</code>大小为合适大小，用 Constrains 束缚住。通过键盘把<code>One Pic</code>移动到和<code>Nine Pics</code>左上角对齐的位置。（移动位置为了看起来更直观。所有的约束不是由在<code>storyboard</code>上显示的位置决定的。）<br>将<code>One Pic</code>左、上设置成和<code>Nice Pics</code>一样的约束：左边 8px，上面 8px。</p>
 <p>这个时候因为单张大图的高比九宫格的高小，所以看上去<code>One Pic</code>和<code>3-button-panel</code>的间距一定是大于 8px。</p>
 <p>但是约束的神奇就是这样。</p>
 <p>我们现在设置<code>One Pic</code>和<code>3-button-panel</code>的间距为 8px。</p>

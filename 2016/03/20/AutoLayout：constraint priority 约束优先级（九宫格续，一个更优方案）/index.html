@@ -8,7 +8,7 @@
 <p>之前因为觉得麻烦，没有在那个项目里面尝试把九宫格图片分别作为九个<code>UIImageView</code>来处理（而非一个<code>StackView</code>）。这次我新建了一个项目，来尝试这种情况。</p>
 <p>依然是九宫格格子长宽 75px/75px，单张大图长宽 200px/200px。</p>
 <p>效果如下图。用了一些不同的颜色让各个 view 更明显。因为我用的图片背景都是白色，所以我把单张大图右移了一些以示区分。右边那一块白色就是单张大图。（上下两块区域的文字位置没调好，但这不是重点：D）</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-20%20at%208.33.20%20PM.png" alt=""></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-20%20at%208.33.20%20PM.png" alt=""><br><a id="more"></a></p>
 <h3 id="相同的高度？"><a href="#相同的高度？" class="headerlink" title="相同的高度？"></a>相同的高度？</h3><p>一看图就能发现，单张大图和九宫格是一样高的。</p>
 <p>我用<code>print(onePic.frame.height)</code>单张大图高度打印下来看，结果是 200.0。没有问题。</p>
 <p>难道是九宫格变小了？<code>print(firstImg.frame.height)</code>结果是 75.0。也没问题。</p>
