@@ -213,9 +213,13 @@ function initTree(){
 	addChild(ROOT.leftChild.leftChild);
 	addChild(ROOT.leftChild.leftChild);
 	addChild(ROOT.leftChild.rightChild);
+	addChild(ROOT.leftChild.rightChild);
 	addChild(ROOT.rightChild);
 	addChild(ROOT.rightChild);
 	addChild(ROOT.rightChild.leftChild);
+	addChild(ROOT.rightChild.leftChild);
+	addChild(ROOT.rightChild.rightChild);
+	addChild(ROOT.rightChild.rightChild);
 }
 
 // 初始化树中节点坐标
