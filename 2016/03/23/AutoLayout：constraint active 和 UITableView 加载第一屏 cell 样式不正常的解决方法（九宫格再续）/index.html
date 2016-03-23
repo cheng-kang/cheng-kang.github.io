@@ -2,21 +2,27 @@
 <p>运行结果是这样的：</p>
 <p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%205.51.02%20PM.png" alt=""></p>
 <p>？？？说好的解决了问题呢？？？<br>为什么图片被拉伸了？？？</p>
-<p><strong>问题何在</strong><br>回想一下，在之前的测试项目中，我没有给 button panel 设置底部和 superview 的约束，只是设定了固定高和上方与图片之间的约束，所以 button panel 飘上去了。而且由于 storyboard 里面约束设置不全面（superview 的底部没有与其中的 subview 建立约束），所以使用<code>estimatedHeightForRowAtIndexPath</code>的时候，整个 cell 都挤在了一起。<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%208.29.38%20PM.png" alt=""></p>
+<p><strong>问题何在?</strong><br>回想一下，在之前的测试项目中，我没有给 button panel 设置底部和 superview 的约束，只是设定了固定高和上方与图片之间的约束，所以 button panel 飘上去了。而且由于 storyboard 里面约束设置不全面（superview 的底部没有与其中的 subview 建立约束），所以使用<code>estimatedHeightForRowAtIndexPath</code>的时候，整个 cell 都挤在了一起。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%208.29.38%20PM.png" alt=""></p>
 <blockquote>
-<p>要使用<code>estimatedHeightForRowAtIndexPath</code>，一定得将约束设置全面。这个我以后再研究。<br>而在模拟微博项目中，我设置了 3-button-panel 和 superview 底部的约束（实际不是它们俩之间的约束，具体我应该会在另一篇文章来说，关于如何添加 cell 之间的空白。），约束设置全面了，3-button-panel 因此没有往上飘，而是 onePic 因为和 3-button-panel 之间的 8px 间距约束高度被拉伸。</p>
+<p>要使用<code>estimatedHeightForRowAtIndexPath</code>，一定得将约束设置全面。这个我以后再研究。</p>
 </blockquote>
-<p><strong>怎么办？</strong><br><a id="more"></a><br>上一次我学到了<code>constraint.priority</code>的用法。于是我想，是不是因为 onePic 高度约束优先级没有 onePic 和 3-button-panel 间距优先级高。</p>
+<p>而在模拟微博项目中，我设置了 3-button-panel 和 superview 底部的约束（实际不是它们俩之间的约束，具体我应该会在另一篇文章来说，关于如何添加 cell 之间的空白。），约束设置全面了，3-button-panel 因此没有往上飘，而是 onePic 因为和 3-button-panel 之间的 8px 间距约束高度被拉伸。</p>
+<p><strong>怎么办？</strong><br>上一次我学到了<code>constraint.priority</code>的用法。于是我想，是不是因为 onePic 高度约束优先级没有 onePic 和 3-button-panel 间距优先级高。</p>
 <p>然后我添加了这一段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@IBOutlet weak var onePicHeight: NSLayoutConstraint!</span><br><span class="line"></span><br><span class="line">buttonPanelAndOnePicConstraint.priority = firstPic.hidden ? 999 : 250</span><br><span class="line">onePicHeight.priority = 1000</span><br></pre></td></tr></table></figure></p>
-<p>就是当 onePic 出现的时候，将间距约束优先级设置为 999，而高度约束优先级设为 1000。结果如下：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.07.21%20PM.png" alt=""><br>图片高度正常了。但是，onePic 和 3-button-panel 间距不正常了。</p>
-<p><strong>问题何在！！！</strong><br>我又想起来之前提到的<strong>hidden 只是隐身、不可见，不是完全消失</strong>。<br>当显示 onePic 的时候，虽然九宫格的九张图全部设置为 hidden，它们仍然占着 superview 中的位置。因此出现了多余的间距。<br>然后我看到 StackOverflow 上面这个回答： <a href="http://stackoverflow.com/questions/32218495/enable-disable-auto-layout-constraints" target="_blank" rel="external">《enable-disable-auto-layout-constraints》</a>，知道了<code>constraint.active</code>。</p>
+<p>就是当 onePic 出现的时候，将间距约束优先级设置为 999，而高度约束优先级设为 1000。结果如下：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.07.21%20PM.png" alt=""></p>
+<p>图片高度正常了。但是，onePic 和 3-button-panel 间距不正常了。</p>
+<p><strong>问题何在??</strong></p>
+<p>我又想起来之前提到的<strong>hidden 只是隐身、不可见，不是完全消失</strong>。<br>当显示 onePic 的时候，虽然九宫格的九张图全部设置为 hidden，它们仍然占着 superview 中的位置。因此出现了多余的间距。<br>然后我看到 StackOverflow 上面这个回答： <a href="http://stackoverflow.com/questions/32218495/enable-disable-auto-layout-constraints" target="_blank" rel="external">《enable-disable-auto-layout-constraints》</a>，知道了<code>constraint.active</code>。</p>
 <h3 id="constraint-active"><a href="#constraint-active" class="headerlink" title="constraint active"></a>constraint active</h3><blockquote>
 <p>官方文档：<a href="https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/#//apple_ref/occ/instp/NSLayoutConstraint/active" target="_blank" rel="external">NSLayoutConstraint: active</a></p>
 </blockquote>
 <p><code>constraint.active</code>对解决这个问题有什么帮助呢？</p>
 <p>当我们用 AutoLayout 的时候，我们设置了各种约束，然后屏幕中的各种 view 按照约束被渲染出来。当 view 被隐藏时，约束并没有消失。因此隐藏的 view 仍占在之前的位置上。<br>而如果我们把这个 view 上绑定的所有约束都注销，它和其他 view 就没有关系了，也就不会继续占位。</p>
 <p>所以要解决多余间距，我添加了这段代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//当第七张图隐藏的时候，把第七、八、九张图的约束全部注销。</span><br><span class="line">//当然更全面的做法是把九宫格的所有图片的约束都注销。此处因为实际情况我可以偷个懒。</span><br><span class="line">if seventhPic.hidden &#123;</span><br><span class="line">    seventhPicLeft.active = false</span><br><span class="line">    seventhPicTop.active = false</span><br><span class="line">    eighthPicLeft.active = false</span><br><span class="line">    eighthPicTop.active = false</span><br><span class="line">    ninethPicLeft.active = false</span><br><span class="line">    ninethPicTop.active = false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行看一看：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.30.24%20PM.png" alt=""></p>
+<p>运行看一看：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.30.24%20PM.png" alt=""></p>
 <p>0.0!!! 没有用吗？<br>往下滑一滑，发现！诶！下面的是正常的。再滑回去，第一个也正常了！</p>
 <p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.31.39%20PM.png" alt=""></p>
 <p>这说明刚才对问题的理解是正确的，解决方案也是正确的，只是存在一个小小的缺陷。</p>
@@ -27,11 +33,14 @@
 <p>That’s the problem.<br>And how to solve that!!!</p>
 <p>我尝试了问题回答里面的所有方法都没有用。最后受提问者自己的回答（他提供了一种方法解决了自己的问题）启发，解决了问题 ：D。</p>
 <p><strong>解决方法</strong>是这样的：<br>在包含 UITableView 的 ViewController 中重写方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">	tableView.reloadData()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>解释</strong><br>我觉得滑屏加载新的 cell 的时候，应该是在调用<code>reloadData()</code>（这里具体我还没探究清楚）或者加载部分 tableView 的 data。<br>当你滑屏的时候，其实就是在<code>viewDidAppear</code>之后<code>reloadData()</code>。<br>所以重写这个方法会有效果。</p>
+<p><strong>解释</strong></p>
+<p>我觉得滑屏加载新的 cell 的时候，应该是在调用<code>reloadData()</code>（这里具体我还没探究清楚）或者加载部分 tableView 的 data。<br>当你滑屏的时候，其实就是在<code>viewDidAppear</code>之后<code>reloadData()</code>。<br>所以重写这个方法会有效果。</p>
 <p>运行结果如图：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.42.30%20PM.png" alt=""></p>
-<h3 id="待解决：为什么第一屏的-cell-样式会不正常？"><a href="#待解决：为什么第一屏的-cell-样式会不正常？" class="headerlink" title="待解决：为什么第一屏的 cell 样式会不正常？"></a>待解决：为什么第一屏的 cell 样式会不正常？</h3><p>为什么第一屏的 cell 样式会不正常？<br>为什么在<code>viewDidLoad</code>或者<code>viewWillAppear</code>方法里面<code>reloadData()</code>没有效果？<br>另外<code>estimatedHeightForRowAtIndexPath</code>更明确的用法是什么？（我发现，当修复了之前的问题之后，注释掉重写的<code>heightForRowAtIndexPath</code>和<code>estimatedHeightForRowAtIndexPath</code> cell 的样式也是自适应的，label 显示也正常。）</p>
+<h3 id="待解决：为什么第一屏的-cell-样式会不正常？"><a href="#待解决：为什么第一屏的-cell-样式会不正常？" class="headerlink" title="待解决：为什么第一屏的 cell 样式会不正常？"></a>待解决：为什么第一屏的 cell 样式会不正常？</h3><p>为什么第一屏的 cell 样式会不正常？</p>
+<p>为什么在<code>viewDidLoad</code>或者<code>viewWillAppear</code>方法里面<code>reloadData()</code>没有效果？</p>
+<p>另外<code>estimatedHeightForRowAtIndexPath</code>更明确的用法是什么？（我发现，当修复了之前的问题之后，注释掉重写的<code>heightForRowAtIndexPath</code>和<code>estimatedHeightForRowAtIndexPath</code> cell 的样式也是自适应的，label 显示也正常。）</p>
 <p>下次继续。</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/" class="next">NEXT</a></div><div data-thread-key="2016/03/23/AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）/" data-title="AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）" data-url="http://cheng-kang.github.io/2016/03/23/AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/" class="next">下一篇</a></div><div data-thread-key="2016/03/23/AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）/" data-title="AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）" data-url="http://cheng-kang.github.io/2016/03/23/AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
 (function() {
     var ds = document.createElement('script');
     ds.type = 'text/javascript';ds.async = true;
