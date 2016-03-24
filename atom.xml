@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-23T20:35:45.000Z</updated>
+  <updated>2016-03-21T03:18:07.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -14,77 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）</title>
-    <link href="http://cheng-kang.github.io/2016/03/23/AutoLayout%EF%BC%9Aconstraint%20active%20%E5%92%8C%20UITableView%20%E5%8A%A0%E8%BD%BD%E7%AC%AC%E4%B8%80%E5%B1%8F%20cell%20%E6%A0%B7%E5%BC%8F%E4%B8%8D%E6%AD%A3%E5%B8%B8%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%88%E4%B9%9D%E5%AE%AB%E6%A0%BC%E5%86%8D%E7%BB%AD%EF%BC%89/"/>
-    <id>http://cheng-kang.github.io/2016/03/23/AutoLayout：constraint active 和 UITableView 加载第一屏 cell 样式不正常的解决方法（九宫格再续）/</id>
-    <published>2016-03-23T20:32:15.000Z</published>
-    <updated>2016-03-23T20:35:45.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;多余的空白部分怎么办？&quot;&gt;&lt;a href=&quot;#多余的空白部分怎么办？&quot; class=&quot;headerlink&quot; title=&quot;多余的空白部分怎么办？&quot;&gt;&lt;/a&gt;多余的空白部分怎么办？&lt;/h3&gt;&lt;p&gt;我用上一篇文章提到的更优方案修改了模拟微博的项目。&lt;/p&gt;
-&lt;p&gt;运行结果是这样的：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%205.51.02%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;？？？说好的解决了问题呢？？？&lt;br&gt;为什么图片被拉伸了？？？&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;问题何在?&lt;/strong&gt;&lt;br&gt;回想一下，在之前的测试项目中，我没有给 button panel 设置底部和 superview 的约束，只是设定了固定高和上方与图片之间的约束，所以 button panel 飘上去了。而且由于 storyboard 里面约束设置不全面（superview 的底部没有与其中的 subview 建立约束），所以使用&lt;code&gt;estimatedHeightForRowAtIndexPath&lt;/code&gt;的时候，整个 cell 都挤在了一起。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%208.29.38%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;要使用&lt;code&gt;estimatedHeightForRowAtIndexPath&lt;/code&gt;，一定得将约束设置全面。这个我以后再研究。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;而在模拟微博项目中，我设置了 3-button-panel 和 superview 底部的约束（实际不是它们俩之间的约束，具体我应该会在另一篇文章来说，关于如何添加 cell 之间的空白。），约束设置全面了，3-button-panel 因此没有往上飘，而是 onePic 因为和 3-button-panel 之间的 8px 间距约束高度被拉伸。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;怎么办？&lt;/strong&gt;&lt;br&gt;上一次我学到了&lt;code&gt;constraint.priority&lt;/code&gt;的用法。于是我想，是不是因为 onePic 高度约束优先级没有 onePic 和 3-button-panel 间距优先级高。&lt;/p&gt;
-&lt;p&gt;然后我添加了这一段代码：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@IBOutlet weak var onePicHeight: NSLayoutConstraint!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;buttonPanelAndOnePicConstraint.priority = firstPic.hidden ? 999 : 250&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;onePicHeight.priority = 1000&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;就是当 onePic 出现的时候，将间距约束优先级设置为 999，而高度约束优先级设为 1000。结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.07.21%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;图片高度正常了。但是，onePic 和 3-button-panel 间距不正常了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;问题何在??&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我又想起来之前提到的&lt;strong&gt;hidden 只是隐身、不可见，不是完全消失&lt;/strong&gt;。&lt;br&gt;当显示 onePic 的时候，虽然九宫格的九张图全部设置为 hidden，它们仍然占着 superview 中的位置。因此出现了多余的间距。&lt;br&gt;然后我看到 StackOverflow 上面这个回答： &lt;a href=&quot;http://stackoverflow.com/questions/32218495/enable-disable-auto-layout-constraints&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《enable-disable-auto-layout-constraints》&lt;/a&gt;，知道了&lt;code&gt;constraint.active&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;constraint-active&quot;&gt;&lt;a href=&quot;#constraint-active&quot; class=&quot;headerlink&quot; title=&quot;constraint active&quot;&gt;&lt;/a&gt;constraint active&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;官方文档：&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/AppKit/Reference/NSLayoutConstraint_Class/#//apple_ref/occ/instp/NSLayoutConstraint/active&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NSLayoutConstraint: active&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;code&gt;constraint.active&lt;/code&gt;对解决这个问题有什么帮助呢？&lt;/p&gt;
-&lt;p&gt;当我们用 AutoLayout 的时候，我们设置了各种约束，然后屏幕中的各种 view 按照约束被渲染出来。当 view 被隐藏时，约束并没有消失。因此隐藏的 view 仍占在之前的位置上。&lt;br&gt;而如果我们把这个 view 上绑定的所有约束都注销，它和其他 view 就没有关系了，也就不会继续占位。&lt;/p&gt;
-&lt;p&gt;所以要解决多余间距，我添加了这段代码：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//当第七张图隐藏的时候，把第七、八、九张图的约束全部注销。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;//当然更全面的做法是把九宫格的所有图片的约束都注销。此处因为实际情况我可以偷个懒。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if seventhPic.hidden &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    seventhPicLeft.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    seventhPicTop.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    eighthPicLeft.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    eighthPicTop.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ninethPicLeft.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ninethPicTop.active = false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;运行看一看：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.30.24%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;0.0!!! 没有用吗？&lt;br&gt;往下滑一滑，发现！诶！下面的是正常的。再滑回去，第一个也正常了！&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.31.39%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这说明刚才对问题的理解是正确的，解决方案也是正确的，只是存在一个小小的缺陷。&lt;/p&gt;
-&lt;h3 id=&quot;如何解决：UITableView-加载第一屏-cell-样式不正常&quot;&gt;&lt;a href=&quot;#如何解决：UITableView-加载第一屏-cell-样式不正常&quot; class=&quot;headerlink&quot; title=&quot;如何解决：UITableView 加载第一屏 cell 样式不正常&quot;&gt;&lt;/a&gt;如何解决：UITableView 加载第一屏 cell 样式不正常&lt;/h3&gt;&lt;p&gt;我在 StackOverflow 找到有人遇到相同的问题，部分问题描述是这样的：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;This works nicely for the cells that have yet to be scrolled to (as UITableViewAutomaticDimention is called upon scrolling to the cell) and all is well for those, &lt;strong&gt;but not for the cells that are initially rendered onscreen after loading the data&lt;/strong&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;That’s the problem.&lt;br&gt;And how to solve that!!!&lt;/p&gt;
-&lt;p&gt;我尝试了问题回答里面的所有方法都没有用。最后受提问者自己的回答（他提供了一种方法解决了自己的问题）启发，解决了问题 ：D。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解决方法&lt;/strong&gt;是这样的：&lt;br&gt;在包含 UITableView 的 ViewController 中重写方法&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;override func viewDidAppear(animated: Bool) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	tableView.reloadData()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解释&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;我觉得滑屏加载新的 cell 的时候，应该是在调用&lt;code&gt;reloadData()&lt;/code&gt;（这里具体我还没探究清楚）或者加载部分 tableView 的 data。&lt;br&gt;当你滑屏的时候，其实就是在&lt;code&gt;viewDidAppear&lt;/code&gt;之后&lt;code&gt;reloadData()&lt;/code&gt;。&lt;br&gt;所以重写这个方法会有效果。&lt;/p&gt;
-&lt;p&gt;运行结果如图：&lt;br&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-23%20at%206.42.30%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;h3 id=&quot;待解决：为什么第一屏的-cell-样式会不正常？&quot;&gt;&lt;a href=&quot;#待解决：为什么第一屏的-cell-样式会不正常？&quot; class=&quot;headerlink&quot; title=&quot;待解决：为什么第一屏的 cell 样式会不正常？&quot;&gt;&lt;/a&gt;待解决：为什么第一屏的 cell 样式会不正常？&lt;/h3&gt;&lt;p&gt;为什么第一屏的 cell 样式会不正常？&lt;/p&gt;
-&lt;p&gt;为什么在&lt;code&gt;viewDidLoad&lt;/code&gt;或者&lt;code&gt;viewWillAppear&lt;/code&gt;方法里面&lt;code&gt;reloadData()&lt;/code&gt;没有效果？&lt;/p&gt;
-&lt;p&gt;另外&lt;code&gt;estimatedHeightForRowAtIndexPath&lt;/code&gt;更明确的用法是什么？（我发现，当修复了之前的问题之后，注释掉重写的&lt;code&gt;heightForRowAtIndexPath&lt;/code&gt;和&lt;code&gt;estimatedHeightForRowAtIndexPath&lt;/code&gt; cell 的样式也是自适应的，label 显示也正常。）&lt;/p&gt;
-&lt;p&gt;下次继续。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;多余的空白部分怎么办？&quot;&gt;&lt;a href=&quot;#多余的空白部分怎么办？&quot; class=&quot;headerlink&quot; title=&quot;多余的空白部分怎么办？&quot;&gt;&lt;/a&gt;多余的空白部分怎么办？&lt;/h3&gt;&lt;p&gt;我用上一篇文章提到的更优方案修改了模拟微博的项目。&lt;/p&gt;
-&lt;p&gt;运
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
-    
-      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
-    
-      <category term="swift" scheme="http://cheng-kang.github.io/tags/swift/"/>
-    
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
-  </entry>
   
   <entry>
     <title>AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）</title>
