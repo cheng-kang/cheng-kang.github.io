@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-03-26T19:36:21.000Z</updated>
+  <updated>2016-03-30T01:03:30.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -14,6 +14,83 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>仿微博 iOS 客户端 TabBar 中间按钮</title>
+    <link href="http://cheng-kang.github.io/2016/03/30/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"/>
+    <id>http://cheng-kang.github.io/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/</id>
+    <published>2016-03-30T01:02:07.000Z</published>
+    <updated>2016-03-30T01:03:30.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Weibo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;模仿微博客户端项目源码&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我在模仿微博 iOS 客户端。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。&lt;/p&gt;
+&lt;h3 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot; title=&quot;思路&quot;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。&lt;/p&gt;
+&lt;p&gt;第二个想法是用一个 button 覆盖 TabBar 中间按钮。无非就是在代码里新建一个&lt;code&gt;UIButton&lt;/code&gt;，用&lt;code&gt;CGRectMake()&lt;/code&gt;定位。&lt;/p&gt;
+&lt;h3 id=&quot;一个错误的尝试&quot;&gt;&lt;a href=&quot;#一个错误的尝试&quot; class=&quot;headerlink&quot; title=&quot;一个错误的尝试&quot;&gt;&lt;/a&gt;一个错误的尝试&lt;/h3&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt; 
+&lt;p&gt;有了上面的思路，我就在首页的 ViewController 中的&lt;code&gt;viewDidLoad()&lt;/code&gt;方法中添加了如下代码：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//100px 高宽随便设置用来测试的。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let postBtn = UIButton()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;postBtn.frame = CGRectMake(self.view.frame.width/2 - 50, self.view.frame.height - 100, 100, 100)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;postBtn.setBackgroundImage(UIImage(named: &amp;quot;post_btn&amp;quot;), forState: .Normal)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;self.view.addSubview(postBtn)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;结果如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.16.31%20AM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;两个问题&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;按钮被什么东西挡住了？&lt;/li&gt;
+&lt;li&gt;这个按钮添加在首页的 View 里面，所以只有首页有，其他 tab 怎么办？每个 tab 写一个吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;问题一&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在 Tabbed Application，底部始终有一个在最上层的 TabBar。每一个 tab 页面的 view 都在 TabBar 下面，所以在 tab 页面的 view 中在 TabBar 所在的位置添加子 subview，subview 会被盖住。&lt;/p&gt;
+&lt;p&gt;所以思路二行不通了吗？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;问题二&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;重复一点代码倒没什么，不过有没有办法避免呢？&lt;/p&gt;
+&lt;h3 id=&quot;解决方案&quot;&gt;&lt;a href=&quot;#解决方案&quot; class=&quot;headerlink&quot; title=&quot;解决方案&quot;&gt;&lt;/a&gt;解决方案&lt;/h3&gt;&lt;p&gt;我发现作为 Initial View Controller 的这个 Tab Bar View Controller 也可以添加一个自定义的 ViewController。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.31.34%20AM%20(2&quot; alt=&quot;&quot;&gt;.png)&lt;/p&gt;
+&lt;p&gt;于是我新建了一个 UITabBarController 的子类。在&lt;code&gt;viewDidLoad()&lt;/code&gt;中添加了 button。下面的代码是调整过 button 大小位置后的最终代码。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//  TabBarViewController.swift&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import UIKit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;class TabBarViewController: UITabBarController &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    override func viewDidLoad() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        super.viewDidLoad()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        //  初始化一些要用到的参数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let WINDOW_HEIGHT = self.view.frame.height&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let TAB_HEIGHT = self.tabBar.frame.height&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let GRID_WIDTH = self.view.frame.width / 5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let MARGIN_X = CGFloat(2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let MARGIN_Y = CGFloat(5)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let BTN_WIDTH = TAB_HEIGHT - MARGIN_X * 2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let BTN_HEIGHT = TAB_HEIGHT - MARGIN_Y * 2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        //  遮罩层，用于遮挡原本的 TabBarItem&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let modalView = UIView()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        modalView.frame = CGRectMake(GRID_WIDTH * 2, WINDOW_HEIGHT - TAB_HEIGHT, GRID_WIDTH, TAB_HEIGHT)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.view.addSubview(modalView)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        //  添加自定义按钮&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let postBtn = UIButton()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        postBtn.frame = CGRectMake(GRID_WIDTH * 2 + (GRID_WIDTH - BTN_WIDTH) / 2, WINDOW_HEIGHT - TAB_HEIGHT + MARGIN_Y, BTN_WIDTH, BTN_HEIGHT)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        postBtn.setBackgroundImage(UIImage(named: &amp;quot;post_btn&amp;quot;), forState: .Normal)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.view.addSubview(postBtn)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        //  给按钮添加事件&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        postBtn.addTarget(self, action: &amp;quot;postButtonClicked:&amp;quot;, forControlEvents: .TouchUpInside)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;效果如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;解释&quot;&gt;&lt;a href=&quot;#解释&quot; class=&quot;headerlink&quot; title=&quot;解释&quot;&gt;&lt;/a&gt;解释&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;对于问题一&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为是直接在 TabBarController 的 view 上添加 subview，所以按钮正常显示。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;对于问题二&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为 TabBar 是所有 tab 页面公用的，所以不用在每个页面单独添加按钮。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;遮罩层的作用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;因为自定义按钮的大小没有覆盖 TabBar 中间 item 的大小，所以点击边缘部分会进入对应的 tab 页面。而微博客户端这个按钮点击后，应该是出现如下页面，而非进入 tab 页。所以用遮罩层挡住那个 TabBar item。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_weibo-1.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自定义按钮的点击事件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个加号按钮点击完之后应该是出现一个半透明视图，包含一些按钮。所以我在最后给按钮添加了一个点击事件，负责完成显示新视图及其中的动画。&lt;/p&gt;
+&lt;p&gt;如果对这个半透明视图和其中动画的实现有兴趣，可以到我 github 下载源码看看。因为都是最基本的 Animation，所以可能不会单独写一篇分享。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Weibo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;模拟微博客户端 github 仓库&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;个人觉得值得注意的是，我的解决方案是：这个半透明视图在第一次出现之后就保存在 TabBarViewController 的类成员变量里，之后的关闭和再显示只是将视图的 alpha 值在 0 和 1 之间切换。&lt;/p&gt;
+&lt;p&gt;说不定也会总结一次。因为实现过程中踩到一些跟 Animation 有关的坑，比如&lt;strong&gt;有些属性变换是立即执行的，不能用动画渐变实现&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;基本的 Animation 知识，建议去看 &lt;a href=&quot;http://weibo.com/yongjianlin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@林永坚Jake &lt;/a&gt; 在慕课网发布的 &lt;a href=&quot;http://www.imooc.com/learn/392&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;iOS-动画入门&lt;/a&gt; 和 &lt;a href=&quot;http://www.imooc.com/learn/395&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;iOS-动画进阶&lt;/a&gt;。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Weibo&quot;&gt;模仿微博客户端项目源码&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我在模仿微博 iOS 客户端。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。&lt;/p&gt;
+&lt;h3 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot; title=&quot;思路&quot;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。&lt;/p&gt;
+&lt;p&gt;第二个想法是用一个 button 覆盖 TabBar 中间按钮。无非就是在代码里新建一个&lt;code&gt;UIButton&lt;/code&gt;，用&lt;code&gt;CGRectMake()&lt;/code&gt;定位。&lt;/p&gt;
+&lt;h3 id=&quot;一个错误的尝试&quot;&gt;&lt;a href=&quot;#一个错误的尝试&quot; class=&quot;headerlink&quot; title=&quot;一个错误的尝试&quot;&gt;&lt;/a&gt;一个错误的尝试&lt;/h3&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="swift" scheme="http://cheng-kang.github.io/tags/swift/"/>
+    
+      <category term="UITabBar" scheme="http://cheng-kang.github.io/tags/UITabBar/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】iOS 基础：Frames、Bounds 和 CGGeometry</title>
