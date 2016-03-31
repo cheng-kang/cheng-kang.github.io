@@ -1,0 +1,193 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子） · CHENG KANG</title><meta name="description" content="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子） - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）</h1><div class="post-time">Mar 31, 2016</div><div class="post-content"><h3 id="引语"><a href="#引语" class="headerlink" title="引语"></a>引语</h3><p>我在练习 iOS 开发。</p>
+<p>碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。</p>
+<p>内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如<code>比较重要的方法</code>、<code>比较重要的属性</code>的重要性均是相对本文内容而言。</p>
+<p>要实现的结果如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.46.56%20PM.png" alt=""></p>
+<p>其中，点击中间按钮时，不激活那个 tab 页，而是执行自定义的任务。（因为 instagram 中间那个按钮功能就是和其他的不一样嘛。）</p>
+<h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><p>首先，敬上四篇相关文档：</p>
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/" target="_blank" rel="external">UITabBarController Class Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarControllerDelegate_Protocol/index.html#//apple_ref/occ/intf/UITabBarControllerDelegate" target="_blank" rel="external">UITabBarControllerDelegate Protocol Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBar_Class/index.html#//apple_ref/occ/cl/UITabBar" target="_blank" rel="external">UITabBar Class Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarItem_Class/index.html#//apple_ref/occ/cl/UITabBarItem" target="_blank" rel="external">UITabBarItem Class Reference</a><a id="more"></a>
+<h3 id="UITabBarController、UITabBarControllerDelegate、UITabBar-和-UITabBarItem"><a href="#UITabBarController、UITabBarControllerDelegate、UITabBar-和-UITabBarItem" class="headerlink" title="UITabBarController、UITabBarControllerDelegate、UITabBar 和 UITabBarItem"></a>UITabBarController、UITabBarControllerDelegate、UITabBar 和 UITabBarItem</h3></li>
+</ul>
+<blockquote>
+<p>先来一点没那么有趣的东西：D。</p>
+</blockquote>
+<p><strong>UITabBarController</strong><br>当你使用 UITabBarController 的时候，你可以新建一个类继承 UITabBarController 来管理你的 TabBar 及相关事件。</p>
+<p>UITabBarController 包含许多属性，与本文相关的比较重要的几个属性是：</p>
+<ul>
+<li>delegate：一个 UITabBarControllerDelegate 对象，用于追踪和处理一些 TabBar 事件。</li>
+<li>tabBar： 一个 UITabBar 对象，直接一点说就是你在屏幕上看到的那个 TabBar。</li>
+<li>viewControllers：每个 Tab 页面对应的 viewController 组成的列表。可以通过排列顺序值获取对应 viewController，比如第一个 tab 的 viewController 为：self.viewControllers[0]。</li>
+</ul>
+<p><strong>UITabBarControllerDelegate</strong><br>一个比较重要的方法：</p>
+<ul>
+<li><code>override func tabBarController(_ tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -&gt; Bool</code><br>用于决定被选中的 tab 是否激活。当返回值是 false 时，保留在之前的 tab 页面；当返回值是 true 时，激活当前选中的 tab 页面。</li>
+</ul>
+<p><strong>UITabBar</strong></p>
+<p>几个重要的属性：</p>
+<ul>
+<li>items：一个 UITabBarItem 列表，即每一个 tab 按钮对象组成的列表。</li>
+<li>selectedItem：当前被选中的 TabBarItem。</li>
+<li>tintColor：覆盖被选中的 TabBarItem 图片的颜色。（默认为蓝色。就是选中时图标的颜色。）<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.43.26%20PM.png" alt=""><ul>
+<li>barTintColor：整个 TabBar 的背景颜色。</li>
+</ul>
+</li>
+</ul>
+<p><strong>UITabBarItem</strong></p>
+<p>几个重要的方法和属性：</p>
+<ul>
+<li>初始化方法（init(…)）。可以通过 init 方法新建 TabBarItem，并赋予指定初始值，比如图片、图片颜色、选中状态时的图片及颜色、tag 值等等。</li>
+<li>badgeValue：看图。通过设置这个值可以直接得到这个效果，我觉得挺有意思的，很省事的样子。<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.39.12%20PM.png" alt=""></li>
+<li>selectedImage：TabBarItem 被选中时显示的图片，默认和未选中状态图片一样。</li>
+</ul>
+<h3 id="TabBar-基本样式的设置"><a href="#TabBar-基本样式的设置" class="headerlink" title="TabBar 基本样式的设置"></a>TabBar 基本样式的设置</h3><p>我目前的看法是，<strong>能用 storyboard 解决的一定不用代码</strong>。所以基本样式设置全部在 storyboard 完成。</p>
+<p><strong>TabBar</strong></p>
+<p>选中 TabBar，打开右侧的属性面板。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.58.59%20PM.png" alt=""><br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen_Shot_2016-03-31_at_8_59_09_PM.png" alt=""></p>
+<ul>
+<li>一般都不用修改 item Positioning，默认是居中均匀分布，应该符合大部分需求。</li>
+<li>Translucent 半透明度可以根据需要勾选。像微博的客户端就是半透明的，而instagram 不是。</li>
+<li>没有特别需求的话，可以直接在这里设置 Image Tint。我们这个例子在代码里面设置。</li>
+<li>Style：系统提供了 Default 默认的白色背景和可选的 Black 黑色背景。可根据需要选择。如图：</li>
+</ul>
+<p><strong>TabBarItem</strong></p>
+<p>选中 tab 页面的 viewController 底部的 tab 图标。右侧的属性面板如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.20.49%20PM.png" alt=""></p>
+<p>先看下面的：</p>
+<ul>
+<li>Title：就是在图标下显示的文字。可以为空，可以通过 Title Position 调整位置。</li>
+<li>Image：图标的图片。</li>
+<li>Tag：当前 TabBarItem 的标志，设置一个值方便在代码里找到对应的 TabBarItem。</li>
+<li>Enabled：没什么好说的：）</li>
+</ul>
+<p>然后是这些：</p>
+<ul>
+<li>Badge：就是之前提到过的红点。可以在这里设置一个初始值。</li>
+<li>System Item：一些系统自带的 Tab 图标，根据需要自行取用。一般还是用自己的图吧。</li>
+<li>Selected Image：tab 被选中的时候的图片。</li>
+<li>Title Postition：设置 title 的位置。<br>可以如图设置<code>水平偏移</code>和<code>垂直偏移</code>。</li>
+</ul>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.28.11%20PM.png" alt=""></p>
+<p><strong>值得注意的是：水平偏移对图标有影响，垂直偏移对图标没有影响。</strong>效果如图，红线是我自己加的一条中线，用于对比。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.28.19%20PM.png" alt=""></p>
+<p>One more thing :)</p>
+<p>属性面板右边有一个设置尺寸的面板：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.34.25%20PM.png" alt=""><br>在这里可以设置图标的偏移量，从而修改图标的位置。</p>
+<p>因为默认图标在 Title上面，位置偏高，就算没有 Title 图标也在那个位置。所以当我们不用 Title 的时候，像 instagram，需要调整图标的位置，让它看起来居中一点。</p>
+<p>一种是直接在面板设置，一种是用代码设置。<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.40.26%20PM.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);</span><br></pre></td></tr></table></figure></p>
+<p>对比效果如图：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.40.45%20PM.png" alt=""></p>
+<p><strong>注意：top 和 bottom 要设置成相反数，不然点击 tab 图标时 image 的大小会一直改变！！！</strong><br>如图：<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-1.gif" alt=""></p>
+<p><strong>一个建议</strong></p>
+<p>有时候需要调整图标的大小，不建议用代码修改或者视图通过 image inset 来修改。</p>
+<p>建议做图标的时候，就在图标周围留白。比如 75px 的图片，其中上下左右各留白 20px，这样图标就小了。</p>
+<p>另外，根据 Apple 制定的标准，tab 图标准备 3 个尺寸，分别是 75 px（@3x），55px（@2x）和25px。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2011.40.42%20PM.png" alt=""></p>
+<h3 id="TabBar-个性化样式设置要求（大家好，重点要开始了：D）"><a href="#TabBar-个性化样式设置要求（大家好，重点要开始了：D）" class="headerlink" title="TabBar 个性化样式设置要求（大家好，重点要开始了：D）"></a>TabBar 个性化样式设置要求（大家好，重点要开始了：D）</h3><p>经过之前一些简单的步骤，你将得到如图效果：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.50.54%20PM.png" alt=""></p>
+<p>记得将五个 TabBarItem 的 tag 设置为 0 - 5，方便以后。</p>
+<p>但是我们要实现的不是这么简单。</p>
+<p><strong>要求：</strong></p>
+<ul>
+<li>选中 TabBarItem 背景颜色为黑色。</li>
+<li>未选中 TabBarItem 背景颜色为某种灰色。</li>
+<li>选中 TabBarItem 图标颜色为白色。</li>
+<li>未选中 TabBarItem 图标颜色为某种灰色。</li>
+<li>中间按钮始终背景颜色为某种蓝色、图标颜色为白色。</li>
+</ul>
+<h3 id="如何在-UITabBarController-中修改样式"><a href="#如何在-UITabBarController-中修改样式" class="headerlink" title="如何在 UITabBarController 中修改样式"></a>如何在 UITabBarController 中修改样式</h3><p>新建一个 Cocoa Touch Class，取名叫<code>MainTabBarViewController</code>，继承 UITabBarController。去 storyboard 把作为入口的那个 UITabBarController 的类修改为<code>MainTabBarViewController</code>。</p>
+<p>这个时候，我们就可以在<code>MainTabBarViewController</code>中对 TabBar 进行修改了。</p>
+<p>首先来试验一下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class MainTabBarViewController: UITabBarController &#123;</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        //设置 tabBar 图标选中时的颜色</span><br><span class="line">        self.tabBar.tintColor = UIColor.whiteColor()</span><br><span class="line">        //遍历全部 tabBarItem，设置 badege 值</span><br><span class="line">        for one in self.tabBar.items! &#123;</span><br><span class="line">            one.badgeValue = &quot;100&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WOW。好酷。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.01.19%20PM.png" alt=""></p>
+<ul>
+<li><del>选中 TabBarItem 图标颜色为白色。</del> 达成√！！</li>
+<li><del>未选中 TabBarItem 图标颜色为某种灰色。</del> 达成√！！</li>
+</ul>
+<p>然后还顺便尝试了设置 badge 值。</p>
+<h3 id="如何通过代码设置单个-TabBarItem-背景颜色"><a href="#如何通过代码设置单个-TabBarItem-背景颜色" class="headerlink" title="如何通过代码设置单个 TabBarItem 背景颜色"></a>如何通过代码设置单个 TabBarItem 背景颜色</h3><p>之前提到过 barTintColor 这个属性。通过<code>self.tabBar.barTintColor = UIColor().greyColor()</code>就可以把背景设置为灰色了。但是这并没有完成被选中 TabBarItem 背景颜色变为黑色的要求。</p>
+<p>事实上，<strong>并没有直接设置单个 TabBarItem 背景颜色的方法</strong>。</p>
+<p><strong>解决方案</strong></p>
+<p>重写 viewDidAppear 方法和 didSelectItem 方法。didSelectItem 是每当有 tabBarItem 被选中时执行的函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class MainTabBarViewController: UITabBarController &#123;</span><br><span class="line"></span><br><span class="line">		//定义一个用于存储背景层 view 的列表</span><br><span class="line">    var tabBarItemBgViews: [UIView] = []</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        self.tabBar.tintColor = UIColor.whiteColor()</span><br><span class="line">        for it in self.tabBar.items! &#123;</span><br><span class="line">            it.badgeValue = &quot;100&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">		    //初始化需要用到的尺寸数值</span><br><span class="line">        let ITEM_WIDTH = self.tabBar.frame.width / 5</span><br><span class="line">        let ITEM_HEIGHT = CGFloat(49)</span><br><span class="line">        </span><br><span class="line">        //初始化 tab bar item 背景层</span><br><span class="line">        for one in self.tabBar.items! &#123;</span><br><span class="line">            let vw = UIView()</span><br><span class="line">            vw.backgroundColor = UIColor(red: 37/255, green: 29/255, blue: 42/255, alpha: 1)</span><br><span class="line">            vw.frame = CGRectMake(ITEM_WIDTH * CGFloat(one.tag), 0, ITEM_WIDTH, ITEM_HEIGHT)</span><br><span class="line">            self.tabBarItemBgViews.append(vw)</span><br><span class="line">            //将背景层插入到 index 为 1 的位置，这样背景层就在图标下面。记住这个 1 就好了：）</span><br><span class="line">            tabBar.insertSubview(vw, atIndex: 1)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //修改第一个 item 的背景色为选中状态颜色</span><br><span class="line">        self.tabBarItemBgViews[0].backgroundColor = UIColor.blackColor()</span><br><span class="line">        </span><br><span class="line">        //自定义中间按钮样式</span><br><span class="line">        self.tabBarItemBgViews[2].backgroundColor = UIColor(red: 17/255, green: 86/255, blue: 136/255, alpha: 1)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) &#123;</span><br><span class="line">	    //当选中的 TabBarItem 不是中间那个时，改变背景颜色</span><br><span class="line">	    if item.tag != 2 &#123;</span><br><span class="line">	        for one in tabBar.items! &#123;</span><br><span class="line">			        //将当前被选中的 TabBarItem 背景颜色设置为黑色</span><br><span class="line">	            if one.tag == item.tag &#123;</span><br><span class="line">	                self.tabBarItemBgViews[one.tag].backgroundColor = UIColor.blackColor()</span><br><span class="line">	            &#125; else &#123;</span><br><span class="line">	                //将其他 TabBarItem 背景颜色设置为灰色</span><br><span class="line">					        self.tabBarItemBgViews[one.tag].backgroundColor = UIColor(red: 37/255, green: 29/255, blue: 42/255, alpha: 1)</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	        </span><br><span class="line">	        //将中间 TabBarItem 的背景颜色重置为蓝色</span><br><span class="line">	        self.tabBarItemBgViews[2].backgroundColor = UIColor(red: 17/255, green: 86/255, blue: 136/255, alpha: 1)</span><br><span class="line">	    &#125; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通过上面的代码，得到了：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.14.04%20PM.png" alt=""></p>
+<p><strong>解释：为什么是重写 viewDidAppear 方法而不是 viewDidLoad</strong></p>
+<p>如果把上面那段代码写在<code>viewDidLoad</code>方法中，会出现如下情况：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-2.gif" alt=""></p>
+<p>可以看到，第一个 TabBarItem 没有图标，而且点击无效。</p>
+<p>简单来说，在<code>viewDidLoad</code>的时候，页面的那些视图大概还没准备好，所以插入的时候会有错误。包括写在<code>viewWillAppear</code>中也会出现同样问题。</p>
+<p>所以记得重写<code>viewDiaAppear</code>。</p>
+<p><strong>两个问题</strong></p>
+<ol>
+<li>打开 app 的时候，中间按钮图标颜色不是白色。（当然这是因为我们上面代码里面没有设置。）</li>
+<li>点击中间按钮，进入了对应的 tab 页面，如图。（这不是我们希望的。）<br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.24.06%20PM.png" alt=""></li>
+</ol>
+<h3 id="如何修改-TabBarItem-样式"><a href="#如何修改-TabBarItem-样式" class="headerlink" title="如何修改 TabBarItem 样式"></a>如何修改 TabBarItem 样式</h3><p>初一想，在<code>viewDidAppear</code>结尾加上这段代码就可以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//将 tabBar 包含的 tabBarItem 中的第二个修改为自定义的一个 UITabBarItem</span><br><span class="line">//使用原本设置的图片，原本设置的 tag 值，并将图片设置为使用原图片。</span><br><span class="line">//imageWithRenderingMode(.AlwaysOriginal)，稍后详细解释</span><br><span class="line">self.tabBar.items![2] = UITabBarItem(title: nil, image: self.tabBarItem.image?.imageWithRenderingMode(.AlwaysOriginal), tag: self.tabBarItem.tag)</span><br><span class="line">//修改偏移量，让图标居中</span><br><span class="line">self.tabBar.items![2].imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)</span><br></pre></td></tr></table></figure></p>
+<p>编译也没有问题。但是运行的时候报错了。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.38.58%20PM.png" alt=""></p>
+<p><strong>需要注意：不能直接在 tab bar controller 里面修改 tab bar item 的属性</strong></p>
+<blockquote>
+<p>文档原文是这样说的：<br>”You should never access the tab bar view of a tab bar controller directly. To configure the tabs of a tab bar controller, you assign the view controllers that provide the root view for each tab to the <code>viewControllers</code> property.”<br>这里我觉得 tab bar view 可能说得不够清楚，应该是 tab bar item view。</p>
+</blockquote>
+<p>可能有同学会对上面我们增加背景有疑问。那难道不是修改 tab bar item 吗？</p>
+<p>并不是。上面我们其实是给 TabBar 增加子视图，并定位到各个 TabBarItem 背后，看起来像是在给 TabBarItem 添加背景。并没有直接修改 TabBarItem。</p>
+<p><strong>解决方案</strong></p>
+<p>如文档所说，我们应该在对应的 viewController 里面去操作。</p>
+<p>到我们之前应该创建好了的<code>ThirdViewController.swift</code>里面，写一个用于修改第三个 TabBarItem 样式的函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class ThirdViewController: UIViewController, UITabBarControllerDelegate &#123;</span><br><span class="line"></span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    func initTabBarItem() &#123;</span><br><span class="line">        //将该 TabBarItem 替换为一个新的</span><br><span class="line">        self.tabBarItem = UITabBarItem(title: nil, image: self.tabBarItem.image?.imageWithRenderingMode(.AlwaysOriginal), tag: self.tabBarItem.tag)</span><br><span class="line">        //设置偏移量</span><br><span class="line">        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后回到<code>MainTabBarViewController.swift</code>。加上这两句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let vc = self.viewControllers![2] as! ThirdViewController</span><br><span class="line">vc.initTabBarItem()</span><br></pre></td></tr></table></figure></p>
+<p><code>viewDidAppear</code>方法现在应该如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">    let ITEM_WIDTH = self.tabBar.frame.width / 5</span><br><span class="line">    let ITEM_HEIGHT = CGFloat(49)</span><br><span class="line">    </span><br><span class="line">    //初始化 tab bar item 背景层</span><br><span class="line">    for one in self.tabBar.items! &#123;</span><br><span class="line">        let vw = UIView()</span><br><span class="line">        vw.backgroundColor = UIColor(red: 37/255, green: 29/255, blue: 42/255, alpha: 1)</span><br><span class="line">        vw.frame = CGRectMake(ITEM_WIDTH * CGFloat(one.tag), 0, ITEM_WIDTH, ITEM_HEIGHT)</span><br><span class="line">        self.tabBarItemBgViews.append(vw)</span><br><span class="line">        tabBar.insertSubview(vw, atIndex: 1)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //修改第一个 item 的背景色为选中状态颜色</span><br><span class="line">    self.tabBarItemBgViews[0].backgroundColor = UIColor.blackColor()</span><br><span class="line">    </span><br><span class="line">    //自定义中间按钮样式</span><br><span class="line">    self.tabBarItemBgViews[2].backgroundColor = UIColor(red: 17/255, green: 86/255, blue: 136/255, alpha: 1)</span><br><span class="line">    //获取第三个 TabBarItem 对应的 viewController，然后调用修改样式函数</span><br><span class="line">    let vc = self.viewControllers![2] as! ThirdViewController</span><br><span class="line">    vc.initTabBarItem()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们用到了之前提到的<code>UITabBarController</code>的<code>viewControllers</code>属性，通过下标获取到对应的<code>viewContrller</code>，然后调用里面的函数，完成样式修改。</p>
+<p>效果如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.54.50%20PM.png" alt=""></p>
+<ul>
+<li><del>中间按钮始终背景颜色为某种蓝色、图标颜色为白色。</del> 达成√！！</li>
+</ul>
+<p>但是点击中间的按钮还是会进入对应的 tab 页面。下下部分继续解决这个问题。</p>
+<h3 id="imageWithRenderingMode（稍微详细的介绍）"><a href="#imageWithRenderingMode（稍微详细的介绍）" class="headerlink" title="imageWithRenderingMode（稍微详细的介绍）"></a>imageWithRenderingMode（稍微详细的介绍）</h3><blockquote>
+<p>官方文档：<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImage_Class/#//apple_ref/occ/instm/UIImage/imageWithRenderingMode:" target="_blank" rel="external">imageWithRenderingMode:</a></p>
+</blockquote>
+<p>UIImage 自身有一个方法是 imageWithRenderingMode()。<br>有三个可选值：</p>
+<ul>
+<li>.Automatic</li>
+<li>.AlwaysOriginal：保持原样</li>
+<li>.AlwaysTemplate：留住图片的样板，忽略原图颜色。（比如设置为 tabBarItem.image 的图片，默认是渲染模式（rendering mode）是 .AlwaysTemplate，只保留了形状，默认是灰色。）</li>
+</ul>
+<p>如果想让 tabBarItem.image 的颜色保持原图颜色，就要用一个 RenderingMode 为 .AlwaysOriginal 的图片替换。也就是上面用到的那种方式。</p>
+<h3 id="如何自定义-TabBarItem-点击事件，UITabBarControllerDelegate"><a href="#如何自定义-TabBarItem-点击事件，UITabBarControllerDelegate" class="headerlink" title="如何自定义 TabBarItem 点击事件，UITabBarControllerDelegate"></a>如何自定义 TabBarItem 点击事件，UITabBarControllerDelegate</h3><p>之前提到， <code>override func tabBarController(_ tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -&gt; Bool</code>，用于决定被选中的 tab 是否激活。当返回值是 false 时，保留在之前的 tab 页面；当返回值是 true 时，激活当前选中的 tab 页面。</p>
+<p>我们要做的是，当被选中的是第三个 tab 时，保留之前的 tab 页面。</p>
+<p>思路就是这样，怎么做呢？</p>
+<p><strong>1.设置 UITabBarControllerDelegate</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate &#123;</span><br><span class="line"></span><br><span class="line">    var tabBarItemBgViews: [UIView] = []</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        self.tabBar.tintColor = UIColor.whiteColor()</span><br><span class="line">        for it in self.tabBar.items! &#123;</span><br><span class="line">            it.badgeValue = &quot;100&quot;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        self.delegate = self</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>给<code>MainTabBarViewController</code>类添加<code>UITabBarControllerDelegate</code>委托，并在<code>viewDidLoad</code>中将自己的 delegate 设置为自己。</p>
+<p>这个时候我们就可以在<code>MainTabBarViewController</code>中实现<code>UITabBarControllerDelegate</code>中的方法来监控和响应事件。</p>
+<p>重写如下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -&gt; Bool &#123;</span><br><span class="line">    if viewController.tabBarItem.tag == 2 &#123;</span><br><span class="line">		    print(viewController.tabBarItem.tag)</span><br><span class="line">        return false</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当被选中 tabBarItem.tag 等于 2 时，即为中间按钮时，返回 false，保留之前的 tab 页面；否则切换到新页面。</p>
+<p>效果如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-3.gif" alt=""></p>
+<p>其中<code>print()</code>方法是用来演示，我们可以在这里做一些其他的事情，比如像 instagram 一样弹出拍照页面。具体实现可以参考我之前的模拟微博项目。之后我也会继续完成模拟 instagram 项目，到时候也可以在我 github 看到。</p>
+<p>如图，当点击中间按钮时，打印出了tag值。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2011.25.41%20PM.png" alt=""></p>
+<h3 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h3><p>以上就是对自定义 TabBar 样式以及一点点事件相关的总结。</p>
+<p>希望对大家有帮助。</p>
+<p>因为我也是刚开始自学 iOS 开发，遇到很多问题需要花很长时间去找答案。所以希望能写出一些有意义的总结，和其他初学者分享，减少大家找不到解决方案的烦恼。</p>
+<p>：D</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/" class="next">NEXT</a></div><div data-thread-key="2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/" data-title="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）" data-url="http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
+var disqus_identifier = '2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/';
+var disqus_title = '自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）';
+var disqus_url = 'http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
