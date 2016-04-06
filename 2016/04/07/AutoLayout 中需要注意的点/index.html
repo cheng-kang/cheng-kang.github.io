@@ -1,9 +1,9 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> AutoLayout 中需要注意的点 · CHENG KANG</title><meta name="description" content="AutoLayout 中需要注意的点 - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">AutoLayout 中需要注意的点</h1><div class="post-time">Apr 7, 2016</div><div class="post-content"><blockquote>
 <p>本文用于记录我在使用 AutoLayout 过程中遇到的一些需要注意的事情，一种是容易犯的错误，一种是我找不到原因的情况。<br><a id="more"></a></p>
+</blockquote>
 <h3 id="容易犯的错误"><a href="#容易犯的错误" class="headerlink" title="容易犯的错误"></a>容易犯的错误</h3><ol>
 <li>如果预览的样式和你预想的不一样，检查一下是不是忘记给作为背景的 view 添加约束（上下左右），可能有一个约束缺失，导致整体样式出错。</li>
 </ol>
-</blockquote>
 <h3 id="找不到原因的情况"><a href="#找不到原因的情况" class="headerlink" title="找不到原因的情况"></a>找不到原因的情况</h3><ol>
 <li><p>在 ScrollView 中通过 AutoLayout 设置 StackView 子视图不固定宽度时，需要设置和 superview Equal Widths，然后根据需要调整间距。否则子视图宽度约束设置不生效。如果出现其他 view 宽度不对劲的情况，也可以试着用 Equal Widths 解决。</p>
 <p> 如图，分别为宽度不正常情况和使用 Eauql Widths 之后正常情况：</p>

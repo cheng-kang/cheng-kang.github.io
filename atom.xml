@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-04-06T23:42:15.000Z</updated>
+  <updated>2016-04-06T23:44:59.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="http://cheng-kang.github.io/2016/04/07/AutoLayout%20%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9/"/>
     <id>http://cheng-kang.github.io/2016/04/07/AutoLayout 中需要注意的点/</id>
     <published>2016-04-06T23:41:14.000Z</published>
-    <updated>2016-04-06T23:42:15.000Z</updated>
+    <updated>2016-04-06T23:44:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文用于记录我在使用 AutoLayout 过程中遇到的一些需要注意的事情，一种是容易犯的错误，一种是我找不到原因的情况。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&quot;容易犯的错误&quot;&gt;&lt;a href=&quot;#容易犯的错误&quot; class=&quot;headerlink&quot; title=&quot;容易犯的错误&quot;&gt;&lt;/a&gt;容易犯的错误&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;如果预览的样式和你预想的不一样，检查一下是不是忘记给作为背景的 view 添加约束（上下左右），可能有一个约束缺失，导致整体样式出错。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;/blockquote&gt;
 &lt;h3 id=&quot;找不到原因的情况&quot;&gt;&lt;a href=&quot;#找不到原因的情况&quot; class=&quot;headerlink&quot; title=&quot;找不到原因的情况&quot;&gt;&lt;/a&gt;找不到原因的情况&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;在 ScrollView 中通过 AutoLayout 设置 StackView 子视图不固定宽度时，需要设置和 superview Equal Widths，然后根据需要调整间距。否则子视图宽度约束设置不生效。如果出现其他 view 宽度不对劲的情况，也可以试着用 Equal Widths 解决。&lt;/p&gt;
 &lt;p&gt; 如图，分别为宽度不正常情况和使用 Eauql Widths 之后正常情况：&lt;/p&gt;
