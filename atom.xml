@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-04-08T20:01:04.000Z</updated>
+  <updated>2016-04-12T22:40:25.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】UICollectionView 轻松重排</title>
+    <link href="http://cheng-kang.github.io/2016/04/12/%E3%80%90%E8%AF%91%E3%80%91UICollectionView%20%E8%BD%BB%E6%9D%BE%E9%87%8D%E6%8E%92/"/>
+    <id>http://cheng-kang.github.io/2016/04/12/【译】UICollectionView 轻松重排/</id>
+    <published>2016-04-12T22:38:28.000Z</published>
+    <updated>2016-04-12T22:40:25.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;http://nshint.io/blog/2015/07/16/uicollectionviews-now-have-easy-reordering/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;UICollectionViews Now Have Easy Reordering&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原本打算总结一下 UICollectionView 的一些用法，看到一篇比较好的文章，所以直接翻译了。翻译得比较生硬，见谅。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我超喜欢&lt;code&gt;UICollectionView&lt;/code&gt;。相比&lt;code&gt;UITableView&lt;/code&gt;，它容易自定义得多。现在我使用甚至使用 collection view 比使用 table view 还要频繁了。在 iOS9 中，它开始支持使用起来很简单的重排。在之前是不可能直接重排的，而且实现起来很麻烦。让我们一起来看看 API。你可以在 &lt;a href=&quot;https://github.com/nshintio/uicollectionview-reordering&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上找到对应的 Xcode 项目。&lt;/p&gt;
+&lt;p&gt;最简单的实现重排是通过使用&lt;code&gt;UICollectionViewController&lt;/code&gt;。它现在有一个新的属性叫做&lt;code&gt;installsStandardGestureForInteractiveMovement&lt;/code&gt;，作用是添加手势（gestures）来重排 cells。这个属性默认值为&lt;code&gt;True&lt;/code&gt;，这意味着要使用它我们只需要重写一个方法。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func collectionView(collectionView: UICollectionView,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    moveItemAtIndexPath sourceIndexPath: NSIndexPath,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    toIndexPath destinationIndexPath: NSIndexPath) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // move your data order&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // 可以留空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;当前的 collection view 判定 items 可以被移动，因为&lt;code&gt;moveItemAtIndexPath&lt;/code&gt;被重写了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/1.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;当我们希望在一个简单的&lt;code&gt;UIViewController&lt;/code&gt;中使用 collection view 时，会麻烦一点。我们也要实现之前提到的&lt;code&gt;UICollectionViewDataSource&lt;/code&gt;方法，不过我们需要重写&lt;code&gt;installsStandardGestureForInteractiveMovement&lt;/code&gt;。不用担心，也很简单。&lt;code&gt;UILongPressGestureRecognizer&lt;/code&gt;是一种持续性的手势识别器并且完全支持拖动。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;override func viewDidLoad() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    super.viewDidLoad()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            longPressGesture = UILongPressGestureRecognizer(target: self, action: &amp;quot;handleLongGesture:&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.addGestureRecognizer(longPressGesture)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    func handleLongGesture(gesture: UILongPressGestureRecognizer) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        switch(gesture.state) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        case UIGestureRecognizerState.Began:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(gesture.locationInView(self.collectionView)) else &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        case UIGestureRecognizerState.Changed:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            collectionView.updateInteractiveMovementTargetPosition(gesture.locationInView(gesture.view!))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        case UIGestureRecognizerState.Ended:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            collectionView.endInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        default:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            collectionView.cancelInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我们保存了在 long press gesture 中不活的被选中的 index path 并且基于它是否有值决定允不允许拖动手势生效。然后，我们根据手势状态调用一些新的 collection view 方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;beginInteractiveMovementForItemAtIndexPath(indexPath: NSIndexPath)&lt;/code&gt;：开始指定位置 cell 的交互移动。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;updateInteractiveMovementTargetPosition(targetPosition: CGPoint)&lt;/code&gt;：更新交互移动对象的位置&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;endInteractiveMovement()&lt;/code&gt;：在你结束拖动手势之后结束交互移动&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cancelInteractiveMovement()&lt;/code&gt;：取消交互移动&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些让搞定拖动手势非常容易。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;效果和标准的&lt;code&gt;UICollectionViewController&lt;/code&gt;一样。很酷对吧，不过更酷的是我们可以将我们自定义的 collection view layout 应用到重排中去。看看下面在简单的瀑布视图中的交互移动。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/3.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;嗯，看起来不错，不过如果我们不想在移动的时候改变 cell 大小呢？选中的 cell 大小应该在交互移动时保持一致。这是可以实现的。&lt;code&gt;UICollectionViewLayout&lt;/code&gt;也有一些其他的方法来负责重排。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func invalidationContextForInteractivelyMovingItems(targetIndexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    withTargetPosition targetPosition: CGPoint,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    previousIndexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    previousPosition: CGPoint) -&amp;gt; UICollectionViewLayoutInvalidationContext&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;func invalidationContextForEndingInteractiveMovementOfItemsToFinalIndexPaths(indexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    previousIndexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    movementCancelled: Bool) -&amp;gt; UICollectionViewLayoutInvalidationContext&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;前一个在目标 indexPath 和之前的 indexPath 之间进行移动时调用。另一个类似，不过是在移动结束之后调用。有了这些我们就可以通过一些小手段达到我们的要求。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;internal override func invalidationContextForInteractivelyMovingItems(targetIndexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    withTargetPosition targetPosition: CGPoint,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    previousIndexPaths: [NSIndexPath],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    previousPosition: CGPoint) -&amp;gt; UICollectionViewLayoutInvalidationContext &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    var context = super.invalidationContextForInteractivelyMovingItems(targetIndexPaths,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        withTargetPosition: targetPosition, previousIndexPaths: previousIndexPaths,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        previousPosition: previousPosition)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    self.delegate?.collectionView!(self.collectionView!, moveItemAtIndexPath: previousIndexPaths[0],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        toIndexPath: targetIndexPaths[0])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return context&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;解决方案非常清晰。获取正在移动的 cell 之前和目标 index path。然后调用&lt;code&gt;UICollectionViewDataSource&lt;/code&gt;来移动这些 item。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/4.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;不用怀疑，collection view 重排是一个非常棒的更新。UIKit 工程师干得太棒了！：）&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;http://nshint.io/blog/2015/07/16/uicollectionviews-now-have-easy-reordering/&quot;&gt;UICollectionViews Now Have Easy Reordering&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原本打算总结一下 UICollectionView 的一些用法，看到一篇比较好的文章，所以直接翻译了。翻译得比较生硬，见谅。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我超喜欢&lt;code&gt;UICollectionView&lt;/code&gt;。相比&lt;code&gt;UITableView&lt;/code&gt;，它容易自定义得多。现在我使用甚至使用 collection view 比使用 table view 还要频繁了。在 iOS9 中，它开始支持使用起来很简单的重排。在之前是不可能直接重排的，而且实现起来很麻烦。让我们一起来看看 API。你可以在 &lt;a href=&quot;https://github.com/nshintio/uicollectionview-reordering&quot;&gt;Github&lt;/a&gt; 上找到对应的 Xcode 项目。&lt;/p&gt;
+&lt;p&gt;最简单的实现重排是通过使用&lt;code&gt;UICollectionViewController&lt;/code&gt;。它现在有一个新的属性叫做&lt;code&gt;installsStandardGestureForInteractiveMovement&lt;/code&gt;，作用是添加手势（gestures）来重排 cells。这个属性默认值为&lt;code&gt;True&lt;/code&gt;，这意味着要使用它我们只需要重写一个方法。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func collectionView(collectionView: UICollectionView,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    moveItemAtIndexPath sourceIndexPath: NSIndexPath,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    toIndexPath destinationIndexPath: NSIndexPath) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // move your data order&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // 可以留空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;当前的 collection view 判定 items 可以被移动，因为&lt;code&gt;moveItemAtIndexPath&lt;/code&gt;被重写了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/1.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UICollectionView" scheme="http://cheng-kang.github.io/tags/UICollectionView/"/>
+    
+  </entry>
   
   <entry>
     <title>模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换</title>
@@ -65,9 +124,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -107,9 +166,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
     
   </entry>
   
@@ -177,9 +236,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
