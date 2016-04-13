@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-04-12T22:40:25.000Z</updated>
+  <updated>2016-04-13T06:14:45.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -14,6 +14,135 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UICollectionView 总结</title>
+    <link href="http://cheng-kang.github.io/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/"/>
+    <id>http://cheng-kang.github.io/2016/04/13/UICollectionView 总结/</id>
+    <published>2016-04-13T06:13:54.000Z</published>
+    <updated>2016-04-13T06:14:45.000Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;引语&quot;&gt;&lt;a href=&quot;#引语&quot; class=&quot;headerlink&quot; title=&quot;引语&quot;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。&lt;/p&gt;
+&lt;p&gt;文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同一个 section 内拖动 cell&lt;ul&gt;
+&lt;li&gt;直接使用 UICollectionViewController（&lt;code&gt;TestCollectionViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;在 UIViewController 中使用 UICollectionView（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不同 section 间拖动 cell（&lt;code&gt;Test.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;不同 section 间点击移动 cell（&lt;code&gt;TabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;点击移除 cell（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;主要内容如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h3 id=&quot;《【译】UICollectionView-轻松重排》&quot;&gt;&lt;a href=&quot;#《【译】UICollectionView-轻松重排》&quot; class=&quot;headerlink&quot; title=&quot;《【译】UICollectionView 轻松重排》&quot;&gt;&lt;/a&gt;《【译】UICollectionView 轻松重排》&lt;/h3&gt;&lt;p&gt;这篇文章主要介绍了在 iOS9 之后 UICollectionView 自带的重新排列方法。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果直接使用 UICollectionViewController，通过重写&lt;code&gt;func collectionView(collectionView: UICollectionView,
+ moveItemAtIndexPath sourceIndexPath: NSIndexPath,
+ toIndexPath destinationIndexPath: NSIndexPath)&lt;/code&gt;即可以实现拖动重排。&lt;/li&gt;
+&lt;li&gt;如果是在 UIViewController 里面使用 UICollectionView，则需要自己添加一个 UILongPressGestureRecognizer，对应状态进行对应处理。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;比较重要的几个方法是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;func collectionView(collectionView: UICollectionView,&lt;br&gt;  moveItemAtIndexPath sourceIndexPath: NSIndexPath,&lt;br&gt;  toIndexPath destinationIndexPath: NSIndexPath)&lt;/li&gt;
+&lt;li&gt;indexPathForItemAtPoint&lt;/li&gt;
+&lt;li&gt;beginInteractiveMovementForItemAtIndexPath&lt;/li&gt;
+&lt;li&gt;updateInteractiveMovementTargetPosition&lt;/li&gt;
+&lt;li&gt;endInteractiveMovement&lt;/li&gt;
+&lt;li&gt;cancelInteractiveMovement&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;特别注意&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这个方法&lt;code&gt;func collectionView(collectionView: UICollectionView,
+    moveItemAtIndexPath sourceIndexPath: NSIndexPath,
+    toIndexPath destinationIndexPath: NSIndexPath)&lt;/code&gt;,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;重写这个方法之后，自带的拖动重排才能生效。&lt;/li&gt;
+&lt;li&gt;这个方法究竟有什么作用？这个方法是在 cell 位置变换之后触发的。它包含两个很有用的参数，被拖动的 cell 的初始 indexPath 和落点 indexPath。因为这个位置的变换只是视图的改变，这些 cell 背后的数据的 index 其实并没有受到影响。因此如果此时 reloadData() 会发现，格子位置又恢复了，但这不是我们想要的，在实际项目中我们希望移动后就一直保持那个位置，也就是说数据的 index 发生相应改变。这个方法就是方便我们处理数据的。具体请看之后内容中的例子。&lt;/li&gt;
+&lt;li&gt;另外这个方法只与通过交互移动 cell 事件有关。如果是直接调用移动 cell 的方法并不会触发这个方法。所以在类似凤凰新闻编辑订阅频道页面，”点击下面 section 中的频道，移动到上面的 section 中”，实现时需要在 didSelect 方法中添加对应修改数据源的代码。具体参看源码中&lt;code&gt;TabsViewController.swift&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;使用-UICollectionView-必做的事情&quot;&gt;&lt;a href=&quot;#使用-UICollectionView-必做的事情&quot; class=&quot;headerlink&quot; title=&quot;使用 UICollectionView 必做的事情&quot;&gt;&lt;/a&gt;使用 UICollectionView 必做的事情&lt;/h3&gt;&lt;p&gt;首先你的 UIViewController 要继承 UICollectionViewDataSource，UICollectionViewDelegate，UICollectionViewDelegateFlowLayout。&lt;/p&gt;
+&lt;p&gt;其次，记得绑定 delegate 和 datasource。&lt;/p&gt;
+&lt;p&gt;然后是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;func numberOfSectionsInCollectionView(collectionView: UICollectionView) -&amp;gt; Int&lt;/li&gt;
+&lt;li&gt;collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -&amp;gt; Int&lt;/li&gt;
+&lt;li&gt;collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&amp;gt; UICollectionViewCell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有需要的话用上：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -&amp;gt; CGSize&lt;/li&gt;
+&lt;li&gt;func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&amp;gt; UICollectionReusableView &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;特别注意&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当你在 storyboard 设置了使用 header 或者 footer 或者两者都用的时候，记得添加对应的内容在 viewForSupplementaryElementOfKind 里面。例如：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&amp;gt; UICollectionReusableView &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    if kind == UICollectionElementKindSectionHeader &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &amp;quot;TabSectionHeader&amp;quot;, forIndexPath: indexPath) as! TabSectionHeader&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return header&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125; else &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let footer = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &amp;quot;TabSectionFooter&amp;quot;, forIndexPath: indexPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return footer&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;个人对这个方法的设计持怀疑态度，觉得像 UITableView 那样分离开会更好。（又或许是我理解不够深刻吧。）&lt;/p&gt;
+&lt;p&gt;记得设置 reuseIdentifier。&lt;/p&gt;
+&lt;h3 id=&quot;插入、移动、删除-cell-以及-cell-总数的问题&quot;&gt;&lt;a href=&quot;#插入、移动、删除-cell-以及-cell-总数的问题&quot; class=&quot;headerlink&quot; title=&quot;插入、移动、删除 cell 以及 cell 总数的问题&quot;&gt;&lt;/a&gt;插入、移动、删除 cell 以及 cell 总数的问题&lt;/h3&gt;&lt;p&gt;UICollectionView 是在生成 cell 的时候，先通过 numberOfItemsInSection 获得 cell 数量，然后一个一个生成添加在视图中。&lt;/p&gt;
+&lt;p&gt;你可通过这些方法来插入、移动、删除 cell：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;insertItemAtIndexPaths&lt;/li&gt;
+&lt;li&gt;moveItemAtIndexPath&lt;/li&gt;
+&lt;li&gt;deleteItemsAtIndexPaths&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;比如，当来自服务器的数据更新了，新增或者减少了一个数据，我们可以想到有两种情况：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过 reloadData() 将整个 UICollectionView 更新。&lt;/li&gt;
+&lt;li&gt;只在对应的位置插入或删除对应的那一个 cell。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用第一种方法是没有任何问题的。问题在第二种方法。&lt;/p&gt;
+&lt;p&gt;当我们直接通过 insertItemAtIndexPaths 或者 deleteItemsAtIndexPaths 添加或删除 cell 时，UICollectionView 中的 cell 数量发生变化了。貌似没问题？如果你尝试滑动一下屏幕，你会发现程序崩溃了。你会看到类似下面的报错：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-13%20at%206.20.09%20AM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;原因在于，当 UICollectionView 进行任何的更新时，包括局部更新，都会检查 numberOfItemInSection 方法返回的值和当前 UICollectionView 中实际包含的 cell 数量。如果二者不一致就会报错。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特别注意&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;UICollectionView 中实际包含的 cell 数量在下一次更新前 collection view 视图前一定要和 numberOfItemInSection 的返回值一直。&lt;/p&gt;
+&lt;p&gt;所以我们在新增或者删除 cell 之后，记得要修改对应的数据源。（当然在实际项目中应该不会忘记。）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;插入、移动、删除 section 类似&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;不同-section-间拖动-cell&quot;&gt;&lt;a href=&quot;#不同-section-间拖动-cell&quot; class=&quot;headerlink&quot; title=&quot;不同 section 间拖动 cell&quot;&gt;&lt;/a&gt;不同 section 间拖动 cell&lt;/h3&gt;&lt;p&gt;项目中的 Test.swift 是关于不同 section 间拖动 cell 的例子。&lt;/p&gt;
+&lt;p&gt;基本原理和在一个 section 内拖动 cell 一样，都是调用那几个方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第一点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的还是上面提到的记得修改对应数据源，否则第二次拖动就会报错。因为此时两个 section 内 cell 数量和 numberOfItemInSection 返回值不一样了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第二点&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;请看一下两个实现方法：&lt;/p&gt;
+&lt;p&gt;一，『原始』方法&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    switch sender.state &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Began:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let location = sender.locationInView(self.collectionView)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let indexPath = self.collectionView.indexPathForItemAtPoint(location)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.originalSectionIndex = (indexPath?.section)!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.interactiveItem = self.collectionView.cellForItemAtIndexPath(indexPath!)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.beginInteractiveMovementForItemAtIndexPath(indexPath!)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Changed:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let location = sender.locationInView(self.collectionView)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        print(location)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let indexPath = self.collectionView.indexPathForItemAtPoint(location)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        print(indexPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.updateInteractiveMovementTargetPosition(location)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Ended:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.endInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        let currentSectionIndex = (self.collectionView.indexPathForCell(self.interactiveItem)?.section)!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.sections[currentSectionIndex]++&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.sections[self.originalSectionIndex]--&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    default:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.cancelInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;二，借助自带方法的简便方法&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    self.sections[destinationIndexPath.section]++&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    self.sections[sourceIndexPath.section]--&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    switch sender.state &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Began:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(sender.locationInView(self.collectionView)) else &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Changed:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.updateInteractiveMovementTargetPosition(sender.locationInView(self.collectionView))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    case .Ended:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.endInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    default:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        self.collectionView.cancelInteractiveMovement()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        break&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;第一个方法定义了两个全局变量&lt;code&gt;var originalSectionIndex = 0&lt;/code&gt;和&lt;code&gt;var interactiveItem:UICollectionViewCell!&lt;/code&gt;来记录初始位置和正在进行移动的 cell。&lt;/p&gt;
+&lt;p&gt;而第二个方法，通过使用&lt;code&gt;func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)&lt;/code&gt;，直接就可以使用开始和结束位置 indexPath。非常方便。&lt;/p&gt;
+&lt;p&gt;所以当然一定要用第二种方法。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;引语&quot;&gt;&lt;a href=&quot;#引语&quot; class=&quot;headerlink&quot; title=&quot;引语&quot;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。&lt;/p&gt;
+&lt;p&gt;文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同一个 section 内拖动 cell&lt;ul&gt;
+&lt;li&gt;直接使用 UICollectionViewController（&lt;code&gt;TestCollectionViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;在 UIViewController 中使用 UICollectionView（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不同 section 间拖动 cell（&lt;code&gt;Test.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;不同 section 间点击移动 cell（&lt;code&gt;TabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;点击移除 cell（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;主要内容如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UICollectionView" scheme="http://cheng-kang.github.io/tags/UICollectionView/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】UICollectionView 轻松重排</title>
