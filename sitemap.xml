@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cheng-kang.github.io/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/</loc>
+    
+    <lastmod>2016-05-15T15:15:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cheng-kang.github.io/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/</loc>
     
     <lastmod>2016-04-13T06:18:48.000Z</lastmod>

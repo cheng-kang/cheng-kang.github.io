@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-04-13T06:18:48.000Z</updated>
+  <updated>2016-05-15T15:15:40.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,10 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Swift2 中的错误处理：try，catch，do 以及 throw</title>
+    <link href="http://cheng-kang.github.io/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"/>
+    <id>http://cheng-kang.github.io/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/</id>
+    <published>2016-05-15T15:14:40.000Z</published>
+    <updated>2016-05-15T15:15:40.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Error handling in Swift 2: try, catch, do and throw》&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果你已经看了我那篇讨论 Swift2 中所有新东西的文章并且想了解更多关于新的错误处理系统的东西，这篇文章非常合适。简单来说，它已经被完全重写得现代化，快速和安全，并且除非你只使用 iOS API 的一小部分的话，你需要花些时间来学习一下。&lt;/p&gt;
+&lt;p&gt;如果你喜欢这篇文章，你可能也会想读读这些：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/swift2-2&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;What’s new in Swift 2.2?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/ios9&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;What’s new in iOS 9?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;My free Swift tutorial series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://gum.co/proswift&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Pre-order Pro Swift for just $20!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;过去是怎样：NSError-和-NSErrorPointer&quot;&gt;&lt;a href=&quot;#过去是怎样：NSError-和-NSErrorPointer&quot; class=&quot;headerlink&quot; title=&quot;过去是怎样：NSError 和 NSErrorPointer&quot;&gt;&lt;/a&gt;过去是怎样：NSError 和 NSErrorPointer&lt;/h3&gt;&lt;p&gt;用于处理错误的历史方法是通过使用一个作为指针传递的 NSError 对象。在 Objective-C 中，它是 NSError*，但在 Swift 中你会看到 NSError？ 和 NSErrorPointer。&lt;/p&gt;
+&lt;p&gt;当你调用一个可能失败的方法，你要传递一个空 NSError 作为参数，如果有问题的话这个参数就会被赋值。这让方法的返回值是你真正关心的那个数据。例如，在 Swift1.2 中，从硬盘加载一个 NSString 看起来是这样的：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;var err: NSError?&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let contents = NSString(contentsOfFile: filePath, encoding: NSUTF8StringEncoding, error: &amp;amp;err)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if err != nil &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // uh-oh!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这种编程风格在 Cocoa 中非常广泛，或者说至少：Swift2 完全不这么干，所以上面的代码要么要重写要么就移除掉。&lt;/p&gt;
+&lt;p&gt;至于为什么，有很多原因。例如，用上面的调用方法，很容易就忽略了错误，要么是没有检查 err 的值，要么是根本就没用 NSError 而是直接传递了一个 nil。&lt;/p&gt;
+&lt;p&gt;虽然 Swift2 中的新错误处理需要多费点功夫，但是它让程序员阅读起来清楚明白得多，它抛弃了那些复杂的东西例如用 &amp;amp; 来传递 NSError，并且它通过保证你捕获所有错误来给你更高的安全性。&lt;/p&gt;
+&lt;h3 id=&quot;Swift2-中的方法：try，catch，do-以及-throw&quot;&gt;&lt;a href=&quot;#Swift2-中的方法：try，catch，do-以及-throw&quot; class=&quot;headerlink&quot; title=&quot;Swift2 中的方法：try，catch，do 以及 throw&quot;&gt;&lt;/a&gt;Swift2 中的方法：try，catch，do 以及 throw&lt;/h3&gt;&lt;p&gt;当你导入一个 Swift1.2 项目到 Xcode7 时，你会被问道是否想要将它转换成最新的 Swift 语法。它并不能生成和你手写的一模一样的代码，但是它能帮你解决很大一部分工作，这样你就差不多确定要去使用它了。&lt;/p&gt;
+&lt;p&gt;在上面那个从文件中加载字符串的例子中，它会将其转化为 Swift2 版本：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let contents: NSString?&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    contents = try NSString(contentsOfFile: filePath, encoding: NSUTF8StringEncoding)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; catch _ &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    contents = nil&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里展示了五个你需要学习的新关键字其中三个。当然，严格来说有一个不新，不过它的用法是新的：do 之前使用在 do … while 循环中，不过为了避免混淆，在 Swift2 中，它已经被重命名为 repeat … while。&lt;/p&gt;
+&lt;p&gt;第四和第五个关键字是 throw 和 throws，我们现在来更深入地看看。&lt;/p&gt;
+&lt;p&gt;请创建一个新的 Xcode 项目，用单视图应用模板。随便命个名，随便选个目标设备 - 都没关系，因为我们这次不做任何跟视图有关的东西。&lt;/p&gt;
+&lt;p&gt;选择 ViewController.swift 并且添加这个新方法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func encryptString(str: String, withPassword password: String) -&amp;gt; String &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // complicated encryption goes here&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    let encrypted = password + str + password&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return String(encrypted.characters.reverse())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这个方法会用传递进来的密码加密一个字符串。当然，它不会自动就这样做 - 这篇文章不是关于加密的，所以我的『加密』算法很悲剧：它将密码添加在输入的字符串前后，然后翻转这个字符串。你之后可以随意加上复杂的加密算法。&lt;/p&gt;
+&lt;p&gt;修改 viewDidLoad() 来调用这个方法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let encrypted = encryptString(&amp;quot;secret information!&amp;quot;, withPassword: &amp;quot;12345&amp;quot;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;print(encrypted)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;你现在运行你的应用，你将看到在 Xcode 终端上打印出了『54321！noitamrofni terces54321』。很简单对吧。&lt;/p&gt;
+&lt;p&gt;但是有一个问题：假设你实际上设定了一个有意义的加密算法，你没办法阻止用户输入一个空字符串作为密码，或者输入明显的密码类似『password』，或者甚至尝试在没有任何可加密数据的情况下调用加密算法。&lt;/p&gt;
+&lt;p&gt;Swift2 来帮忙了：你可以告诉 Swift 当这个方法发现它自己处于一个不可接受的状态时，它可以抛出一个错误，例如如果密码是六位或者更少位。这些错误是由你定义的，然后 Swift 用某种办法来保证你捕获所有的错误。&lt;/p&gt;
+&lt;p&gt;首先，我们需要关键字 throws，你需要在定义你的方法时把它加在返回值前面，就像这样：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func encryptString(str: String, withPassword password: String) throws -&amp;gt; String &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // complicated encryption goes here&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    let encrypted = password + str + password&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return String(encrypted.characters.reverse())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;``` &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;一旦你这样做了，你的代码就会停止工作：添加 throws 命名让情况更糟了！不过它变糟了是因为一个好原因：Swift 中的 try/catch 系统被设计为对开发者清晰明了，这意味着你需要用关键字 try 标记所有可以抛出错误的方法，就像这样：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;let encrypted = try encryptString(“secret information!”, withPassword: “12345”)&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;…不过即使现在你的代码还是不能编译成功，因为你还没有告诉 Swift 当错误被抛出时要做什么。这就是关键字 do 和 catch 派上用场的地方：它们开始了一段可能运行失败的代码，并且处理那些失败。在我们的简单例子里，它可能看起来是这样：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;do {&lt;br&gt;    let encrypted = try encryptString(“secret information!”, withPassword: “12345”)&lt;br&gt;    print(encrypted)&lt;br&gt;} catch {&lt;br&gt;    print(“Something went wrong!”)&lt;br&gt;}&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;这样所有的错误都没了，你的代码又可以运行了。不过目前为止它实际上还没有做任何有意思的事情，因为即使我们说 encryptString() 可能抛出一个错误，它从没有真正发生。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;### 如何在 Swift2 中抛出错误&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;在你可以抛出一个错误之前，你需要制作一个你要抛出的可能错误的列表。在我们这个例子中，我们要组织人们提供空密码，短密码和明显密码，不过之后你可以扩展它。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;要做到这些，我们需要创建一个枚举类型变量来代表我们错误的类型。这需要建立在内建的 ErrorType 枚举类型上，不过不管怎样都很简单。把这个加载 ViewController 类的前面：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;enum EncryptionError: ErrorType {&lt;br&gt;    case Empty&lt;br&gt;    case Short&lt;br&gt;}&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;它定义了两个错误类型，然后我们可以马上开始用它们。因为它们是运行这个方法的前提条件，我们要用这个新关键字 guard 来使我们的意图清晰。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;把这个放在 encryptString() 前面：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;guard password.characters.count &amp;gt; 0 else { throw EncryptionError.Empty }&lt;br&gt;guard password.characters.count &amp;gt;= 5 else { throw EncryptionError.Short }&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;如果你现在运行应用，没有什么变化，因为我们在提供『12345』这个密码。不过如果你把它设置为一个空字符串，你会看到『Something went wrong！』在 Xcode 控制台打印出来了。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;当然，有一个错误信息帮助不是很大 - 因为这个方法调用时有多种方式失败，并且我们希望给每一种情况提供一些有意义的信息。所以，把 viewDidLoad() 中的 try/catch 代码块改成这样：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;do {&lt;br&gt;    let encrypted = try encryptString(“secret information!”, withPassword: “”)&lt;br&gt;    print(encrypted)&lt;br&gt;} catch EncryptionError.Empty {&lt;br&gt;    print(“You must provide a password.”)&lt;br&gt;} catch EncryptionError.Short {&lt;br&gt;    print(“Passwords must be at least five characters, preferably eight or more.”)&lt;br&gt;} catch {&lt;br&gt;    print(“Something went wrong!”)&lt;br&gt;}&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;现在有了有意义的错误信息，我们的代码开始看起来更棒了。不过你可能注意到了，虽然我们已经捕获到了 .Empty 和 .Short 的情况，我们还需要第三个 catch 代码块。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;### Swift2 要求详尽无遗的 try/catch 错误处理&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;如果你还记得的话，我说过『Swift 通过一些方式来保证你捕获到所有错误』，这里我们来说明清楚：我们已经能捕获所有我们定义的错误，但是 Swift 还希望我们定义一个一般的 catch all 来处理任何其他可能出现的错误。我们不用告诉 Swift 到底加密算法可能抛出哪种错误，只需要说明它会抛出某些错误，因此这个额外的 catch-all 代码块是必须的。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;有一个不好的地方：如果你新增任何值给枚举类型，它会直接进到默认的 catch 代码块 - 你不会被要求为它提供任何代码。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;我们将要给枚举类型加一个新的值来检测明显的密码。不过我们将要用 Swift 超强枚举类型这样我们可以返回一个带着错误类型的信息。因此，将 EncryptionError 枚举类型修改成这样：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;enum EncryptionError: ErrorType {&lt;br&gt;    case Empty&lt;br&gt;    case Short&lt;br&gt;    case Obvious(String)&lt;br&gt;}&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;现在当你想要抛出一个 EncrytionError.Obvious 类型的错误是，你必须提供一个理由。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;guard password != “12345” else { throw EncryptionError.Obvious(“I’ve got the same passcode on my luggage!”) }&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;显然你不想写无数个 guard 声明来过滤出明显的密码，不过如果你记得如何使用 UITextChecker 来做拼写检查的话，就很方便了。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;这就是完整的 Swift 基本 do/try/throw/catch 例子。你可能觉得 try 声明没什么用，不过他是作为一个信号告诉开发者『这个调用可能失败』。这很重要：当一个 try 调用失败了，执行立刻跳转到 catch 代码块，因此如果你看到一个调用之前的 try，它标志着底下的代码可能不会被执行。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;还有一个要说的事情就是，如果你知道一个调用就是不会失败你该怎么做。现在，很显然这是一个你需要根据情况来做的决定，不过如果你知道有一个方法绝对不可能调用失败或者如果它调用失败的你的代码就会完全崩溃，你可以使用 try! 来告诉 Swift。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;当你使用关键字 try!，你不需要用 do/catch 来包裹你的代码，因为你在保证它永远不会失败。你只需要这样写：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;let encrypted = try! encryptString(“secret information!”, withPassword: “12345”)&lt;br&gt;print(encrypted)&lt;br&gt;```&lt;br&gt;Using the try! keyword communicates your intent clearly: you’re aware there’s the theoretical possibility of the call failing, but you’re certain it won’t happen in your use case. For example, if you’re trying to load the contents of a file in your app’s bundle, any failure effectively means your app bundle is damaged or unavailable, so you should terminate.&lt;/p&gt;
+&lt;p&gt;That’s all for error handling in Swift 2. If you’d like to learn about how Swift handles try/finally you should read my article on Swift’s defer keyword.&lt;br&gt;使用关键字 try! 清楚地表达了你的意图：你知道理论上这个调用可能失败，但是你确定它在你的用例中不会失败。例如，如果你从你的应用包中的文件中加载内容，任何失败意味着你的应用包被损坏了或者不可用，所以你需要终止应用。&lt;/p&gt;
+&lt;p&gt;这就是所有关于 Swift2 中错误处理的东西。如果你想学习 Swift 是怎样处理 try/finally，你应该读读我这篇&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-defer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;关于关键词 defer 的文章&lt;/a&gt;。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="error" scheme="http://cheng-kang.github.io/tags/error/"/>
+    
+  </entry>
+  
+  <entry>
     <title>UICollectionView 总结</title>
     <link href="http://cheng-kang.github.io/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/"/>
     <id>http://cheng-kang.github.io/2016/04/13/UICollectionView 总结/</id>
-    <published>2016-04-13T06:13:54.000Z</published>
+    <published>2016-04-12T23:13:54.000Z</published>
     <updated>2016-04-13T06:18:48.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -154,7 +219,7 @@
     <title>【译】UICollectionView 轻松重排</title>
     <link href="http://cheng-kang.github.io/2016/04/12/%E3%80%90%E8%AF%91%E3%80%91UICollectionView%20%E8%BD%BB%E6%9D%BE%E9%87%8D%E6%8E%92/"/>
     <id>http://cheng-kang.github.io/2016/04/12/【译】UICollectionView 轻松重排/</id>
-    <published>2016-04-12T22:38:28.000Z</published>
+    <published>2016-04-12T15:38:28.000Z</published>
     <updated>2016-04-12T22:40:25.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -213,7 +278,7 @@
     <title>模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换</title>
     <link href="http://cheng-kang.github.io/2016/04/08/%E6%A8%A1%E6%8B%9F%E5%87%A4%E5%87%B0%E6%96%B0%E9%97%BB%20%7C%20%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E6%A0%87%E7%AD%BE%E5%8A%A8%E7%94%BB%20-%20Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2/"/>
     <id>http://cheng-kang.github.io/2016/04/08/模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换/</id>
-    <published>2016-04-08T19:59:13.000Z</published>
+    <published>2016-04-08T12:59:13.000Z</published>
     <updated>2016-04-08T20:01:04.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -271,7 +336,7 @@
     <title>AutoLayout 中需要注意的点</title>
     <link href="http://cheng-kang.github.io/2016/04/07/AutoLayout%20%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9/"/>
     <id>http://cheng-kang.github.io/2016/04/07/AutoLayout 中需要注意的点/</id>
-    <published>2016-04-06T23:41:14.000Z</published>
+    <published>2016-04-06T16:41:14.000Z</published>
     <updated>2016-04-06T23:44:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -301,9 +366,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
   </entry>
   
@@ -311,7 +376,7 @@
     <title>Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）</title>
     <link href="http://cheng-kang.github.io/2016/04/06/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/04/06/Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）/</id>
-    <published>2016-04-06T01:50:01.000Z</published>
+    <published>2016-04-05T18:50:01.000Z</published>
     <updated>2016-04-08T19:36:51.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -383,7 +448,7 @@
     <title>实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）</title>
     <link href="http://cheng-kang.github.io/2016/04/03/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/04/03/实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）/</id>
-    <published>2016-04-03T22:51:08.000Z</published>
+    <published>2016-04-03T15:51:08.000Z</published>
     <updated>2016-04-06T01:51:32.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;目标和成果&quot;&gt;&lt;a href=&quot;#目标和成果&quot; class=&quot;headerlink&quot; title=&quot;目标和成果&quot;&gt;&lt;/a&gt;目标和成果&lt;/h3&gt;&lt;p&gt;instagram 截图如下：&lt;/p&gt;
@@ -460,7 +525,7 @@
     <title>自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）</title>
     <link href="http://cheng-kang.github.io/2016/03/31/%E8%87%AA%E5%AE%9A%E4%B9%89%20UITabBar%20%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%8B%9F%20instagram%20TabBar%20%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/</id>
-    <published>2016-03-31T22:48:38.000Z</published>
+    <published>2016-03-31T15:48:38.000Z</published>
     <updated>2016-04-06T01:51:37.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -683,7 +748,7 @@
     <title>仿微博 iOS 客户端 TabBar 中间按钮</title>
     <link href="http://cheng-kang.github.io/2016/03/30/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"/>
     <id>http://cheng-kang.github.io/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/</id>
-    <published>2016-03-30T01:02:07.000Z</published>
+    <published>2016-03-29T18:02:07.000Z</published>
     <updated>2016-04-06T01:51:24.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -760,7 +825,7 @@
     <title>【译】iOS 基础：Frames、Bounds 和 CGGeometry</title>
     <link href="http://cheng-kang.github.io/2016/03/26/%E3%80%90%E8%AF%91%E3%80%91iOS%20%E5%9F%BA%E7%A1%80%EF%BC%9AFrames%E3%80%81Bounds%20%E5%92%8C%20CGGeometry/"/>
     <id>http://cheng-kang.github.io/2016/03/26/【译】iOS 基础：Frames、Bounds 和 CGGeometry/</id>
-    <published>2016-03-26T19:35:02.000Z</published>
+    <published>2016-03-26T11:35:02.000Z</published>
     <updated>2016-03-26T19:36:21.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -843,7 +908,7 @@
     <title>AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）</title>
     <link href="http://cheng-kang.github.io/2016/03/20/AutoLayout%EF%BC%9Aconstraint%20priority%20%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%88%E4%B9%9D%E5%AE%AB%E6%A0%BC%E7%BB%AD%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%9B%B4%E4%BC%98%E6%96%B9%E6%A1%88%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/</id>
-    <published>2016-03-20T22:49:31.000Z</published>
+    <published>2016-03-20T14:49:31.000Z</published>
     <updated>2016-03-21T03:18:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -947,7 +1012,7 @@
     <title>AutoLayout：UITableViewCell 自适应高度的一个例子</title>
     <link href="http://cheng-kang.github.io/2016/03/19/AutoLayout%EF%BC%9AUITableViewCell%20%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%BA%A6%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90/"/>
     <id>http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/</id>
-    <published>2016-03-19T23:51:24.000Z</published>
+    <published>2016-03-19T15:51:24.000Z</published>
     <updated>2016-03-21T03:19:13.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
@@ -1004,7 +1069,7 @@
     <title>UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色</title>
     <link href="http://cheng-kang.github.io/2016/03/19/UISearchBar%EF%BC%88%E4%B8%80%EF%BC%89%E4%BF%AE%E6%94%B9%E8%83%8C%E6%99%AF%E5%B1%82%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E5%B1%82%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%E5%92%8C%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/"/>
     <id>http://cheng-kang.github.io/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/</id>
-    <published>2016-03-19T20:51:09.000Z</published>
+    <published>2016-03-19T12:51:09.000Z</published>
     <updated>2016-03-21T03:21:32.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1087,10 +1152,37 @@
   </entry>
   
   <entry>
+    <title>Hello World</title>
+    <link href="http://cheng-kang.github.io/2016/03/18/hello-world/"/>
+    <id>http://cheng-kang.github.io/2016/03/18/hello-world/</id>
+    <published>2016-03-18T12:01:11.000Z</published>
+    <updated>2016-03-18T12:01:11.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Fire Blog 中文说明</title>
     <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
     <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
-    <published>2016-03-18T12:51:29.000Z</published>
+    <published>2016-03-18T04:51:29.000Z</published>
     <updated>2016-03-21T03:22:46.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;起源&quot;&gt;&lt;a href=&quot;#起源&quot; class=&quot;headerlink&quot; title=&quot;起源&quot;&gt;&lt;/a&gt;起源&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
@@ -1147,7 +1239,7 @@
     <title>FireBlog Instruction</title>
     <link href="http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/"/>
     <id>http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/</id>
-    <published>2016-03-18T12:47:49.000Z</published>
+    <published>2016-03-18T04:47:49.000Z</published>
     <updated>2016-03-21T03:22:54.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;Why&quot;&gt;&lt;a href=&quot;#Why&quot; class=&quot;headerlink&quot; title=&quot;Why&quot;&gt;&lt;/a&gt;Why&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
@@ -1197,33 +1289,6 @@
     
     
       <category term="fireblog" scheme="http://cheng-kang.github.io/tags/fireblog/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://cheng-kang.github.io/2016/03/18/hello-world/"/>
-    <id>http://cheng-kang.github.io/2016/03/18/hello-world/</id>
-    <published>2016-03-18T12:01:11.000Z</published>
-    <updated>2016-03-18T12:01:11.000Z</updated>
-    
-    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
     
   </entry>
   
