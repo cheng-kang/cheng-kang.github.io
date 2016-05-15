@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-05-15T15:18:23.000Z</updated>
+  <updated>2016-05-15T15:18:59.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cheng-kang.github.io/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"/>
     <id>http://cheng-kang.github.io/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/</id>
     <published>2016-05-15T15:14:40.000Z</published>
-    <updated>2016-05-15T15:18:23.000Z</updated>
+    <updated>2016-05-15T15:18:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Error handling in Swift 2: try, catch, do and throw》&lt;/a&gt;&lt;/p&gt;
@@ -34,10 +34,8 @@
 &lt;li&gt;&lt;a href=&quot;https://gum.co/proswift&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Pre-order Pro Swift for just $20!&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&quot;过去是怎样：NSError-和-NSErrorPointer&quot;&gt;&lt;a href=&quot;#过去是怎样：NSError-和-NSErrorPointer&quot; class=&quot;headerlink&quot; title=&quot;过去是怎样：NSError 和 NSErrorPointer&quot;&gt;&lt;/a&gt;过去是怎样：NSError 和 NSErrorPointer&lt;/h3&gt;&lt;p&gt;用于处理错误的历史方法是通过使用一个作为指针传递的 NSError 对象。在 Objective-C 中，它是 NSError*，但在 Swift 中你会看到 NSError？ 和 NSErrorPointer。&lt;/p&gt;
-&lt;!--more—&gt;
-
-当你调用一个可能失败的方法，你要传递一个空 NSError 作为参数，如果有问题的话这个参数就会被赋值。这让方法的返回值是你真正关心的那个数据。例如，在 Swift1.2 中，从硬盘加载一个 NSString 看起来是这样的：
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;var err: NSError?&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let contents = NSString(contentsOfFile: filePath, encoding: NSUTF8StringEncoding, error: &amp;amp;err)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if err != nil &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // uh-oh!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;当你调用一个可能失败的方法，你要传递一个空 NSError 作为参数，如果有问题的话这个参数就会被赋值。这让方法的返回值是你真正关心的那个数据。例如，在 Swift1.2 中，从硬盘加载一个 NSString 看起来是这样的：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;var err: NSError?&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let contents = NSString(contentsOfFile: filePath, encoding: NSUTF8StringEncoding, error: &amp;amp;err)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if err != nil &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // uh-oh!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;这种编程风格在 Cocoa 中非常广泛，或者说至少：Swift2 完全不这么干，所以上面的代码要么要重写要么就移除掉。&lt;/p&gt;
 &lt;p&gt;至于为什么，有很多原因。例如，用上面的调用方法，很容易就忽略了错误，要么是没有检查 err 的值，要么是根本就没用 NSError 而是直接传递了一个 nil。&lt;/p&gt;
 &lt;p&gt;虽然 Swift2 中的新错误处理需要多费点功夫，但是它让程序员阅读起来清楚明白得多，它抛弃了那些复杂的东西例如用 &amp;amp; 来传递 NSError，并且它通过保证你捕获所有错误来给你更高的安全性。&lt;/p&gt;
@@ -62,13 +60,23 @@
 &lt;p&gt;guard password != “12345” else { throw EncryptionError.Obvious(“I’ve got the same passcode on my luggage!”) }&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;显然你不想写无数个 guard 声明来过滤出明显的密码，不过如果你记得如何使用 UITextChecker 来做拼写检查的话，就很方便了。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;这就是完整的 Swift 基本 do/try/throw/catch 例子。你可能觉得 try 声明没什么用，不过他是作为一个信号告诉开发者『这个调用可能失败』。这很重要：当一个 try 调用失败了，执行立刻跳转到 catch 代码块，因此如果你看到一个调用之前的 try，它标志着底下的代码可能不会被执行。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;还有一个要说的事情就是，如果你知道一个调用就是不会失败你该怎么做。现在，很显然这是一个你需要根据情况来做的决定，不过如果你知道有一个方法绝对不可能调用失败或者如果它调用失败的你的代码就会完全崩溃，你可以使用 try! 来告诉 Swift。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;当你使用关键字 try!，你不需要用 do/catch 来包裹你的代码，因为你在保证它永远不会失败。你只需要这样写：&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;let encrypted = try! encryptString(“secret information!”, withPassword: “12345”)&lt;br&gt;print(encrypted)&lt;br&gt;```&lt;br&gt;Using the try! keyword communicates your intent clearly: you’re aware there’s the theoretical possibility of the call failing, but you’re certain it won’t happen in your use case. For example, if you’re trying to load the contents of a file in your app’s bundle, any failure effectively means your app bundle is damaged or unavailable, so you should terminate.&lt;/p&gt;
 &lt;p&gt;That’s all for error handling in Swift 2. If you’d like to learn about how Swift handles try/finally you should read my article on Swift’s defer keyword.&lt;br&gt;使用关键字 try! 清楚地表达了你的意图：你知道理论上这个调用可能失败，但是你确定它在你的用例中不会失败。例如，如果你从你的应用包中的文件中加载内容，任何失败意味着你的应用包被损坏了或者不可用，所以你需要终止应用。&lt;/p&gt;
-&lt;p&gt;这就是所有关于 Swift2 中错误处理的东西。如果你想学习 Swift 是怎样处理 try/finally，你应该读读我这篇&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-defer&quot;&gt;关于关键词 defer 的文章&lt;/a&gt;。&lt;/p&gt;
---&gt;</content>
+&lt;p&gt;这就是所有关于 Swift2 中错误处理的东西。如果你想学习 Swift 是怎样处理 try/finally，你应该读读我这篇&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-defer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;关于关键词 defer 的文章&lt;/a&gt;。&lt;/p&gt;
+</content>
     
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;原文链接：&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《
+&lt;p&gt;原文链接：&lt;a href=&quot;https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch&quot;&gt;《Error handling in Swift 2: try, catch, do and throw》&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果你已经看了我那篇讨论 Swift2 中所有新东西的文章并且想了解更多关于新的错误处理系统的东西，这篇文章非常合适。简单来说，它已经被完全重写得现代化，快速和安全，并且除非你只使用 iOS API 的一小部分的话，你需要花些时间来学习一下。&lt;/p&gt;
+&lt;p&gt;如果你喜欢这篇文章，你可能也会想读读这些：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/swift2-2&quot;&gt;What’s new in Swift 2.2?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/ios9&quot;&gt;What’s new in iOS 9?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.hackingwithswift.com/&quot;&gt;My free Swift tutorial series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://gum.co/proswift&quot;&gt;Pre-order Pro Swift for just $20!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;过去是怎样：NSError-和-NSErrorPointer&quot;&gt;&lt;a href=&quot;#过去是怎样：NSError-和-NSErrorPointer&quot; class=&quot;headerlink&quot; title=&quot;过去是怎样：NSError 和 NSErrorPointer&quot;&gt;&lt;/a&gt;过去是怎样：NSError 和 NSErrorPointer&lt;/h3&gt;&lt;p&gt;用于处理错误的历史方法是通过使用一个作为指针传递的 NSError 对象。在 Objective-C 中，它是 NSError*，但在 Swift 中你会看到 NSError？ 和 NSErrorPointer。&lt;/p&gt;
     
     </summary>
     
