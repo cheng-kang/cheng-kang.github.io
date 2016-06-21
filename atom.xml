@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-06-21T14:01:00.000Z</updated>
+  <updated>2016-06-21T14:03:37.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,13 +16,16 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JavaScript 中的命名空间</title>
+    <title>【译】JavaScript 中的命名空间</title>
     <link href="http://cheng-kang.github.io/2016/06/21/Namespacing%20in%20JavaScript/"/>
     <id>http://cheng-kang.github.io/2016/06/21/Namespacing in JavaScript/</id>
     <published>2016-06-21T13:59:30.000Z</published>
-    <updated>2016-06-21T14:01:00.000Z</updated>
+    <updated>2016-06-21T14:03:37.000Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;JavaScript-中的命名空间&quot;&gt;&lt;a href=&quot;#JavaScript-中的命名空间&quot; class=&quot;headerlink&quot; title=&quot;JavaScript 中的命名空间&quot;&gt;&lt;/a&gt;JavaScript 中的命名空间&lt;/h1&gt;&lt;p&gt;全局变量应该由有系统范围相关性的对象们保留，并且它们的命名应该避免含糊并尽量减少命名冲突的风险。在实践中，这意味着你应该避免创建全局对象，除非它们是绝对必须的。&lt;/p&gt;
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;原文链接： &lt;a href=&quot;https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Namespacing in JavaScript&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;JavaScript-中的命名空间&quot;&gt;&lt;a href=&quot;#JavaScript-中的命名空间&quot; class=&quot;headerlink&quot; title=&quot;JavaScript 中的命名空间&quot;&gt;&lt;/a&gt;JavaScript 中的命名空间&lt;/h1&gt;&lt;p&gt;全局变量应该由有系统范围相关性的对象们保留，并且它们的命名应该避免含糊并尽量减少命名冲突的风险。在实践中，这意味着你应该避免创建全局对象，除非它们是绝对必须的。&lt;/p&gt;
 &lt;p&gt;不过，恩，这些你早都知道了……&lt;/p&gt;
 &lt;p&gt;所以你对此是怎么做的？传统方法告诉我们，最好的消除全局策略是创建少数作为潜在模块和子系统的实际命名空间的全局对象。我将探索几种有关命名空间的方式，并以我基于 &lt;a href=&quot;http://www.brothercake.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;James Edwards&lt;/a&gt; 最近的一篇文章得到的一个优雅、安全和灵活的解决方案结束。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;静态命名空间&quot;&gt;&lt;a href=&quot;#静态命名空间&quot; class=&quot;headerlink&quot; title=&quot;静态命名空间&quot;&gt;&lt;/a&gt;静态命名空间&lt;/h2&gt;&lt;p&gt;我用&lt;code&gt;静态命名空间&lt;/code&gt;作为那些命名空间标签实际上硬编码的解决方案的涵盖性术语。是的，你可以将一个命名空间重新分配给另一个，不过新的命名空间将会引用和旧的那一个同样的对象。&lt;/p&gt;
@@ -57,7 +60,10 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;JavaScript-中的命名空间&quot;&gt;&lt;a href=&quot;#JavaScript-中的命名空间&quot; class=&quot;headerlink&quot; title=&quot;JavaScript 中的命名空间&quot;&gt;&lt;/a&gt;JavaScript 中的命名空间&lt;/h1&gt;&lt;p&gt;全局变量应该由有系统范围相关性的对象们保留，并且它们的命名应该避免含糊并尽量减少命名冲突的风险。在实践中，这意味着你应该避免创建全局对象，除非它们是绝对必须的。&lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接： &lt;a href=&quot;https://javascriptweblog.wordpress.com/2010/12/07/namespacing-in-javascript/&quot;&gt;Namespacing in JavaScript&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;JavaScript-中的命名空间&quot;&gt;&lt;a href=&quot;#JavaScript-中的命名空间&quot; class=&quot;headerlink&quot; title=&quot;JavaScript 中的命名空间&quot;&gt;&lt;/a&gt;JavaScript 中的命名空间&lt;/h1&gt;&lt;p&gt;全局变量应该由有系统范围相关性的对象们保留，并且它们的命名应该避免含糊并尽量减少命名冲突的风险。在实践中，这意味着你应该避免创建全局对象，除非它们是绝对必须的。&lt;/p&gt;
 &lt;p&gt;不过，恩，这些你早都知道了……&lt;/p&gt;
 &lt;p&gt;所以你对此是怎么做的？传统方法告诉我们，最好的消除全局策略是创建少数作为潜在模块和子系统的实际命名空间的全局对象。我将探索几种有关命名空间的方式，并以我基于 &lt;a href=&quot;http://www.brothercake.com/&quot;&gt;James Edwards&lt;/a&gt; 最近的一篇文章得到的一个优雅、安全和灵活的解决方案结束。&lt;br&gt;
     
@@ -391,9 +397,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -433,9 +439,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
   </entry>
   
@@ -503,9 +509,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
