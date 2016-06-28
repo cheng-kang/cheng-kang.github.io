@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-06-28T08:10:28.000Z</updated>
+  <updated>2016-06-28T08:12:50.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JavaScript 命名空间</title>
+    <title>【译】JavaScript 命名空间</title>
     <link href="http://cheng-kang.github.io/2016/06/28/javascript-namespace-by-michaux/"/>
     <id>http://cheng-kang.github.io/2016/06/28/javascript-namespace-by-michaux/</id>
     <published>2016-06-28T08:07:58.000Z</published>
-    <updated>2016-06-28T08:10:28.000Z</updated>
+    <updated>2016-06-28T08:12:50.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;http://peter.michaux.ca/articles/javascript-namespacing&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《JavaScript Namespacing》&lt;/a&gt;&lt;/p&gt;
