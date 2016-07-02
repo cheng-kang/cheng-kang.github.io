@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://cheng-kang.github.io/2016/07/02/my-favorite-javascript-pattern/</loc>
+    
+    <lastmod>2016-07-02T02:51:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://cheng-kang.github.io/2016/06/28/javascript-namespace-by-michaux/</loc>
     
     <lastmod>2016-06-28T08:12:50.000Z</lastmod>
