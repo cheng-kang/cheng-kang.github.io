@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-09-04T04:36:36.000Z</updated>
+  <updated>2016-07-02T02:51:54.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,30 +16,10 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>parents</title>
-    <link href="http://cheng-kang.github.io/2016/09/04/parents/"/>
-    <id>http://cheng-kang.github.io/2016/09/04/parents/</id>
-    <published>2016-09-04T04:36:16.000Z</published>
-    <updated>2016-09-04T04:36:36.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;About-Parents&quot;&gt;&lt;a href=&quot;#About-Parents&quot; class=&quot;headerlink&quot; title=&quot;About Parents&quot;&gt;&lt;/a&gt;About Parents&lt;/h1&gt;&lt;p&gt;whatever&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;About-Parents&quot;&gt;&lt;a href=&quot;#About-Parents&quot; class=&quot;headerlink&quot; title=&quot;About Parents&quot;&gt;&lt;/a&gt;About Parents&lt;/h1&gt;&lt;p&gt;whatever&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>【译】我最喜欢的 JavaScript 设计模式</title>
     <link href="http://cheng-kang.github.io/2016/07/02/my-favorite-javascript-pattern/"/>
     <id>http://cheng-kang.github.io/2016/07/02/my-favorite-javascript-pattern/</id>
-    <published>2016-07-02T02:50:25.000Z</published>
+    <published>2016-07-02T09:50:25.000Z</published>
     <updated>2016-07-02T02:51:54.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -95,7 +75,7 @@
     <title>【译】JavaScript 命名空间</title>
     <link href="http://cheng-kang.github.io/2016/06/28/javascript-namespace-by-michaux/"/>
     <id>http://cheng-kang.github.io/2016/06/28/javascript-namespace-by-michaux/</id>
-    <published>2016-06-28T08:07:58.000Z</published>
+    <published>2016-06-28T15:07:58.000Z</published>
     <updated>2016-06-28T08:12:50.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -199,7 +179,7 @@
     <title>【译】JavaScript 中的命名空间</title>
     <link href="http://cheng-kang.github.io/2016/06/21/Namespacing%20in%20JavaScript/"/>
     <id>http://cheng-kang.github.io/2016/06/21/Namespacing in JavaScript/</id>
-    <published>2016-06-21T13:59:30.000Z</published>
+    <published>2016-06-21T20:59:30.000Z</published>
     <updated>2016-06-28T08:08:49.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -264,7 +244,7 @@
     <title>【译】Swift2 中的错误处理：try，catch，do 以及 throw</title>
     <link href="http://cheng-kang.github.io/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"/>
     <id>http://cheng-kang.github.io/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/</id>
-    <published>2016-05-15T15:14:40.000Z</published>
+    <published>2016-05-15T22:14:40.000Z</published>
     <updated>2016-05-15T15:21:48.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -339,7 +319,7 @@
     <title>UICollectionView 总结</title>
     <link href="http://cheng-kang.github.io/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/"/>
     <id>http://cheng-kang.github.io/2016/04/13/UICollectionView 总结/</id>
-    <published>2016-04-12T23:13:54.000Z</published>
+    <published>2016-04-13T06:13:54.000Z</published>
     <updated>2016-04-13T06:18:48.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -474,7 +454,7 @@
     <title>【译】UICollectionView 轻松重排</title>
     <link href="http://cheng-kang.github.io/2016/04/12/%E3%80%90%E8%AF%91%E3%80%91UICollectionView%20%E8%BD%BB%E6%9D%BE%E9%87%8D%E6%8E%92/"/>
     <id>http://cheng-kang.github.io/2016/04/12/【译】UICollectionView 轻松重排/</id>
-    <published>2016-04-12T15:38:28.000Z</published>
+    <published>2016-04-12T22:38:28.000Z</published>
     <updated>2016-04-12T22:40:25.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -533,7 +513,7 @@
     <title>模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换</title>
     <link href="http://cheng-kang.github.io/2016/04/08/%E6%A8%A1%E6%8B%9F%E5%87%A4%E5%87%B0%E6%96%B0%E9%97%BB%20%7C%20%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E6%A0%87%E7%AD%BE%E5%8A%A8%E7%94%BB%20-%20Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2/"/>
     <id>http://cheng-kang.github.io/2016/04/08/模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换/</id>
-    <published>2016-04-08T12:59:13.000Z</published>
+    <published>2016-04-08T19:59:13.000Z</published>
     <updated>2016-04-08T20:01:04.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -579,9 +559,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -591,7 +571,7 @@
     <title>AutoLayout 中需要注意的点</title>
     <link href="http://cheng-kang.github.io/2016/04/07/AutoLayout%20%E4%B8%AD%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9/"/>
     <id>http://cheng-kang.github.io/2016/04/07/AutoLayout 中需要注意的点/</id>
-    <published>2016-04-06T16:41:14.000Z</published>
+    <published>2016-04-06T23:41:14.000Z</published>
     <updated>2016-04-06T23:44:59.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -621,9 +601,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
     
   </entry>
   
@@ -631,7 +611,7 @@
     <title>Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）</title>
     <link href="http://cheng-kang.github.io/2016/04/06/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/04/06/Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）/</id>
-    <published>2016-04-05T18:50:01.000Z</published>
+    <published>2016-04-06T01:50:01.000Z</published>
     <updated>2016-04-08T19:36:51.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -691,9 +671,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
@@ -703,7 +683,7 @@
     <title>实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）</title>
     <link href="http://cheng-kang.github.io/2016/04/03/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/04/03/实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）/</id>
-    <published>2016-04-03T15:51:08.000Z</published>
+    <published>2016-04-03T22:51:08.000Z</published>
     <updated>2016-04-06T01:51:32.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;目标和成果&quot;&gt;&lt;a href=&quot;#目标和成果&quot; class=&quot;headerlink&quot; title=&quot;目标和成果&quot;&gt;&lt;/a&gt;目标和成果&lt;/h3&gt;&lt;p&gt;instagram 截图如下：&lt;/p&gt;
@@ -780,7 +760,7 @@
     <title>自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）</title>
     <link href="http://cheng-kang.github.io/2016/03/31/%E8%87%AA%E5%AE%9A%E4%B9%89%20UITabBar%20%E6%80%BB%E7%BB%93%EF%BC%88%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%8B%9F%20instagram%20TabBar%20%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/</id>
-    <published>2016-03-31T15:48:38.000Z</published>
+    <published>2016-03-31T22:48:38.000Z</published>
     <updated>2016-04-06T01:51:37.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1003,7 +983,7 @@
     <title>仿微博 iOS 客户端 TabBar 中间按钮</title>
     <link href="http://cheng-kang.github.io/2016/03/30/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"/>
     <id>http://cheng-kang.github.io/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/</id>
-    <published>2016-03-29T18:02:07.000Z</published>
+    <published>2016-03-30T01:02:07.000Z</published>
     <updated>2016-04-06T01:51:24.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1080,7 +1060,7 @@
     <title>【译】iOS 基础：Frames、Bounds 和 CGGeometry</title>
     <link href="http://cheng-kang.github.io/2016/03/26/%E3%80%90%E8%AF%91%E3%80%91iOS%20%E5%9F%BA%E7%A1%80%EF%BC%9AFrames%E3%80%81Bounds%20%E5%92%8C%20CGGeometry/"/>
     <id>http://cheng-kang.github.io/2016/03/26/【译】iOS 基础：Frames、Bounds 和 CGGeometry/</id>
-    <published>2016-03-26T11:35:02.000Z</published>
+    <published>2016-03-26T19:35:02.000Z</published>
     <updated>2016-03-26T19:36:21.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1163,7 +1143,7 @@
     <title>AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）</title>
     <link href="http://cheng-kang.github.io/2016/03/20/AutoLayout%EF%BC%9Aconstraint%20priority%20%E7%BA%A6%E6%9D%9F%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%88%E4%B9%9D%E5%AE%AB%E6%A0%BC%E7%BB%AD%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%9B%B4%E4%BC%98%E6%96%B9%E6%A1%88%EF%BC%89/"/>
     <id>http://cheng-kang.github.io/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/</id>
-    <published>2016-03-20T14:49:31.000Z</published>
+    <published>2016-03-20T22:49:31.000Z</published>
     <updated>2016-03-21T03:18:07.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1267,7 +1247,7 @@
     <title>AutoLayout：UITableViewCell 自适应高度的一个例子</title>
     <link href="http://cheng-kang.github.io/2016/03/19/AutoLayout%EF%BC%9AUITableViewCell%20%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%BA%A6%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90/"/>
     <id>http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/</id>
-    <published>2016-03-19T15:51:24.000Z</published>
+    <published>2016-03-19T23:51:24.000Z</published>
     <updated>2016-03-21T03:19:13.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
@@ -1324,7 +1304,7 @@
     <title>UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色</title>
     <link href="http://cheng-kang.github.io/2016/03/19/UISearchBar%EF%BC%88%E4%B8%80%EF%BC%89%E4%BF%AE%E6%94%B9%E8%83%8C%E6%99%AF%E5%B1%82%E5%92%8C%E8%BE%93%E5%85%A5%E6%A1%86%E5%B1%82%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%E5%92%8C%E8%BE%B9%E6%A1%86%E9%A2%9C%E8%89%B2/"/>
     <id>http://cheng-kang.github.io/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/</id>
-    <published>2016-03-19T12:51:09.000Z</published>
+    <published>2016-03-19T20:51:09.000Z</published>
     <updated>2016-03-21T03:21:32.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
@@ -1407,37 +1387,10 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://cheng-kang.github.io/2016/03/18/hello-world/"/>
-    <id>http://cheng-kang.github.io/2016/03/18/hello-world/</id>
-    <published>2016-03-18T12:01:11.000Z</published>
-    <updated>2016-03-18T12:01:11.000Z</updated>
-    
-    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Fire Blog 中文说明</title>
     <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
     <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
-    <published>2016-03-18T04:51:29.000Z</published>
+    <published>2016-03-18T12:51:29.000Z</published>
     <updated>2016-03-21T03:22:46.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;起源&quot;&gt;&lt;a href=&quot;#起源&quot; class=&quot;headerlink&quot; title=&quot;起源&quot;&gt;&lt;/a&gt;起源&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
@@ -1494,7 +1447,7 @@
     <title>FireBlog Instruction</title>
     <link href="http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/"/>
     <id>http://cheng-kang.github.io/2016/03/18/FireBlog-Instruction/</id>
-    <published>2016-03-18T04:47:49.000Z</published>
+    <published>2016-03-18T12:47:49.000Z</published>
     <updated>2016-03-21T03:22:54.000Z</updated>
     
     <content type="html">&lt;h3 id=&quot;Why&quot;&gt;&lt;a href=&quot;#Why&quot; class=&quot;headerlink&quot; title=&quot;Why&quot;&gt;&lt;/a&gt;Why&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt; offers the wonderful &lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt; service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com）&lt;/a&gt;. It’s super convenient to set up a static blog based on the service.&lt;/p&gt;
@@ -1544,6 +1497,33 @@
     
     
       <category term="fireblog" scheme="http://cheng-kang.github.io/tags/fireblog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://cheng-kang.github.io/2016/03/18/hello-world/"/>
+    <id>http://cheng-kang.github.io/2016/03/18/hello-world/</id>
+    <published>2016-03-18T12:01:11.000Z</published>
+    <updated>2016-03-18T12:01:11.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
     
   </entry>
   
