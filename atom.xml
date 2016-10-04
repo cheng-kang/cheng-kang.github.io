@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2016-07-02T02:51:54.000Z</updated>
+  <updated>2016-10-04T11:53:07.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Sublime Text Plugins I&#39;m using</title>
+    <link href="http://cheng-kang.github.io/2016/10/04/Sublime-Text-Plugins-I-m-using/"/>
+    <id>http://cheng-kang.github.io/2016/10/04/Sublime-Text-Plugins-I-m-using/</id>
+    <published>2016-10-04T11:50:30.000Z</published>
+    <updated>2016-10-04T11:53:07.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Here is a list of plugins I’m using:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://packagecontrol.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Package Control&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://emmet.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;emmet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://csscomb.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CSScomb&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jonlabelle/Trimmer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Trimmer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Here is a list of plugins I’m using:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://packagecontrol.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Package Control&lt;/a&gt;
+    
+    </summary>
+    
+    
+      <category term="uncategorized" scheme="http://cheng-kang.github.io/tags/uncategorized/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】我最喜欢的 JavaScript 设计模式</title>
@@ -559,9 +588,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -601,9 +630,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
   </entry>
   
@@ -671,9 +700,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
