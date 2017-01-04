@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-04T15:01:57.000Z</updated>
+  <updated>2017-01-04T15:05:43.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,9 +20,12 @@
     <link href="http://cheng-kang.github.io/2017/01/04/Pauseable%20Timer/"/>
     <id>http://cheng-kang.github.io/2017/01/04/Pauseable Timer/</id>
     <published>2017-01-04T14:58:48.000Z</published>
-    <updated>2017-01-04T15:01:57.000Z</updated>
+    <updated>2017-01-04T15:05:43.000Z</updated>
     
-    <content type="html">&lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
 &lt;h2 id=&quot;How-to-Use&quot;&gt;&lt;a href=&quot;#How-to-Use&quot; class=&quot;headerlink&quot; title=&quot;How to Use&quot;&gt;&lt;/a&gt;How to Use&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Create a Timer&lt;/p&gt;
@@ -44,29 +47,27 @@
 &lt;/ul&gt;
 &lt;h2 id=&quot;Intro&quot;&gt;&lt;a href=&quot;#Intro&quot; class=&quot;headerlink&quot; title=&quot;Intro&quot;&gt;&lt;/a&gt;Intro&lt;/h2&gt;&lt;p&gt;Pauseable Timer does not re-implement Timer in Swift, but takes a Timer as a property and implement ‘Pause’ feature with the help of it.&lt;/p&gt;
 &lt;p&gt;The concept of this feature is inspired by &lt;a href=&quot;http://www.jianshu.com/p/e554a164d0da&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NSTimer 总结1(包括计时器不准的解决)&lt;/a&gt;. &lt;/p&gt;
-&lt;p&gt;The main idea is:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;set the firedate of Timer to a un-reachable date when you want it pause (the timer will wait until forever and you can take it as pausing :D), and set it back to its original firedate when you want it resume (and the timer will fire “as expected”).&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;The main idea is &lt;code&gt;set the firedate of Timer to a un-reachable date when you want it pause (the timer will wait until forever and you can take it as pausing :D), and set it back to its original firedate when you want it resume (and the timer will fire &amp;quot;as expected&amp;quot;).&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Simple and Excellent!&lt;/p&gt;
 &lt;p&gt;You might have noticed the double qouted “as expected”. Acctually, this might fail your expectation because&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;The firedate is expried.&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The current time is 2017.01.04 10:25.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The original firedate is 2017.01.04 10:30.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;You pause the timer at this moment and resume it 10 mins after which is 2017.01.04 10:35. So the timer has missed it&amp;apos;s expected firedate. &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;However it will fire once you set the firedate back to 2017.01.04 10:30 at 2017.01.04 10:35, if the timer is already added to RunLoop.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;The timer is expected to wait for the remaining waiting time.&lt;/p&gt;
-  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The current time is 2017.01.04 10:25:00.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The timeInterval of the timer is 60 seconds. It&amp;apos;s scheduled at this moment, and should fire 60 seconds later at 2017.01.04 10:26:00.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;And for some reason you pause it 10 seconds after, which is 2017.01.04 10:25:10. And you resume the timer at 2017.01.04 10:25:50.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;However, you still want it to fire 60 seconds after it&amp;apos;s scheduled, regardless the pausing part. So it should wait for 50 seconds more and fire at 2017.01.04 10:26:40.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The current time is 2017.01.04 10:25:00.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;The timeInterval of the timer is 60 seconds. It&amp;apos;s scheduled at this moment, and should fire 60 seconds later at 2017.01.04 10:26:00.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;And for some reason you pause it 10 seconds after, which is 2017.01.04 10:25:10. And you resume the timer at 2017.01.04 10:25:50.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;However, you still want it to fire 60 seconds after it&amp;apos;s scheduled, regardless the pausing part. So it should wait for 50 seconds more and fire at 2017.01.04 10:26:40.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 &lt;p&gt;An ideal solution should be one that fits all 3 conditions (another one is the condition that someone doesn’t care if the original firedate is expired or not) discussed above. However, this project only deals with condition 2 because that is the problem I encountered with.&lt;/p&gt;
 &lt;p&gt;Hopefully, I will continue this small project in the future and complete it with solutions to every condition.&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
 &lt;h2 id=&quot;How-to-Use&quot;&gt;&lt;a href=&quot;#How-to-Use&quot; class=&quot;headerlink&quot; title=&quot;How to Use&quot;&gt;&lt;/a&gt;How to Use&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Create a Timer&lt;/p&gt;
