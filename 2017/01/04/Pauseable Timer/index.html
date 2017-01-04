@@ -1,0 +1,59 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Pauseable Timer · CHENG KANG</title><meta name="description" content="Pauseable Timer - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Pauseable Timer</h1><div class="post-time">Jan 4, 2017</div><div class="post-content"><p>Pauseable Timer is a pause-able timer written in Swift.</p>
+<p>There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.</p>
+<h2 id="How-to-Use"><a href="#How-to-Use" class="headerlink" title="How to Use"></a>How to Use</h2><ol>
+<li><p>Create a Timer</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create a Pauseable Timer and pass the timer as an argument.</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let pauseableTimer = PauseableTimer(timer: timer)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Pause and Resume!</p>
+<a id="more"></a>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">pauseableTimer.pause()</span><br><span class="line">pauseableTimer.resume()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>Notice</strong></p>
+<ul>
+<li>If the timer you use to initialize a PauseableTimer is not scheduled (or added to RunLoop) already, you need to manually schedule it (ro add it to RunLoop). You can do it by <code>RunLoop.current.add(timer, forMode: .commonModes)</code>. </li>
+<li>Use <code>timer</code> property of PauseableTimer if you need to manipulate the timer or get it’s properties. Like this <code>pauseableTimer.timer.firedate = Date()</code>.</li>
+<li>A convinient method <code>invalidate()</code> is created to invalidate the timer.</li>
+</ul>
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Pauseable Timer does not re-implement Timer in Swift, but takes a Timer as a property and implement ‘Pause’ feature with the help of it.</p>
+<p>The concept of this feature is inspired by <a href="http://www.jianshu.com/p/e554a164d0da" target="_blank" rel="external">NSTimer 总结1(包括计时器不准的解决)</a>. </p>
+<p>The main idea is:</p>
+<blockquote>
+<p>set the firedate of Timer to a un-reachable date when you want it pause (the timer will wait until forever and you can take it as pausing :D), and set it back to its original firedate when you want it resume (and the timer will fire “as expected”).</p>
+</blockquote>
+<p>Simple and Excellent!</p>
+<p>You might have noticed the double qouted “as expected”. Acctually, this might fail your expectation because</p>
+<ol>
+<li><p>The firedate is expried.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">The current time is 2017.01.04 10:25.</span><br><span class="line">The original firedate is 2017.01.04 10:30.</span><br><span class="line">You pause the timer at this moment and resume it 10 mins after which is 2017.01.04 10:35. So the timer has missed it&apos;s expected firedate. </span><br><span class="line">However it will fire once you set the firedate back to 2017.01.04 10:30 at 2017.01.04 10:35, if the timer is already added to RunLoop.</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p>The timer is expected to wait for the remaining waiting time.</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">The current time is 2017.01.04 10:25:00.</span><br><span class="line">The timeInterval of the timer is 60 seconds. It&apos;s scheduled at this moment, and should fire 60 seconds later at 2017.01.04 10:26:00.</span><br><span class="line">And for some reason you pause it 10 seconds after, which is 2017.01.04 10:25:10. And you resume the timer at 2017.01.04 10:25:50.</span><br><span class="line">However, you still want it to fire 60 seconds after it&apos;s scheduled, regardless the pausing part. So it should wait for 50 seconds more and fire at 2017.01.04 10:26:40.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>An ideal solution should be one that fits all 3 conditions (another one is the condition that someone doesn’t care if the original firedate is expired or not) discussed above. However, this project only deals with condition 2 because that is the problem I encountered with.</p>
+<p>Hopefully, I will continue this small project in the future and complete it with solutions to every condition.</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/10/04/Sublime-Text-Plugins-I-m-using/" class="next">NEXT</a></div><div data-thread-key="2017/01/04/Pauseable Timer/" data-title="Pauseable Timer" data-url="http://cheng-kang.github.io/2017/01/04/Pauseable Timer/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
+var disqus_identifier = '2017/01/04/Pauseable Timer/';
+var disqus_title = 'Pauseable Timer';
+var disqus_url = 'http://cheng-kang.github.io/2017/01/04/Pauseable Timer/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2017 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
