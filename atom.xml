@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-05T10:17:18.000Z</updated>
+  <updated>2017-01-05T10:23:55.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cheng-kang.github.io/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://cheng-kang.github.io/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
     <published>2017-01-05T10:14:32.000Z</published>
-    <updated>2017-01-05T10:17:18.000Z</updated>
+    <updated>2017-01-05T10:23:55.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
@@ -34,9 +34,9 @@
 &lt;/ol&gt;
 &lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
 
-- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
-- `speed` 弹幕的速度;
-- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+    - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+    - `speed` 弹幕的速度;
+    - `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
 &lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;添加一条弹幕 &lt;/p&gt;
@@ -111,9 +111,9 @@
 &lt;/ol&gt;
 &lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
 
-- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
-- `speed` 弹幕的速度;
-- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+    - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+    - `speed` 弹幕的速度;
+    - `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
 &lt;/code&gt;&lt;/pre&gt;
     
     </summary>
@@ -850,9 +850,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -892,9 +892,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
   </entry>
   
@@ -962,9 +962,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
