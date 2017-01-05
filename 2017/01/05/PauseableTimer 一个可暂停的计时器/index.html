@@ -1,0 +1,57 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Pauseable Timer 一个可暂停的计时器 · CHENG KANG</title><meta name="description" content="Pauseable Timer 一个可暂停的计时器 - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Pauseable Timer 一个可暂停的计时器</h1><div class="post-time">Jan 5, 2017</div><div class="post-content"><blockquote>
+<p>项目主页: <a href="https://github.com/cheng-kang/PauseableTimer" target="_blank" rel="external">PauseableTimer Github Repository</a><br>英文介绍： <a href="">Pauseable Timer</a></p>
+</blockquote>
+<p>PauseableTimer 是一个用 Swift 写的可暂停的计时器。</p>
+<p>有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。</p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><ol>
+<li><p>创建一个计时器 Timer</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个可暂停的计时器 PauseableTimer，并将之前创建的 Timer 作为参数传入 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let pauseableTimer = PauseableTimer(timer: timer)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>暂停 然后 重新开始！</p>
+<a id="more"></a>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">pauseableTimer.pause()</span><br><span class="line">pauseableTimer.resume()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>注意</strong></p>
+<ul>
+<li>如果用于初始化 PauseableTimer 的 Timer 不是通过 scheduledTimer 方法初始化的或没有被加入到 RunLoop 中，那么你需要手动将它加入到 RunLoop 中。你可以这样做，<code>RunLoop.current.add(timer, forMode: .commonModes)</code>。</li>
+<li>如果你需要操作用于初始化 PauseableTimer 的 Timer 或者需要获取它的属性，请使用 PauseableTimer 的 <code>timer</code> 属性。就像这样，<code>pauseableTimer.timer.firedate = Date()</code>。</li>
+<li><code>invalidate()</code> 方法是为便于手动让 timer 失效而创建的。</li>
+</ul>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>PauseableTimer 并没有重新实现 Swift 中的 Timer，而是将 Timer 作为一个属性然后在它的帮助下实现了 暂停 的功能。</p>
+<p>这个功能的原理受到 <a href="http://www.jianshu.com/p/e554a164d0da" target="_blank" rel="external">NSTimer 总结1(包括计时器不准的解决)</a> 的启发。 </p>
+<p>主要思想是 <code>当你需要暂停的时候，将 Timer 的 firedate 设置为一个无法达到的日期（这样计时器会一直等待，感觉起来就像是暂停了 :D）；当你需要重新开始的时候，将 firedate 设置回原来的时间（这样计时器就可以『照常』触发）</code>。 </p>
+<p>简单聪明！</p>
+<p>你可能注意到了加了引号的『照常』。事实上，这个方法可能无法达到你的期望，因为</p>
+<ol>
+<li><p>Firedate 过期了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">现在的时间是 2017.01.04 10:25。</span><br><span class="line">原本的 firedate 是 2017.01.04 10:30。</span><br><span class="line">你现在暂停了这个计时器，并且在十分钟后（2017.01.04 10:35）重新开始。这时，计时器已经错过了它预计的 firedate（2017.01.04 10:30）。</span><br><span class="line">然而，如果这个计时器已经在 RunLoop 当中的话，当你在 2017.01.04 10:35 将 firedate 设置回 2017.01.04 10:30 时，计时器会立即触发一次。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>我们希望计时器继续等待剩下的等待时间。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">现在的时间是 2017.01.04 10:25:00。</span><br><span class="line">计时器的 timeInterval 是 60 秒。现在计时器被加入到 RunLoop，它应该在 60 秒后触发，也就是在 2017.01.04 10:26:00。</span><br><span class="line">然后你因为某种原因在 10 秒后暂停了它，也就是在 2017.01.04 10:25:10。你在 2017.01.04 10:25:50 的时候重新开始了计时器。</span><br><span class="line">不过，你仍然希望它是在设置好后，等待 60 秒再触发，不管暂停的那段时间。所以它应该再等待 50 秒，然后在 2017.01.04 10:26:40 触发。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>完美的解决方案应该是满足以上所述三种情况的（另一种情况是我们不在乎原始 firedate 是否过期）。不过，这个项目目前只解决了第二个情况，因为这是我在其他项目中所遇到的需要解决的问题。</p>
+<p>未来我可能会继续这个小项目，然后将每一种情况的解决方案都完善起来。</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2017/01/05/DanmuManager 一个简单的弹幕工具/" class="prev">上一篇</a><a href="/2017/01/04/Pauseable Timer/" class="next">下一篇</a></div><div data-thread-key="2017/01/05/PauseableTimer 一个可暂停的计时器/" data-title="Pauseable Timer 一个可暂停的计时器" data-url="http://cheng-kang.github.io/2017/01/05/PauseableTimer 一个可暂停的计时器/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+
+</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
+var disqus_identifier = '2017/01/05/PauseableTimer 一个可暂停的计时器/';
+var disqus_title = 'Pauseable Timer 一个可暂停的计时器';
+var disqus_url = 'http://cheng-kang.github.io/2017/01/05/PauseableTimer 一个可暂停的计时器/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2017 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>

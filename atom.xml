@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-04T15:05:43.000Z</updated>
+  <updated>2017-01-05T10:17:18.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,14 +16,196 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>DanmuManager 一个简单的弹幕工具</title>
+    <link href="http://cheng-kang.github.io/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
+    <id>http://cheng-kang.github.io/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
+    <published>2017-01-05T10:14:32.000Z</published>
+    <updated>2017-01-05T10:17:18.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
+&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;/p&gt;
+&lt;h3 id=&quot;DanmuManager&quot;&gt;&lt;a href=&quot;#DanmuManager&quot; class=&quot;headerlink&quot; title=&quot;DanmuManager&quot;&gt;&lt;/a&gt;DanmuManager&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建 DanmuManager&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
+
+- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+- `speed` 弹幕的速度;
+- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+&lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;添加一条弹幕 &lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dm.add(with: “Wow so cool!!!”, at: 4)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;`add` 方法有两个必传参数，`text`（弹幕文字） 和 `line`（弹幕所在行）;可选参数 `hasBorder` 用于设置该条弹幕是否有边框（默认 borderColor = UIColor.black.cgColor，borderWidth = 1）,默认值为 false;可选参数 `isAdvance` 用于设置该条弹幕是否开启高级功能（目前支持修改 文字颜色 和 背景颜色），默认值为 false。
+
+如果需要弹幕出现在随机行，可以使用
+`func addRandom(with text: String = &amp;quot;This is a test Danmu.&amp;quot;, at line: Int = 0, hasBorder: Bool = false, isAdvanced: Bool = false)`。
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;暂停/继续 弹幕&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dm.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dm.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;你也可以使用 `dm.toggle()` 来快捷切换 暂停/继续。
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&quot;VideoDanmuManager&quot;&gt;&lt;a href=&quot;#VideoDanmuManager&quot; class=&quot;headerlink&quot; title=&quot;VideoDanmuManager&quot;&gt;&lt;/a&gt;VideoDanmuManager&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建 VideoDanmuManager&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let vdm = VideoDanmuManager(view: self.view,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                               videoLength: 10,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                               danmuData: [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (3.4, &amp;quot;3.4 Wowowowowowow!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (3.4, &amp;quot;3.4 SOOOO COOOOOOOOOOL!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (3.4, &amp;quot;3.4 Amazing!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (3.4, &amp;quot;3.4 I love you~&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (3.4, &amp;quot;3.4 MY BABY!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (1.1, &amp;quot;1.1 This is a test Danmu!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (2.0, &amp;quot;2.0 Another test Danmu.&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (4.1, &amp;quot;4.1 Amazing!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (6.1, &amp;quot;6.1 Test!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (8.1, &amp;quot;8.1 Test!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (9.1, &amp;quot;9.1 Test!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                                   (10, &amp;quot;10 Test!!!!&amp;quot;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           ],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                               isSorted: false&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;       )&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;`VideoDanmuManager` 的创建有三个必选参数，`view`（显示弹幕的视图），`videoLength`（视频时长，精确到 0.1 秒）和 `danmuData`（已经存在的弹幕列表）。
+
+可选参数 `videoCurrent` 默认为 0，即开始时刻；你可以通过传入不同的时间值来设置显示弹幕的初始时间（比如在视频从 1 分 15 秒开始播放，则应设置 `videoCurrent` 为 75）。
+可选参数 `isSorted` 默认为 true，即默认数据集已经按照弹幕显示时间从先到后排序；如传入 false，则将自动调用 `func sort()` 对数据进行排序。
+
+可选参数 `top` 和 `bottom` 同 `DanmuManager`。
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;开启弹幕&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vdm.start()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;你需要在视频开始播放的同时，手动开启弹幕。
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;暂停/继续 弹幕&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vdm.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;vdm.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;你也可以使用 `vdm.toggle()` 来快捷切换 暂停/继续。
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;中止弹幕&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vdm.stop()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;重新开始弹幕&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vdm.restart()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;你也可以在指定时间点重新开始弹幕：
+
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vdm.restart(at: 75)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;设计思路&quot;&gt;&lt;a href=&quot;#设计思路&quot; class=&quot;headerlink&quot; title=&quot;设计思路&quot;&gt;&lt;/a&gt;设计思路&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 通过设置的字体大小计算文本显示高度 &lt;code&gt;lineHeight&lt;/code&gt;，通过 &lt;code&gt;numberOfLines = Int(floor((bottom - top) / lineHeight))&lt;/code&gt; 得到可以显示的弹幕行数；使用 &lt;code&gt;inUsingLines&lt;/code&gt;，&lt;code&gt;enteringTimers&lt;/code&gt; 和 &lt;code&gt;waitingQueues&lt;/code&gt; 来分别记录 正在使用的行（有尾部还没有完全进入视图的弹幕的行），正在进入视图的弹幕的计时器 和 正在等待进入的弹幕队列。&lt;/p&gt;
+&lt;p&gt;为了防止弹幕重叠，只有当 当前行中前一条弹幕尾部进入视图 时（之后），下一条弹幕才可以发射。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;enteringTimers&lt;/code&gt; 中每一个 Timer 都对应一条正在进入视图的弹幕，当计时器结束时，通过 NotificationCenter 发通知将该弹幕所在的行的状态更改为 false。&lt;/p&gt;
+&lt;p&gt;因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 &lt;a href=&quot;&quot;&gt;PauseableTimer&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;为了避免手动发射弹幕和自动发射队列中的弹幕出现冲突（弹幕重叠），所有弹幕通过 &lt;code&gt;taskTimer&lt;/code&gt; 定时任务统一调度。&lt;/p&gt;
+&lt;h2 id=&quot;下一步-Next-Step&quot;&gt;&lt;a href=&quot;#下一步-Next-Step&quot; class=&quot;headerlink&quot; title=&quot;下一步 Next Step&quot;&gt;&lt;/a&gt;下一步 Next Step&lt;/h2&gt;&lt;p&gt;现在流行的弹幕功能越来越复杂、高级，DanmuManager 只是完成了最基础的滚动文字弹幕功能。未来可能会学习常见的弹幕，添加一些更高级的功能，比如 对滚动弹幕的操作，居中弹幕 等。    &lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
+&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;/p&gt;
+&lt;h3 id=&quot;DanmuManager&quot;&gt;&lt;a href=&quot;#DanmuManager&quot; class=&quot;headerlink&quot; title=&quot;DanmuManager&quot;&gt;&lt;/a&gt;DanmuManager&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建 DanmuManager&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
+
+- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+- `speed` 弹幕的速度;
+- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pauseable Timer 一个可暂停的计时器</title>
+    <link href="http://cheng-kang.github.io/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
+    <id>http://cheng-kang.github.io/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
+    <published>2017-01-05T07:31:35.000Z</published>
+    <updated>2017-01-05T07:32:45.000Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
+&lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
+&lt;h2 id=&quot;如何使用&quot;&gt;&lt;a href=&quot;#如何使用&quot; class=&quot;headerlink&quot; title=&quot;如何使用&quot;&gt;&lt;/a&gt;如何使用&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建一个计时器 Timer&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建一个可暂停的计时器 PauseableTimer，并将之前创建的 Timer 作为参数传入 &lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;暂停 然后 重新开始！&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果用于初始化 PauseableTimer 的 Timer 不是通过 scheduledTimer 方法初始化的或没有被加入到 RunLoop 中，那么你需要手动将它加入到 RunLoop 中。你可以这样做，&lt;code&gt;RunLoop.current.add(timer, forMode: .commonModes)&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;如果你需要操作用于初始化 PauseableTimer 的 Timer 或者需要获取它的属性，请使用 PauseableTimer 的 &lt;code&gt;timer&lt;/code&gt; 属性。就像这样，&lt;code&gt;pauseableTimer.timer.firedate = Date()&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;invalidate()&lt;/code&gt; 方法是为便于手动让 timer 失效而创建的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;PauseableTimer 并没有重新实现 Swift 中的 Timer，而是将 Timer 作为一个属性然后在它的帮助下实现了 暂停 的功能。&lt;/p&gt;
+&lt;p&gt;这个功能的原理受到 &lt;a href=&quot;http://www.jianshu.com/p/e554a164d0da&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NSTimer 总结1(包括计时器不准的解决)&lt;/a&gt; 的启发。 &lt;/p&gt;
+&lt;p&gt;主要思想是 &lt;code&gt;当你需要暂停的时候，将 Timer 的 firedate 设置为一个无法达到的日期（这样计时器会一直等待，感觉起来就像是暂停了 :D）；当你需要重新开始的时候，将 firedate 设置回原来的时间（这样计时器就可以『照常』触发）&lt;/code&gt;。 &lt;/p&gt;
+&lt;p&gt;简单聪明！&lt;/p&gt;
+&lt;p&gt;你可能注意到了加了引号的『照常』。事实上，这个方法可能无法达到你的期望，因为&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Firedate 过期了。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;现在的时间是 2017.01.04 10:25。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;原本的 firedate 是 2017.01.04 10:30。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;你现在暂停了这个计时器，并且在十分钟后（2017.01.04 10:35）重新开始。这时，计时器已经错过了它预计的 firedate（2017.01.04 10:30）。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;然而，如果这个计时器已经在 RunLoop 当中的话，当你在 2017.01.04 10:35 将 firedate 设置回 2017.01.04 10:30 时，计时器会立即触发一次。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;我们希望计时器继续等待剩下的等待时间。&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;现在的时间是 2017.01.04 10:25:00。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;计时器的 timeInterval 是 60 秒。现在计时器被加入到 RunLoop，它应该在 60 秒后触发，也就是在 2017.01.04 10:26:00。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;然后你因为某种原因在 10 秒后暂停了它，也就是在 2017.01.04 10:25:10。你在 2017.01.04 10:25:50 的时候重新开始了计时器。&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;不过，你仍然希望它是在设置好后，等待 60 秒再触发，不管暂停的那段时间。所以它应该再等待 50 秒，然后在 2017.01.04 10:26:40 触发。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;完美的解决方案应该是满足以上所述三种情况的（另一种情况是我们不在乎原始 firedate 是否过期）。不过，这个项目目前只解决了第二个情况，因为这是我在其他项目中所遇到的需要解决的问题。&lt;/p&gt;
+&lt;p&gt;未来我可能会继续这个小项目，然后将每一种情况的解决方案都完善起来。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
+&lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
+&lt;h2 id=&quot;如何使用&quot;&gt;&lt;a href=&quot;#如何使用&quot; class=&quot;headerlink&quot; title=&quot;如何使用&quot;&gt;&lt;/a&gt;如何使用&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建一个计时器 Timer&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;创建一个可暂停的计时器 PauseableTimer，并将之前创建的 Timer 作为参数传入 &lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;暂停 然后 重新开始！&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Pauseable Timer</title>
     <link href="http://cheng-kang.github.io/2017/01/04/Pauseable%20Timer/"/>
     <id>http://cheng-kang.github.io/2017/01/04/Pauseable Timer/</id>
     <published>2017-01-04T14:58:48.000Z</published>
-    <updated>2017-01-04T15:05:43.000Z</updated>
+    <updated>2017-01-05T07:33:49.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;Chinese Version: &lt;a href=&quot;&quot;&gt;Pauseable Timer 一个可暂停的计时器&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
@@ -65,7 +247,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;Chinese Version: &lt;a href=&quot;&quot;&gt;Pauseable Timer 一个可暂停的计时器&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
@@ -668,9 +850,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -780,9 +962,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
@@ -1492,90 +1674,6 @@
       <category term="UISearchBar" scheme="http://cheng-kang.github.io/tags/UISearchBar/"/>
     
       <category term="color" scheme="http://cheng-kang.github.io/tags/color/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://cheng-kang.github.io/2016/03/18/hello-world/"/>
-    <id>http://cheng-kang.github.io/2016/03/18/hello-world/</id>
-    <published>2016-03-18T12:01:11.000Z</published>
-    <updated>2016-03-18T12:01:11.000Z</updated>
-    
-    <content type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deployment&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Fire Blog 中文说明</title>
-    <link href="http://cheng-kang.github.io/2016/03/18/Fire-Blog-%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E/"/>
-    <id>http://cheng-kang.github.io/2016/03/18/Fire-Blog-中文说明/</id>
-    <published>2016-03-18T04:51:29.000Z</published>
-    <updated>2016-03-21T03:22:46.000Z</updated>
-    
-    <content type="html">&lt;h3 id=&quot;起源&quot;&gt;&lt;a href=&quot;#起源&quot; class=&quot;headerlink&quot; title=&quot;起源&quot;&gt;&lt;/a&gt;起源&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;因为简单免费而且访问速度快（比我自己的阿里云快多了【翻白眼】），所以越来越多的人使用&lt;code&gt;Github Pages&lt;/code&gt;搭建技术博客。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：也可以绑定自己的域名。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;两个星期之前，自己才通过朋友的博客知道这个好东西。&lt;/p&gt;
-&lt;p&gt;官方提供&lt;code&gt;Jekyll&lt;/code&gt;的支持,可以快速搭建不用到数据库的博客。用法是配置好之后，每次将写好的博客&lt;code&gt;markdown&lt;/code&gt;文件上&lt;code&gt;push&lt;/code&gt;到&lt;code&gt;github&lt;/code&gt;里面。&lt;/p&gt;
-&lt;p&gt;不过当时也没过多在意，一是我自己有一个放在阿里云上的&lt;code&gt;wordpress&lt;/code&gt;博客，二是觉得每次还要上传文件嫌麻烦。&lt;/p&gt;
-&lt;p&gt;直到有一天我在&lt;code&gt;Youtube&lt;/code&gt;上看相声视频的时候给我推送了一个广告（不得不说广告投得蛮准的，很多时候我都把广告看完了，尤其是那个参加空军的广告：）女王，我要当兵），是一个在线数据库服务，叫&lt;code&gt;firebase&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;firebase&lt;/code&gt;提供免费的基础服务，可以通过&lt;code&gt;js&lt;/code&gt;进行数据库操作。&lt;/p&gt;
-&lt;p&gt;我突然就想起来&lt;code&gt;Github Pages&lt;/code&gt;如果用上这个，不就有数据库了吗。&lt;/p&gt;
-&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;名字叫&lt;code&gt;Fire Blog&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;1 从&lt;a href=&quot;http://cheng-kang.github.com/fireblog&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;项目主页&lt;/a&gt;&lt;code&gt;fork&lt;/code&gt;项目代码&lt;/p&gt;
-&lt;p&gt;2 修改&lt;code&gt;fork&lt;/code&gt;下来的项目的项目名称为 &lt;code&gt;username.github.io&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;3 等待一两分钟，访问刚刚设置的&lt;code&gt;https://username.github.io&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;4 点击那个隐藏的后台登录入口&lt;/p&gt;
-&lt;p&gt;5 使用&lt;code&gt;Github&lt;/code&gt;账号登录&lt;/p&gt;
-&lt;p&gt;6 按要求修改配置文件&lt;/p&gt;
-&lt;p&gt;7 &lt;code&gt;Tada！&lt;/code&gt;然后你的博客就创建好了！&lt;/p&gt;
-&lt;h3 id=&quot;其他的话&quot;&gt;&lt;a href=&quot;#其他的话&quot; class=&quot;headerlink&quot; title=&quot;其他的话&quot;&gt;&lt;/a&gt;其他的话&lt;/h3&gt;&lt;p&gt;我自己还没跟开源项目挂上过勾。&lt;/p&gt;
-&lt;p&gt;我想开源项目应该就是能够帮上别人，也希望有人一起来完善。&lt;/p&gt;
-&lt;p&gt;这个项目的本意就是这样。&lt;/p&gt;
-&lt;p&gt;希望&lt;code&gt;Fire Blog&lt;/code&gt;成为大家的一个选择，也希望其他程序员来添砖加瓦、建议指正。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;起源&quot;&gt;&lt;a href=&quot;#起源&quot; class=&quot;headerlink&quot; title=&quot;起源&quot;&gt;&lt;/a&gt;起源&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Github&lt;/code&gt;提供了&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github Pages&lt;/a&gt;服务，相当于为你提供了服务器空间和还算比较好看的域名（如： &lt;a href=&quot;http://username.github.io&quot;&gt;http://username.github.io&lt;/a&gt;, &lt;a href=&quot;http://username.github.com），你可以利用它建立一个静态博客。&quot;&gt;http://username.github.com），你可以利用它建立一个静态博客。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;因为简单免费而且访问速度快（比我自己的阿里云快多了【翻白眼】），所以越来越多的人使用&lt;code&gt;Github Pages&lt;/code&gt;搭建技术博客。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：也可以绑定自己的域名。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;两个星期之前，自己才通过朋友的博客知道这个好东西。&lt;/p&gt;
-&lt;p&gt;官方提供&lt;code&gt;Jekyll&lt;/code&gt;的支持,可以快速搭建不用到数据库的博客。用法是配置好之后，每次将写好的博客&lt;code&gt;markdown&lt;/code&gt;文件上&lt;code&gt;push&lt;/code&gt;到&lt;code&gt;github&lt;/code&gt;里面。&lt;/p&gt;
-&lt;p&gt;不过当时也没过多在意，一是我自己有一个放在阿里云上的&lt;code&gt;wordpress&lt;/code&gt;博客，二是觉得每次还要上传文件嫌麻烦。&lt;/p&gt;
-&lt;p&gt;直到有一天我在&lt;code&gt;Youtube&lt;/code&gt;上看相声视频的时候给我推送了一个广告（不得不说广告投得蛮准的，很多时候我都把广告看完了，尤其是那个参加空军的广告：）女王，我要当兵），是一个在线数据库服务，叫&lt;code&gt;firebase&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;firebase&lt;/code&gt;提供免费的基础服务，可以通过&lt;code&gt;js&lt;/code&gt;进行数据库操作。&lt;/p&gt;
-&lt;p&gt;我突然就想起来&lt;code&gt;Github Pages&lt;/code&gt;如果用上这个，不就有数据库了吗。&lt;/p&gt;
-&lt;p&gt;于是决定用&lt;code&gt;angularjs&lt;/code&gt;+&lt;code&gt;firebase&lt;/code&gt;写一个博客框架，让不懂代码的朋友到时候只用&lt;code&gt;fork&lt;/code&gt;下项目代码，用自己的&lt;code&gt;github&lt;/code&gt;账号登录就可以创建好自己的博客。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://cheng-kang.github.io/categories/Tech/"/>
-    
-    
-      <category term="fireblog" scheme="http://cheng-kang.github.io/tags/fireblog/"/>
     
   </entry>
   
