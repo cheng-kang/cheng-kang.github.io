@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-05T10:23:55.000Z</updated>
+  <updated>2017-01-05T13:08:09.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://cheng-kang.github.io/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://cheng-kang.github.io/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
     <published>2017-01-05T10:14:32.000Z</published>
-    <updated>2017-01-05T10:23:55.000Z</updated>
+    <updated>2017-01-05T13:08:09.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
@@ -32,22 +32,20 @@
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
+&lt;pre&gt;&lt;code&gt;初始化 `init` 方法允许自定义： 
 
-    - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
-    - `speed` 弹幕的速度;
-    - `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
-&lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;ol&gt;
+- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+- `speed` 弹幕的速度;
+- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;添加一条弹幕 &lt;/p&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dm.add(with: “Wow so cool!!!”, at: 4)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt; 添加弹幕 &lt;code&gt;add&lt;/code&gt; 方法有两个必传参数，&lt;code&gt;text&lt;/code&gt;（弹幕文字） 和 &lt;code&gt;line&lt;/code&gt;（弹幕所在行）;可选参数 &lt;code&gt;hasBorder&lt;/code&gt; 用于设置该条弹幕是否有边框（默认 borderColor = UIColor.black.cgColor，borderWidth = 1）,默认值为 false;可选参数 &lt;code&gt;isAdvance&lt;/code&gt; 用于设置该条弹幕是否开启高级功能（目前支持修改 文字颜色 和 背景颜色），默认值为 false。&lt;/p&gt;
+&lt;p&gt; 如果需要弹幕出现在随机行，可以使用&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func addRandom(with text: String = &amp;quot;This is a test Danmu.&amp;quot;, at line: Int = 0, hasBorder: Bool = false, isAdvanced: Bool = false)`。&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre&gt;&lt;code&gt;`add` 方法有两个必传参数，`text`（弹幕文字） 和 `line`（弹幕所在行）;可选参数 `hasBorder` 用于设置该条弹幕是否有边框（默认 borderColor = UIColor.black.cgColor，borderWidth = 1）,默认值为 false;可选参数 `isAdvance` 用于设置该条弹幕是否开启高级功能（目前支持修改 文字颜色 和 背景颜色），默认值为 false。
-
-如果需要弹幕出现在随机行，可以使用
-`func addRandom(with text: String = &amp;quot;This is a test Danmu.&amp;quot;, at line: Int = 0, hasBorder: Bool = false, isAdvanced: Bool = false)`。
-&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;暂停/继续 弹幕&lt;/p&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dm.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dm.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
@@ -92,7 +90,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;设计思路&quot;&gt;&lt;a href=&quot;#设计思路&quot; class=&quot;headerlink&quot; title=&quot;设计思路&quot;&gt;&lt;/a&gt;设计思路&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 通过设置的字体大小计算文本显示高度 &lt;code&gt;lineHeight&lt;/code&gt;，通过 &lt;code&gt;numberOfLines = Int(floor((bottom - top) / lineHeight))&lt;/code&gt; 得到可以显示的弹幕行数；使用 &lt;code&gt;inUsingLines&lt;/code&gt;，&lt;code&gt;enteringTimers&lt;/code&gt; 和 &lt;code&gt;waitingQueues&lt;/code&gt; 来分别记录 正在使用的行（有尾部还没有完全进入视图的弹幕的行），正在进入视图的弹幕的计时器 和 正在等待进入的弹幕队列。&lt;/p&gt;
 &lt;p&gt;为了防止弹幕重叠，只有当 当前行中前一条弹幕尾部进入视图 时（之后），下一条弹幕才可以发射。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;enteringTimers&lt;/code&gt; 中每一个 Timer 都对应一条正在进入视图的弹幕，当计时器结束时，通过 NotificationCenter 发通知将该弹幕所在的行的状态更改为 false。&lt;/p&gt;
-&lt;p&gt;因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 &lt;a href=&quot;&quot;&gt;PauseableTimer&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 &lt;a href=&quot;http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《PauseableTimer》&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;为了避免手动发射弹幕和自动发射队列中的弹幕出现冲突（弹幕重叠），所有弹幕通过 &lt;code&gt;taskTimer&lt;/code&gt; 定时任务统一调度。&lt;/p&gt;
 &lt;h2 id=&quot;下一步-Next-Step&quot;&gt;&lt;a href=&quot;#下一步-Next-Step&quot; class=&quot;headerlink&quot; title=&quot;下一步 Next Step&quot;&gt;&lt;/a&gt;下一步 Next Step&lt;/h2&gt;&lt;p&gt;现在流行的弹幕功能越来越复杂、高级，DanmuManager 只是完成了最基础的滚动文字弹幕功能。未来可能会学习常见的弹幕，添加一些更高级的功能，比如 对滚动弹幕的操作，居中弹幕 等。    &lt;/p&gt;
 </content>
@@ -100,21 +98,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
-&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;/p&gt;
-&lt;h3 id=&quot;DanmuManager&quot;&gt;&lt;a href=&quot;#DanmuManager&quot; class=&quot;headerlink&quot; title=&quot;DanmuManager&quot;&gt;&lt;/a&gt;DanmuManager&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建 DanmuManager&lt;/p&gt;
- &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre&gt;&lt;code&gt;`init` 方法允许自定义： 
-
-    - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
-    - `speed` 弹幕的速度;
-    - `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;
     
     </summary>
     
@@ -130,10 +114,10 @@
     <link href="http://cheng-kang.github.io/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
     <id>http://cheng-kang.github.io/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
     <published>2017-01-05T07:31:35.000Z</published>
-    <updated>2017-01-05T07:32:45.000Z</updated>
+    <updated>2017-01-05T13:09:46.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;http://chengkang.me/2017/01/04/Pauseable%20Timer/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
 &lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
@@ -175,7 +159,7 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;http://chengkang.me/2017/01/04/Pauseable%20Timer/&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
 &lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
@@ -202,10 +186,11 @@
     <link href="http://cheng-kang.github.io/2017/01/04/Pauseable%20Timer/"/>
     <id>http://cheng-kang.github.io/2017/01/04/Pauseable Timer/</id>
     <published>2017-01-04T14:58:48.000Z</published>
-    <updated>2017-01-05T07:33:49.000Z</updated>
+    <updated>2017-01-05T13:08:29.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;Chinese Version: &lt;a href=&quot;&quot;&gt;Pauseable Timer 一个可暂停的计时器&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Chinese Version: &lt;a href=&quot;http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《Pauseable Timer 一个可暂停的计时器》&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
@@ -247,7 +232,8 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;Chinese Version: &lt;a href=&quot;&quot;&gt;Pauseable Timer 一个可暂停的计时器&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Chinese Version: &lt;a href=&quot;http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/&quot;&gt;《Pauseable Timer 一个可暂停的计时器》&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
@@ -850,9 +836,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -892,9 +878,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
     
   </entry>
   
@@ -962,9 +948,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
