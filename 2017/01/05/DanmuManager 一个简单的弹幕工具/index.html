@@ -3,6 +3,7 @@
 </blockquote>
 <h2 id="使用方法-Usage"><a href="#使用方法-Usage" class="headerlink" title="使用方法 Usage"></a>使用方法 Usage</h2><p><code>DanmuManager</code> 和 <code>VideoDanmuManager</code> 有不同的应用场景，后者用于视频弹幕。</p>
 <p>你可以运行项目中的测试，来了解二者的使用方法。</p>
+<a id="more"></a>
 <h3 id="DanmuManager"><a href="#DanmuManager" class="headerlink" title="DanmuManager"></a>DanmuManager</h3><ol>
 <li><p>创建 DanmuManager</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let dm = DanmuManager(with: self.view)</span><br></pre></td></tr></table></figure>
@@ -13,8 +14,7 @@
 - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
 - `speed` 弹幕的速度;
 - `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
-</code></pre><a id="more"></a>
-<ol>
+</code></pre><ol>
 <li><p>添加一条弹幕 </p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dm.add(with: “Wow so cool!!!”, at: 4)</span><br></pre></td></tr></table></figure>
 <p> 添加弹幕 <code>add</code> 方法有两个必传参数，<code>text</code>（弹幕文字） 和 <code>line</code>（弹幕所在行）;可选参数 <code>hasBorder</code> 用于设置该条弹幕是否有边框（默认 borderColor = UIColor.black.cgColor，borderWidth = 1）,默认值为 false;可选参数 <code>isAdvance</code> 用于设置该条弹幕是否开启高级功能（目前支持修改 文字颜色 和 背景颜色），默认值为 false。</p>
