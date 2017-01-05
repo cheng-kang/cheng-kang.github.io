@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-05T13:34:40.000Z</updated>
+  <updated>2017-01-05T13:54:40.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="http://cheng-kang.github.io/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://cheng-kang.github.io/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
     <published>2017-01-05T10:14:32.000Z</published>
-    <updated>2017-01-05T13:34:40.000Z</updated>
+    <updated>2017-01-05T13:54:40.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
 &lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-1.gif&quot; width=&quot;200&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-2.gif&quot; width=&quot;200&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-3.gif&quot; width=&quot;200&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;DanmuManager&quot;&gt;&lt;a href=&quot;#DanmuManager&quot; class=&quot;headerlink&quot; title=&quot;DanmuManager&quot;&gt;&lt;/a&gt;DanmuManager&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;创建 DanmuManager&lt;/p&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -117,13 +118,15 @@
     <link href="http://cheng-kang.github.io/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
     <id>http://cheng-kang.github.io/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
     <published>2017-01-05T07:31:35.000Z</published>
-    <updated>2017-01-05T13:09:46.000Z</updated>
+    <updated>2017-01-05T13:56:19.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;项目主页: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;br&gt;英文介绍： &lt;a href=&quot;http://chengkang.me/2017/01/04/Pauseable%20Timer/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Pauseable Timer&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
 &lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;“https://raw.githubusercontent.com/cheng-kang/PauseableTimer/master/PauseableTimer-1.gif”&quot; width=&quot;“200”&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;如何使用&quot;&gt;&lt;a href=&quot;#如何使用&quot; class=&quot;headerlink&quot; title=&quot;如何使用&quot;&gt;&lt;/a&gt;如何使用&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;创建一个计时器 Timer&lt;/p&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -132,7 +135,6 @@
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;暂停 然后 重新开始！&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -166,14 +168,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;PauseableTimer 是一个用 Swift 写的可暂停的计时器。&lt;/p&gt;
 &lt;p&gt;有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。&lt;/p&gt;
-&lt;h2 id=&quot;如何使用&quot;&gt;&lt;a href=&quot;#如何使用&quot; class=&quot;headerlink&quot; title=&quot;如何使用&quot;&gt;&lt;/a&gt;如何使用&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建一个计时器 Timer&lt;/p&gt;
- &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;创建一个可暂停的计时器 PauseableTimer，并将之前创建的 Timer 作为参数传入 &lt;/p&gt;
- &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;暂停 然后 重新开始！&lt;/p&gt;
+&lt;p&gt;&lt;img src=“https://raw.githubusercontent.com/cheng-kang/PauseableTimer/master/PauseableTimer-1.gif” width=“200”&gt;&lt;/p&gt;
     
     </summary>
     
@@ -189,7 +184,7 @@
     <link href="http://cheng-kang.github.io/2017/01/04/Pauseable%20Timer/"/>
     <id>http://cheng-kang.github.io/2017/01/04/Pauseable Timer/</id>
     <published>2017-01-04T14:58:48.000Z</published>
-    <updated>2017-01-05T13:08:29.000Z</updated>
+    <updated>2017-01-05T13:55:58.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;Project Page: &lt;a href=&quot;https://github.com/cheng-kang/PauseableTimer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;PauseableTimer Github Repository&lt;/a&gt;&lt;/p&gt;
@@ -197,6 +192,8 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;“https://raw.githubusercontent.com/cheng-kang/PauseableTimer/master/PauseableTimer-1.gif”&quot; width=&quot;“200”&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;How-to-Use&quot;&gt;&lt;a href=&quot;#How-to-Use&quot; class=&quot;headerlink&quot; title=&quot;How to Use&quot;&gt;&lt;/a&gt;How to Use&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Create a Timer&lt;/p&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -205,7 +202,6 @@
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Pause and Resume!&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
  &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pauseableTimer.resume()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
@@ -240,14 +236,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;Pauseable Timer is a pause-able timer written in Swift.&lt;/p&gt;
 &lt;p&gt;There are occassions when we need timers to pause, however, this feature is not implemented in Timer(Swift3). Thus, after some failed attempts, I create this pause-able timer which hopefully could be useful to you.&lt;/p&gt;
-&lt;h2 id=&quot;How-to-Use&quot;&gt;&lt;a href=&quot;#How-to-Use&quot; class=&quot;headerlink&quot; title=&quot;How to Use&quot;&gt;&lt;/a&gt;How to Use&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Create a Timer&lt;/p&gt;
- &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Create a Pauseable Timer and pass the timer as an argument.&lt;/p&gt;
- &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;e.g.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let pauseableTimer = PauseableTimer(timer: timer)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Pause and Resume!&lt;/p&gt;
+&lt;p&gt;&lt;img src=“https://raw.githubusercontent.com/cheng-kang/PauseableTimer/master/PauseableTimer-1.gif” width=“200”&gt;&lt;/p&gt;
     
     </summary>
     

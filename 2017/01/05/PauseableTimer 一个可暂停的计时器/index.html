@@ -3,6 +3,8 @@
 </blockquote>
 <p>PauseableTimer 是一个用 Swift 写的可暂停的计时器。</p>
 <p>有时候我们需要暂停计时器，但是这个功能在 Timer(Swift3) 中并没有被实现。因此，经过一些失败的尝试，我创建了这个可以暂停的计时器，希望对你也有用。</p>
+<p><img src="“https://raw.githubusercontent.com/cheng-kang/PauseableTimer/master/PauseableTimer-1.gif”" width="“200”"></p>
+<a id="more"></a>
 <h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><ol>
 <li><p>创建一个计时器 Timer</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: aSelector, userInfo: nil, repeats: true)</span><br></pre></td></tr></table></figure>
@@ -11,7 +13,6 @@
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">let pauseableTimer = PauseableTimer(timer: timer)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>暂停 然后 重新开始！</p>
-<a id="more"></a>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">e.g.</span><br><span class="line">pauseableTimer.pause()</span><br><span class="line">pauseableTimer.resume()</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
