@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-05T13:32:02.000Z</updated>
+  <updated>2017-01-05T13:32:43.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,20 +20,19 @@
     <link href="http://cheng-kang.github.io/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://cheng-kang.github.io/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
     <published>2017-01-05T10:14:32.000Z</published>
-    <updated>2017-01-05T13:32:02.000Z</updated>
+    <updated>2017-01-05T13:32:43.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
 &lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;/p&gt;
-&lt;!--more—&gt;
-
-### DanmuManager
-
-1. 创建 DanmuManager
-
-    &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h3 id=&quot;DanmuManager&quot;&gt;&lt;a href=&quot;#DanmuManager&quot; class=&quot;headerlink&quot; title=&quot;DanmuManager&quot;&gt;&lt;/a&gt;DanmuManager&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建 DanmuManager&lt;/p&gt;
+ &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dm = DanmuManager(with: self.view)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;pre&gt;&lt;code&gt;初始化 `init` 方法允许自定义： 
 
 - `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
@@ -92,15 +91,18 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;设计思路&quot;&gt;&lt;a href=&quot;#设计思路&quot; class=&quot;headerlink&quot; title=&quot;设计思路&quot;&gt;&lt;/a&gt;设计思路&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 通过设置的字体大小计算文本显示高度 &lt;code&gt;lineHeight&lt;/code&gt;，通过 &lt;code&gt;numberOfLines = Int(floor((bottom - top) / lineHeight))&lt;/code&gt; 得到可以显示的弹幕行数；使用 &lt;code&gt;inUsingLines&lt;/code&gt;，&lt;code&gt;enteringTimers&lt;/code&gt; 和 &lt;code&gt;waitingQueues&lt;/code&gt; 来分别记录 正在使用的行（有尾部还没有完全进入视图的弹幕的行），正在进入视图的弹幕的计时器 和 正在等待进入的弹幕队列。&lt;/p&gt;
 &lt;p&gt;为了防止弹幕重叠，只有当 当前行中前一条弹幕尾部进入视图 时（之后），下一条弹幕才可以发射。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;enteringTimers&lt;/code&gt; 中每一个 Timer 都对应一条正在进入视图的弹幕，当计时器结束时，通过 NotificationCenter 发通知将该弹幕所在的行的状态更改为 false。&lt;/p&gt;
-&lt;p&gt;因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 &lt;a href=&quot;http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/&quot;&gt;《PauseableTimer》&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 &lt;a href=&quot;http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;《PauseableTimer》&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;为了避免手动发射弹幕和自动发射队列中的弹幕出现冲突（弹幕重叠），所有弹幕通过 &lt;code&gt;taskTimer&lt;/code&gt; 定时任务统一调度。&lt;/p&gt;
 &lt;h2 id=&quot;下一步-Next-Step&quot;&gt;&lt;a href=&quot;#下一步-Next-Step&quot; class=&quot;headerlink&quot; title=&quot;下一步 Next Step&quot;&gt;&lt;/a&gt;下一步 Next Step&lt;/h2&gt;&lt;p&gt;现在流行的弹幕功能越来越复杂、高级，DanmuManager 只是完成了最基础的滚动文字弹幕功能。未来可能会学习常见的弹幕，添加一些更高级的功能，比如 对滚动弹幕的操作，居中弹幕 等。    &lt;/p&gt;
---&gt;</content>
+</content>
     
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;DanmuManager Github Repository&lt;/a&gt;
+&lt;p&gt;项目首页： &lt;a href=&quot;https://github.com/cheng-kang/DanmuManager&quot;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;使用方法-Usage&quot;&gt;&lt;a href=&quot;#使用方法-Usage&quot; class=&quot;headerlink&quot; title=&quot;使用方法 Usage&quot;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
+&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;/p&gt;
     
     </summary>
     
