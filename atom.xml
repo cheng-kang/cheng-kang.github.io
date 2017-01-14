@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-14T11:53:56.000Z</updated>
+  <updated>2017-01-14T11:58:48.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>QnA, 一个 Hexo FAQ 主题</title>
-    <link href="http://cheng-kang.github.io/2017/01/14/QnA,%20%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"/>
-    <id>http://cheng-kang.github.io/2017/01/14/QnA, 一个 Hexo FAQ 主题/</id>
+    <title>QnA，一个 Hexo FAQ 主题</title>
+    <link href="http://cheng-kang.github.io/2017/01/14/QnA%EF%BC%8C%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"/>
+    <id>http://cheng-kang.github.io/2017/01/14/QnA，一个 Hexo FAQ 主题/</id>
     <published>2017-01-14T11:47:03.000Z</published>
-    <updated>2017-01-14T11:53:56.000Z</updated>
+    <updated>2017-01-14T11:58:48.000Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;之前在 Gitbook 上创建了一个 FAQ 网站，但是 Gitbook 使用起来偏麻烦，而且主题不好看。预期创建一个 Gitbook 主题，不如创建一个 Hexo 主题，然后将网站部署到 Github 上。于是我便动手制作了这个主题。&lt;/p&gt;
@@ -29,6 +29,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/cheng-kang/hexo-theme-qna/master/QnA.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;为 Hexo 设计的『知识库』类主题。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;文档&quot;&gt;&lt;a href=&quot;#文档&quot; class=&quot;headerlink&quot; title=&quot;文档&quot;&gt;&lt;/a&gt;文档&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;./Documentation.md&quot;&gt;Documentation English Version&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -62,7 +63,11 @@
     
       &lt;blockquote&gt;
 &lt;p&gt;之前在 Gitbook 上创建了一个 FAQ 网站，但是 Gitbook 使用起来偏麻烦，而且主题不好看。预期创建一个 Gitbook 主题，不如创建一个 Hexo 主题，然后将网站部署到 Github 上。于是我便动手制作了这个主题。&lt;/p&gt;
-&lt;
+&lt;p&gt;这个主题的最初目的是为了服务这个网站 &lt;a href=&quot;http://chengkang.me/Swift-Newbie/&quot;&gt;Swift Newbie: 给 Swift 新手的知识库&lt;/a&gt;，对 Swift 学习感兴趣的同学可以点开看看，有意贡献的同学可以联系我 &lt;code&gt;hi@chengkang.me&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;项目主页：&lt;a href=&quot;https://github.com/cheng-kang/hexo-theme-qna&quot;&gt;《Theme QnA for Hexo》&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/cheng-kang/hexo-theme-qna/master/QnA.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;为 Hexo 设计的『知识库』类主题。&lt;/p&gt;
     
     </summary>
     
@@ -882,9 +887,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -924,9 +929,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
   </entry>
   
@@ -994,9 +999,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
-    
       <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
+    
+      <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
