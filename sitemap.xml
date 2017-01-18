@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chengkang.me/about/index.html</loc>
+    
+    <lastmod>2017-01-18T20:04:11.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chengkang.me/2017/01/18/Examples%20to%20understand%20how%20to%20find%20Nash%20equilibrium%20by%20eliminating%20%E2%80%9Cdominated%20strategies%E2%80%9D/</loc>
     
     <lastmod>2017-01-18T17:18:11.000Z</lastmod>
