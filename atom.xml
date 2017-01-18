@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://cheng-kang.github.io/"/>
-  <updated>2017-01-18T17:15:02.000Z</updated>
+  <updated>2017-01-18T17:18:11.000Z</updated>
   <id>http://cheng-kang.github.io/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="http://cheng-kang.github.io/2017/01/18/Examples%20to%20understand%20how%20to%20find%20Nash%20equilibrium%20by%20eliminating%20%E2%80%9Cdominated%20strategies%E2%80%9D/"/>
     <id>http://cheng-kang.github.io/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/</id>
     <published>2017-01-18T17:14:22.000Z</published>
-    <updated>2017-01-18T17:15:02.000Z</updated>
+    <updated>2017-01-18T17:18:11.000Z</updated>
     
     <content type="html">&lt;p&gt;This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what &lt;code&gt;dominated strategies&lt;/code&gt; are and especially what &lt;strong&gt;weakly dominated strategy&lt;/strong&gt; is.&lt;/p&gt;
 &lt;h2 id=&quot;Definition&quot;&gt;&lt;a href=&quot;#Definition&quot; class=&quot;headerlink&quot; title=&quot;Definition&quot;&gt;&lt;/a&gt;Definition&lt;/h2&gt;&lt;p&gt;Suppose &lt;em&gt;si&lt;/em&gt; and &lt;em&gt;s’i&lt;/em&gt; are two strategies for player &lt;em&gt;i&lt;/em&gt; in a normal form game.&lt;/p&gt;
 &lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;strictly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;strictly greater than&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;We call &lt;em&gt;s’i&lt;/em&gt; dominated strategy and &lt;em&gt;si&lt;/em&gt; dominant strategy.&lt;/p&gt;
 &lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;weakly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from chossing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;at least as great as&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;Remarks&quot;&gt;&lt;a href=&quot;#Remarks&quot; class=&quot;headerlink&quot; title=&quot;Remarks&quot;&gt;&lt;/a&gt;Remarks&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;If a unique strategy remains for the player, we call this the player’s dominant strategy.&lt;/li&gt;
 &lt;li&gt;If a unique strategy remains for all players, we call this strategy profile a dominant&lt;br&gt;strategy equilibrium.&lt;/li&gt;
@@ -125,7 +126,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what &lt;code&gt;domi
+      &lt;p&gt;This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what &lt;code&gt;dominated strategies&lt;/code&gt; are and especially what &lt;strong&gt;weakly dominated strategy&lt;/strong&gt; is.&lt;/p&gt;
+&lt;h2 id=&quot;Definition&quot;&gt;&lt;a href=&quot;#Definition&quot; class=&quot;headerlink&quot; title=&quot;Definition&quot;&gt;&lt;/a&gt;Definition&lt;/h2&gt;&lt;p&gt;Suppose &lt;em&gt;si&lt;/em&gt; and &lt;em&gt;s’i&lt;/em&gt; are two strategies for player &lt;em&gt;i&lt;/em&gt; in a normal form game.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;strictly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;strictly greater than&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;We call &lt;em&gt;s’i&lt;/em&gt; dominated strategy and &lt;em&gt;si&lt;/em&gt; dominant strategy.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;weakly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from chossing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;at least as great as&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
     
     </summary>
     
@@ -1008,9 +1013,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://cheng-kang.github.io/tags/UISrollView/"/>
     
@@ -1050,9 +1055,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="AutoLayout" scheme="http://cheng-kang.github.io/tags/AutoLayout/"/>
     
   </entry>
   
@@ -1120,9 +1125,9 @@
     
       <category term="iOS" scheme="http://cheng-kang.github.io/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://cheng-kang.github.io/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://cheng-kang.github.io/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://cheng-kang.github.io/tags/UIScrollView/"/>
     
