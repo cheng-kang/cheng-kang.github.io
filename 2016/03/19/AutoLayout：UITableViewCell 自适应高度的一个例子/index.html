@@ -1,4 +1,172 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> AutoLayout：UITableViewCell 自适应高度的一个例子 · CHENG KANG</title><meta name="description" content="AutoLayout：UITableViewCell 自适应高度的一个例子 - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">AutoLayout：UITableViewCell 自适应高度的一个例子</h1><div class="post-time">Mar 19, 2016</div><div class="post-content"><h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>我在模拟微博客户端。</p>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="目的我在模拟微博客户端。
+要实现：当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。当一条微博只包含一张图的时候，图片会比较大。
+AutoLayout：实现 一张大图 和 九宫格 的样式
+如图所示，九宫格图片为Nine Pics，底部按钮为3-button-panel（这个命名很奇怪我知道：D），单张大图为One Pic。
+九宫格每张图的大小是 75px/75px，上下左右">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AutoLayout：UITableViewCell 自适应高度的一个例子">
+<meta property="og:url" content="http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="目的我在模拟微博客户端。
+要实现：当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。当一条微博只包含一张图的时候，图片会比较大。
+AutoLayout：实现 一张大图 和 九宫格 的样式
+如图所示，九宫格图片为Nine Pics，底部按钮为3-button-panel（这个命名很奇怪我知道：D），单张大图为One Pic。
+九宫格每张图的大小是 75px/75px，上下左右">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2011.29.17%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.30%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.30%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.16%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2011.49.07%20PM.png">
+<meta property="og:updated_time" content="2016-03-21T03:19:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AutoLayout：UITableViewCell 自适应高度的一个例子">
+<meta name="twitter:description" content="目的我在模拟微博客户端。
+要实现：当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。当一条微博只包含一张图的时候，图片会比较大。
+AutoLayout：实现 一张大图 和 九宫格 的样式
+如图所示，九宫格图片为Nine Pics，底部按钮为3-button-panel（这个命名很奇怪我知道：D），单张大图为One Pic。
+九宫格每张图的大小是 75px/75px，上下左右">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>AutoLayout：UITableViewCell 自适应高度的一个例子</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+    <link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&text=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&is_video=false&description=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AutoLayout：UITableViewCell 自适应高度的一个例子&body=Check out this article: http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&name=AutoLayout：UITableViewCell 自适应高度的一个例子&description=&lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
+&lt;p&gt;要实现：&lt;br&gt;当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。&lt;br&gt;当一条微博只包含一张图的时候，图片会比较大。&lt;/p&gt;
+&lt;h3 id=&quot;AutoLayout：实现-一张大图-和-九宫格-的样式&quot;&gt;&lt;a href=&quot;#AutoLayout：实现-一张大图-和-九宫格-的样式&quot; class=&quot;headerlink&quot; title=&quot;AutoLayout：实现 一张大图 和 九宫格 的样式&quot;&gt;&lt;/a&gt;AutoLayout：实现 一张大图 和 九宫格 的样式&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如图所示，九宫格图片为&lt;code&gt;Nine Pics&lt;/code&gt;，底部按钮为&lt;code&gt;3-button-panel&lt;/code&gt;（这个命名很奇怪我知道：D），单张大图为&lt;code&gt;One Pic&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。&lt;/p&gt;
+&lt;p&gt;单张大图的长宽为 200px/200px。&lt;/p&gt;
+&lt;p&gt;先不管单张大图的&lt;code&gt;UIImageView&lt;/code&gt;，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 &lt;strong&gt;stackview&lt;/strong&gt;。&lt;br&gt;设置&lt;code&gt;Nine Pics&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;br&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AutoLayout：实现-一张大图-和-九宫格-的样式"><span class="toc-number">2.</span> <span class="toc-text">AutoLayout：实现 一张大图 和 九宫格 的样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九宫格图片数量变化时手动适应高度"><span class="toc-number">3.</span> <span class="toc-text">九宫格图片数量变化时手动适应高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成果"><span class="toc-number">4.</span> <span class="toc-text">成果</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        AutoLayout：UITableViewCell 自适应高度的一个例子
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-03-19T23:51:24.000Z" itemprop="datePublished">2016-03-19</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>, <a class="tag-link" href="/tags/九宫格/">九宫格</a>, <a class="tag-link" href="/tags/自适应高度/">自适应高度</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>我在模拟微博客户端。</p>
 <p>要实现：<br>当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。<br>当一条微博只包含一张图的时候，图片会比较大。</p>
 <h3 id="AutoLayout：实现-一张大图-和-九宫格-的样式"><a href="#AutoLayout：实现-一张大图-和-九宫格-的样式" class="headerlink" title="AutoLayout：实现 一张大图 和 九宫格 的样式"></a>AutoLayout：实现 一张大图 和 九宫格 的样式</h3><p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png" alt=""></p>
 <p>如图所示，九宫格图片为<code>Nine Pics</code>，底部按钮为<code>3-button-panel</code>（这个命名很奇怪我知道：D），单张大图为<code>One Pic</code>。</p>
@@ -21,22 +189,124 @@
 <p>隐藏多余的格子，然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.constraintButtonPanelAndNinePic.constant = -75</span><br></pre></td></tr></table></figure></p>
 <p>这个时候，<code>3-button-panel</code>和<code>Nine Pics</code>的相对位置就正确了。</p>
 <h3 id="成果"><a href="#成果" class="headerlink" title="成果"></a>成果</h3><p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.30%20PM.png" alt=""><br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.54.16%20PM.png" alt=""><br><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2011.49.07%20PM.png" alt=""></p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/03/20/AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）/" class="prev">PRVE</a><a href="/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/" class="next">NEXT</a></div><div data-thread-key="2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/" data-title="AutoLayout：UITableViewCell 自适应高度的一个例子" data-url="http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
-(function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
 
-</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
-var disqus_identifier = '2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/';
-var disqus_title = 'AutoLayout：UITableViewCell 自适应高度的一个例子';
-var disqus_url = 'http://cheng-kang.github.io/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2017 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#目的"><span class="toc-number">1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AutoLayout：实现-一张大图-和-九宫格-的样式"><span class="toc-number">2.</span> <span class="toc-text">AutoLayout：实现 一张大图 和 九宫格 的样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#九宫格图片数量变化时手动适应高度"><span class="toc-number">3.</span> <span class="toc-text">九宫格图片数量变化时手动适应高度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成果"><span class="toc-number">4.</span> <span class="toc-text">成果</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&text=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&is_video=false&description=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AutoLayout：UITableViewCell 自适应高度的一个例子&body=Check out this article: http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&title=AutoLayout：UITableViewCell 自适应高度的一个例子"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/&name=AutoLayout：UITableViewCell 自适应高度的一个例子&description=&lt;h3 id=&quot;目的&quot;&gt;&lt;a href=&quot;#目的&quot; class=&quot;headerlink&quot; title=&quot;目的&quot;&gt;&lt;/a&gt;目的&lt;/h3&gt;&lt;p&gt;我在模拟微博客户端。&lt;/p&gt;
+&lt;p&gt;要实现：&lt;br&gt;当一条微博包含 2-9 张图的时候，图片以九宫格形式展示（去除空白格子）。&lt;br&gt;当一条微博只包含一张图的时候，图片会比较大。&lt;/p&gt;
+&lt;h3 id=&quot;AutoLayout：实现-一张大图-和-九宫格-的样式&quot;&gt;&lt;a href=&quot;#AutoLayout：实现-一张大图-和-九宫格-的样式&quot; class=&quot;headerlink&quot; title=&quot;AutoLayout：实现 一张大图 和 九宫格 的样式&quot;&gt;&lt;/a&gt;AutoLayout：实现 一张大图 和 九宫格 的样式&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%2010.55.31%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如图所示，九宫格图片为&lt;code&gt;Nine Pics&lt;/code&gt;，底部按钮为&lt;code&gt;3-button-panel&lt;/code&gt;（这个命名很奇怪我知道：D），单张大图为&lt;code&gt;One Pic&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;九宫格每张图的大小是 75px/75px，上下左右有 4px 的间距，所以总长宽为 233px/233px。&lt;/p&gt;
+&lt;p&gt;单张大图的长宽为 200px/200px。&lt;/p&gt;
+&lt;p&gt;先不管单张大图的&lt;code&gt;UIImageView&lt;/code&gt;，将 view 里面其他元素通过 AutoLayout 设置好。九宫格的九张图片因为排布整齐，所以我直接用的一个 &lt;strong&gt;stackview&lt;/strong&gt;。&lt;br&gt;设置&lt;code&gt;Nine Pics&lt;/code&gt;和&lt;code&gt;3-button-panel&lt;/code&gt;的间距为 8px。&lt;br&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 程康·Ant
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    <script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'chengkang';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

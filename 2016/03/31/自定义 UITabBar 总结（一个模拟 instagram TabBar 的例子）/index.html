@@ -1,4 +1,205 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子） · CHENG KANG</title><meta name="description" content="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子） - 程康·Ant"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/progrant" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/cheng-kang" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）</h1><div class="post-time">Mar 31, 2016</div><div class="post-content"><blockquote>
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目 github 仓库：模拟 instagram
+
+引语我在练习 iOS 开发。
+碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。
+内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如比较重要的方法、比较重要的属性的重要性均是相对本文内容而言。
+要实现的结果如图：
+
+其中，点击中间按钮时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）">
+<meta property="og:url" content="http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="项目 github 仓库：模拟 instagram
+
+引语我在练习 iOS 开发。
+碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。
+内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如比较重要的方法、比较重要的属性的重要性均是相对本文内容而言。
+要实现的结果如图：
+
+其中，点击中间按钮时，">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.46.56%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.43.26%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.39.12%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.58.59%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen_Shot_2016-03-31_at_8_59_09_PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.20.49%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.28.11%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.28.19%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.34.25%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.40.26%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.40.45%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-1.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2011.40.42%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%209.50.54%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.01.19%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.14.04%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-2.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.24.06%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.38.58%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2010.54.50%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_tabbar-3.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%2011.25.41%20PM.png">
+<meta property="og:updated_time" content="2016-04-06T01:51:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）">
+<meta name="twitter:description" content="项目 github 仓库：模拟 instagram
+
+引语我在练习 iOS 开发。
+碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。
+内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如比较重要的方法、比较重要的属性的重要性均是相对本文内容而言。
+要实现的结果如图：
+
+其中，点击中间按钮时，">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.46.56%20PM.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+    <link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/04/03/实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&text=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&is_video=false&description=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）&body=Check out this article: http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&name=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）&description=&lt;blockquote&gt;
+&lt;p&gt;项目 github 仓库：&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Instagram&quot;&gt;模拟 instagram&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;引语&quot;&gt;&lt;a href=&quot;#引语&quot; class=&quot;headerlink&quot; title=&quot;引语&quot;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;我在练习 iOS 开发。&lt;/p&gt;
+&lt;p&gt;碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。&lt;/p&gt;
+&lt;p&gt;内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如&lt;code&gt;比较重要的方法&lt;/code&gt;、&lt;code&gt;比较重要的属性&lt;/code&gt;的重要性均是相对本文内容而言。&lt;/p&gt;
+&lt;p&gt;要实现的结果如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.46.56%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其中，点击中间按钮时，不激活那个 tab 页，而是执行自定义的任务。（因为 instagram 中间那个按钮功能就是和其他的不一样嘛。）&lt;/p&gt;
+&lt;h3 id=&quot;相关文档&quot;&gt;&lt;a href=&quot;#相关文档&quot; class=&quot;headerlink&quot; title=&quot;相关文档&quot;&gt;&lt;/a&gt;相关文档&lt;/h3&gt;&lt;p&gt;首先，敬上四篇相关文档：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/&quot;&gt;UITabBarController Class Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarControllerDelegate_Protocol/index.html#//apple_ref/occ/intf/UITabBarControllerDelegate&quot;&gt;UITabBarControllerDelegate Protocol Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBar_Class/index.html#//apple_ref/occ/cl/UITabBar&quot;&gt;UITabBar Class Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarItem_Class/index.html#//apple_ref/occ/cl/UITabBarItem&quot;&gt;UITabBarItem Class Reference&lt;/a&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引语"><span class="toc-number">1.</span> <span class="toc-text">引语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关文档"><span class="toc-number">2.</span> <span class="toc-text">相关文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UITabBarController、UITabBarControllerDelegate、UITabBar-和-UITabBarItem"><span class="toc-number">3.</span> <span class="toc-text">UITabBarController、UITabBarControllerDelegate、UITabBar 和 UITabBarItem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabBar-基本样式的设置"><span class="toc-number">4.</span> <span class="toc-text">TabBar 基本样式的设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabBar-个性化样式设置要求（大家好，重点要开始了：D）"><span class="toc-number">5.</span> <span class="toc-text">TabBar 个性化样式设置要求（大家好，重点要开始了：D）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在-UITabBarController-中修改样式"><span class="toc-number">6.</span> <span class="toc-text">如何在 UITabBarController 中修改样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何通过代码设置单个-TabBarItem-背景颜色"><span class="toc-number">7.</span> <span class="toc-text">如何通过代码设置单个 TabBarItem 背景颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何修改-TabBarItem-样式"><span class="toc-number">8.</span> <span class="toc-text">如何修改 TabBarItem 样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#imageWithRenderingMode（稍微详细的介绍）"><span class="toc-number">9.</span> <span class="toc-text">imageWithRenderingMode（稍微详细的介绍）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何自定义-TabBarItem-点击事件，UITabBarControllerDelegate"><span class="toc-number">10.</span> <span class="toc-text">如何自定义 TabBarItem 点击事件，UITabBarControllerDelegate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结束"><span class="toc-number">11.</span> <span class="toc-text">结束</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-03-31T22:48:38.000Z" itemprop="datePublished">2016-03-31</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>, <a class="tag-link" href="/tags/UITabBar/">UITabBar</a>, <a class="tag-link" href="/tags/UITabBarController/">UITabBarController</a>, <a class="tag-link" href="/tags/UITabBarControllerDelegate/">UITabBarControllerDelegate</a>, <a class="tag-link" href="/tags/UITabBatItem/">UITabBatItem</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
 <p>项目 github 仓库：<a href="https://github.com/cheng-kang/iosDev/tree/master/Instagram" target="_blank" rel="external">模拟 instagram</a></p>
 </blockquote>
 <h3 id="引语"><a href="#引语" class="headerlink" title="引语"></a>引语</h3><p>我在练习 iOS 开发。</p>
@@ -175,22 +376,132 @@
 <p>希望对大家有帮助。</p>
 <p>因为我也是刚开始自学 iOS 开发，遇到很多问题需要花很长时间去找答案。所以希望能写出一些有意义的总结，和其他初学者分享，减少大家找不到解决方案的烦恼。</p>
 <p>：D</p>
-</div></article></div></section><footer><div class="paginator"><a href="/2016/04/03/实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）/" class="prev">PRVE</a><a href="/2016/03/30/仿微博 iOS 客户端 TabBar 中间按钮/" class="next">NEXT</a></div><div data-thread-key="2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/" data-title="自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）" data-url="http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"chengkang"};
-(function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
 
-</script><div id="disqus_thread"></div><script>var disqus_shortname = 'chengkang';
-var disqus_identifier = '2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/';
-var disqus_title = '自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）';
-var disqus_url = 'http://cheng-kang.github.io/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//chengkang.disqus.com/count.js" async></script><div class="copyright"><p>© 2016 - 2017 <a href="http://cheng-kang.github.io">程康·Ant</a>, unless otherwise noted.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-75274957-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ae1a81e6256aab436489ff79379d128d";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script></body></html>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引语"><span class="toc-number">1.</span> <span class="toc-text">引语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关文档"><span class="toc-number">2.</span> <span class="toc-text">相关文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UITabBarController、UITabBarControllerDelegate、UITabBar-和-UITabBarItem"><span class="toc-number">3.</span> <span class="toc-text">UITabBarController、UITabBarControllerDelegate、UITabBar 和 UITabBarItem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabBar-基本样式的设置"><span class="toc-number">4.</span> <span class="toc-text">TabBar 基本样式的设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TabBar-个性化样式设置要求（大家好，重点要开始了：D）"><span class="toc-number">5.</span> <span class="toc-text">TabBar 个性化样式设置要求（大家好，重点要开始了：D）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在-UITabBarController-中修改样式"><span class="toc-number">6.</span> <span class="toc-text">如何在 UITabBarController 中修改样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何通过代码设置单个-TabBarItem-背景颜色"><span class="toc-number">7.</span> <span class="toc-text">如何通过代码设置单个 TabBarItem 背景颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何修改-TabBarItem-样式"><span class="toc-number">8.</span> <span class="toc-text">如何修改 TabBarItem 样式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#imageWithRenderingMode（稍微详细的介绍）"><span class="toc-number">9.</span> <span class="toc-text">imageWithRenderingMode（稍微详细的介绍）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何自定义-TabBarItem-点击事件，UITabBarControllerDelegate"><span class="toc-number">10.</span> <span class="toc-text">如何自定义 TabBarItem 点击事件，UITabBarControllerDelegate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结束"><span class="toc-number">11.</span> <span class="toc-text">结束</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&text=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&is_video=false&description=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）&body=Check out this article: http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&title=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2016/03/31/自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）/&name=自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）&description=&lt;blockquote&gt;
+&lt;p&gt;项目 github 仓库：&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/Instagram&quot;&gt;模拟 instagram&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;引语&quot;&gt;&lt;a href=&quot;#引语&quot; class=&quot;headerlink&quot; title=&quot;引语&quot;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;我在练习 iOS 开发。&lt;/p&gt;
+&lt;p&gt;碰到了跟 TabBar 有关的东西，希望自己尽量对 TabBar 的使用了解清楚而不是直接复制粘贴，所以整体研究一番，在此总结。&lt;/p&gt;
+&lt;p&gt;内容主要跟 TabBar 的样式修改有关，涉及到一点点点击事件。文中提到的诸如&lt;code&gt;比较重要的方法&lt;/code&gt;、&lt;code&gt;比较重要的属性&lt;/code&gt;的重要性均是相对本文内容而言。&lt;/p&gt;
+&lt;p&gt;要实现的结果如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-31%20at%208.46.56%20PM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;其中，点击中间按钮时，不激活那个 tab 页，而是执行自定义的任务。（因为 instagram 中间那个按钮功能就是和其他的不一样嘛。）&lt;/p&gt;
+&lt;h3 id=&quot;相关文档&quot;&gt;&lt;a href=&quot;#相关文档&quot; class=&quot;headerlink&quot; title=&quot;相关文档&quot;&gt;&lt;/a&gt;相关文档&lt;/h3&gt;&lt;p&gt;首先，敬上四篇相关文档：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarController_Class/&quot;&gt;UITabBarController Class Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarControllerDelegate_Protocol/index.html#//apple_ref/occ/intf/UITabBarControllerDelegate&quot;&gt;UITabBarControllerDelegate Protocol Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBar_Class/index.html#//apple_ref/occ/cl/UITabBar&quot;&gt;UITabBar Class Reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITabBarItem_Class/index.html#//apple_ref/occ/cl/UITabBarItem&quot;&gt;UITabBarItem Class Reference&lt;/a&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 程康·Ant
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    <script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'chengkang';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
