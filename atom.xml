@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-04-12T01:36:06.000Z</updated>
+  <updated>2017-04-14T21:36:51.000Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -20,12 +20,13 @@
     <link href="http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/"/>
     <id>http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/</id>
     <published>2017-04-12T01:33:17.000Z</published>
-    <updated>2017-04-12T01:36:06.000Z</updated>
+    <updated>2017-04-14T21:36:51.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>A react-native marquee label component.</p>
 <p>一个 react-native 跑马灯文字组件。</p>
 </blockquote>
+<p>If you need a vertical marquee label, please use <a href="https://github.com/cheng-kang/react-native-lahk-marquee-label-vertical" target="_blank" rel="external">react-native-lahk-marquee-label-vertical</a>.</p>
 <p><a href="https://badge.fury.io/js/react-native-lahk-marquee-label" target="_blank" rel="external"><img src="https://badge.fury.io/js/react-native-lahk-marquee-label.svg" alt="npm version"></a></p>
 <h2 id="Anchors"><a href="#Anchors" class="headerlink" title="Anchors"></a>Anchors</h2><ol>
 <li><a href="#desc">Desc</a></li>
@@ -85,7 +86,7 @@
 &lt;p&gt;A react-native marquee label component.&lt;/p&gt;
 &lt;p&gt;一个 react-native 跑马灯文字组件。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;a href=&quot;https://badge.fury.io/
+&lt;p&gt;If you need a vertical marquee 
     
     </summary>
     
