@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-04-14T21:36:51.000Z</updated>
+  <updated>2017-05-23T21:21:36.000Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】Core Graphics，第一部分：序章</title>
+    <link href="http://chengkang.me/2017/05/23/core-graphics-part-1/"/>
+    <id>http://chengkang.me/2017/05/23/core-graphics-part-1/</id>
+    <published>2017-05-23T21:20:01.000Z</published>
+    <updated>2017-05-23T21:21:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>原文链接：<a href="https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/" target="_blank" rel="external">Core Graphics, Part 1: In the Beginning - Mark Dalrymple</a></p>
+</blockquote>
+<p>Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit 让你可以做动画。AVFoundation 让你可以播放视频。</p>
+<p>Core Graphics，或者它在市场中被人熟知的名字“Quartz”，是这个平台上最老的图形相关 API 之一。Quartz 构建了大多数二维的东西的基础。想要画些图形，给它们填充上渐变并且加上阴影？用 Core Graphics。想要在屏幕上合成图片？Core Graphics 能解决。想要创建 PDF？还是 Core Graphics。</p>
+<a id="more"></a>
+<p>CG 是一个相当大的 API，包括了从基本的几何数据结构（例如：点、大小、向量和矩形）和用于操作它们的方法、用于将像素渲染进图片或者屏幕的东西，一直到事件处理。你可以用 CG 来创建“events taps”，它能帮你监听和操作应用中的事件流（鼠标点击、屏幕点击、任意键盘按键）。</p>
+<p>好吧。最后一项是有点奇怪。为什么一个 graphics API 要处理用户事件呢？这啊和别的一样，还得从历史说起。而且了解一点历史也可以帮助理解为什么 CG 是那样工作的。</p>
+<h2 id="历史中的-PostScript"><a href="#历史中的-PostScript" class="headerlink" title="历史中的 PostScript"></a>历史中的 PostScript</h2><p>从时间的迷雾往回看（二十世纪八十年代，Duran Duran 还在上升期时），graphic API 相比今天还非常初级。你能做的只有从有限的色盘中挑选颜色、绘制独立的像素点、连线和画一些基本的图形比如矩形和椭圆。你可以设置剪切范围来告诉别人，“嘿，这儿不能画，”而且有时候你会有一些不受控的特性比如调整线有多宽。经常会有一些“像素位块传输”的功能用于将像素块到处复制。Mac 上的 QuickDraw 有一个很酷的功能叫做 <code>regions</code>，它能让你创建任意形状的区域然后使用它们来绘制、剪切、绘制轮廓或者 hit -test。不过基本上，当时的 API 都是面向像素的。</p>
+<p>1985 年，Apple 发布了 LaserWriter，一个是其链接的计算机价格两倍的打印机。它包含一个比其链接的计算机更强劲的微处理器，以及一个 12 倍的 RAM。归功于一个叫做 PostScript 的技术，这款打印机（在当时）制作出了魅力惊人的打印制品。</p>
+<p>PostScript 是一个来自 Adobe 的基于栈的计算机语言，与 FORTH 类似。PostScript， 这种技术，是为了创建矢量图（艺术的数学描述）而非基于像素。在 LaserWriter 中内嵌了一个 PostScript 解释器，因此当 Mac 上的程序想要打印什么东西的时候，这个程序（或者某个打印机驱动）将会生成一段程序代码，将其载入打印机并执行。</p>
+<p>下面是一个 PostScript 代码的例子以及结果图像：</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/postscript-code.png" alt=""></p>
+<p>你可以在 <a href="https://github.com/markd2/CGPS" target="_blank" rel="external">Github</a> 上找到这个项目。</p>
+<p>将页面用代码形式来展现是一个非常重要的设计上的决策。这使得程序可以以算法的形式展现页面中的内容，因此用于执行这段程序的设备能够用其最大分辨率来绘制页面。对于当时大多数打印机，这个值是 300dpi。对于其他的，1200dpi。它们都是由同样的生成的程序绘制的。</p>
+<p>除了渲染页面，PostScript 是图灵完备的，并且可以被当作通用编程语言。你甚至可以用它写 Web Server。</p>
+<h2 id="Companion-CuBEs"><a href="#Companion-CuBEs" class="headerlink" title="Companion CuBEs"></a>Companion CuBEs</h2><p>NeXT 工程师在设计他们的系统时，他们选择了 PostScript 作为渲染模型。Display PostScript，简称 DPS，扩展了 PostScript 模型，使其能够在窗口化的计算机显示器工作。不过其核心仍是一个 PostScript 解释器。NeXT 的应用可以用 PostScript 代码实现其屏幕绘制，并且用同一段代码进行打印。你同样也可以用 C 函数来包裹 postScript （使用一个叫 pswrap 的程序）以从应用代码中调用。</p>
+<p>Display PostScript 是用户交互的基础。事件（鼠标、键盘、更新等等）通过 DPS 系统然后被分发到应用中去。</p>
+<p>NeXT 并非当时唯一使用 PostScript 的窗口化系统。Sun 的 NeWS（除了名字像之外，和 NeXT 没有一点关系）也有一个用于驱动系统中用户交互的内嵌 PostScript 解释器。</p>
+<h2 id="说说-Quartz"><a href="#说说-Quartz" class="headerlink" title="说说 Quartz"></a>说说 Quartz</h2><p>为什么 OS X 和 iOS 不用 Display PostScript？基本上是钱的原因。Adobe 收取 Display PostScript 证书费用。同时，Apple 也是有名的想要尽可能有更多他们自有的技术栈。通过实现 PostScript 绘制模型，但并不真正使用 PostScript，他们既避免了付证书费也有了 Core Graphics 的代码。</p>
+<p>有一种普遍的说法是 Quartz 是“基于” PDF 的，在某种意义上的确如此。PDF 就是没有任意编程功能的 PostScript 绘制模型。Quartz 被设计成其 API 的典型使用和 PDF 本身支持的非常接近，以至于在这个平台上创建 PDF 几乎不费吹灰之力。</p>
+<p>哪怕 Display PostScript 被 Quartz 取代了，同样的基本原理被保留下来了，包括事件处理。看看 Cocoa 栈轨迹的 18 帧吧。DPS 仍在！</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/stack-trace.png" alt=""></p>
+<h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>我会在接下来的几周讲到更多 Quartz 细节的各个方面，但是有一个重点是用于“画东西”的那段代码被从实际图形渲染中抽象出来了。“渲染”可以是“让东西在 NSView 中显示”，或者“让东西显示在 UIImage 里面”，甚至是“让东西显示在 PDF 中”。</p>
+<p>你所有的 CG 绘制都在一个“context（上下文）”中执行，它是数据结构和用于控制如何绘制的方法的指针的集合。</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/output.png" alt=""></p>
+<p>Context 有很多种，比如（在 Mac 上）有 NSWindowGraphicsContext。这一特定 context 获取你的代码安排的绘制指令，然后在你的应用的地址空间里中一块共享内存里绘制出像素。这一段内存也与窗口服务器共享。窗口服务器将所有正在运行的应用的窗口表面样子一起展示在屏幕上。</p>
+<p>另一种 CG Context 是一种图片 context。任何你运行的绘制代码都会将像素布置在一个位图图片中。你可以使用这个图片来绘入其它 context 中或者作为 PNG 或 JPEG 保存在文件系统。同样也有一个 PDF context。运行的绘制代码不会变成像素，而是变成了 PDF 命令并被存进一个文件中。此后，PDF查看器可以使用那些 PDF 命令来渲染成某种可以查看的东西。</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/different-results.png" alt=""></p>
+<h2 id="接下来"><a href="#接下来" class="headerlink" title="接下来"></a>接下来</h2><p>下一次，更近距离来看看 context，以及一些 Core Graphics 中的便捷 API。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/&quot;&gt;Core Graphics, Part 1: In the Beginning - Mark Dalrymple&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit 让你可以做动画。AVFoundation 让你可以播放视频。&lt;/p&gt;
+&lt;p&gt;Core Graphics，或者它在市场中被人熟知的名字“Quartz”，是这个平台上最老的图形相关 API 之一。Quartz 构建了大多数二维的东西的基础。想要画些图形，给它们填充上渐变并且加上阴影？用 Core Graphics。想要在屏幕上合成图片？Core Graphics 能解决。想要创建 PDF？还是 Core Graphics。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
+    
+      <category term="Core Graphics" scheme="http://chengkang.me/tags/Core-Graphics/"/>
+    
+  </entry>
   
   <entry>
     <title>react-native-lahk-marquee-label（跑马灯文字组件）</title>
@@ -1126,9 +1182,9 @@
     
       <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://chengkang.me/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://chengkang.me/tags/UITableView/"/>
     
       <category term="UISrollView" scheme="http://chengkang.me/tags/UISrollView/"/>
     
@@ -1168,9 +1224,9 @@
     
       <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
     
-      <category term="AutoLayout" scheme="http://chengkang.me/tags/AutoLayout/"/>
-    
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
+    
+      <category term="AutoLayout" scheme="http://chengkang.me/tags/AutoLayout/"/>
     
   </entry>
   
@@ -1238,9 +1294,9 @@
     
       <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
     
-      <category term="UITableView" scheme="http://chengkang.me/tags/UITableView/"/>
-    
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
+    
+      <category term="UITableView" scheme="http://chengkang.me/tags/UITableView/"/>
     
       <category term="UIScrollView" scheme="http://chengkang.me/tags/UIScrollView/"/>
     
@@ -1620,89 +1676,6 @@
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
     
       <category term="UITabBar" scheme="http://chengkang.me/tags/UITabBar/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【译】iOS 基础：Frames、Bounds 和 CGGeometry</title>
-    <link href="http://chengkang.me/2016/03/26/%E3%80%90%E8%AF%91%E3%80%91iOS%20%E5%9F%BA%E7%A1%80%EF%BC%9AFrames%E3%80%81Bounds%20%E5%92%8C%20CGGeometry/"/>
-    <id>http://chengkang.me/2016/03/26/【译】iOS 基础：Frames、Bounds 和 CGGeometry/</id>
-    <published>2016-03-26T19:35:02.000Z</published>
-    <updated>2016-03-26T19:36:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>原文：<a href="http://code.tutsplus.com/tutorials/ios-fundamentals-frames-bounds-and-cggeometry--cms-21196" target="_blank" rel="external">《iOS Fundamentals: Frames, Bounds, and CGGeometry》</a><br>程康，2016 年 3 月 26 日</p>
-</blockquote>
-<p>如果你习惯支持点语法的语言，要搞清楚<code>CGPoint</code>、<code>CGSize</code>和<code>CGRect</code>并不难。不过编程式定位视图或者编写绘图代码一般都很长，因此变得很难读明白。</p>
-<p>在这个教程里，我希望能澄清一些对 frames 和 bounds 的误解，并且介绍一下<strong>CGGeometry</strong>，它是一个结构体、常量和功能的集合，能让你更轻松地运用<code>CGPoint</code>，<code>CGSize</code>和<code>CGRect</code>。</p>
-<h3 id="1-数据类型"><a href="#1-数据类型" class="headerlink" title="1.数据类型"></a>1.数据类型</h3><p>如果你刚开始接触 iOS 或者 OS X 开发，你可能会想<code>CGPoint</code>、<code>CGSize</code>和<code>CGRect</code>到底是什么。CGGeometry Reference 定义了一系列几何图元（geometric primitives）或者说结构，我们现在关注的是其中的<code>CGPoint</code>、<code>CGSize</code>和<code>CGRect</code>。</p>
-<p>大多数人应该知道，<code>CGPoint</code>是定义了坐标系中一个点的 C 结构体。这个坐标系的原点在 iOS 的左上方以及 OS X 的左下方。换句话说，纵轴方向在 iOS 和 OS X 上不一样。</p>
-<p><code>CGSize</code>是另一个简单的 C 结构体，它定义了一个宽度值（width）和高度值（height）。<code>CGRect</code>包含一个<code>origin</code>（原点）字段、一个<code>CGPoint</code>和一个<code>size</code>（大小）字段，即一个<code>CGSize</code>。<code>origin</code>（原点）和<code>size</code>（大小）字段一起决定了一个矩形的位置和大小。</p>
-<p>CGGeometry Reference 也定义了其他类型，例如<code>CGFloat</code>和<code>CGVector</code>。<code>CGFloat</code>就是一个<code>float</code>（单精度浮点型）或者<code>double</code>(双精度浮点型)的<code>typedef</code>（类型重定义），是哪一种取决于应用运行的机器结构是 32 位还是 64 位。<br><a id="more"></a></p>
-<h3 id="2-Frames-和-Bounds"><a href="#2-Frames-和-Bounds" class="headerlink" title="2.Frames 和 Bounds"></a>2.Frames 和 Bounds</h3><p>第一个要搞清楚的是一个视图的<code>frame</code>和<code>bounds</code>之间的区别，因为这困扰着很多 iOS 入门开发者。不过这个区别也不复杂。</p>
-<p>在 iOS 和 OS X 中，一个应用有多个坐标系。比如，在 iOS 中应用窗口定位在屏幕的坐标系，而窗口的每一个子视图定位在窗口的坐标系。换句话说，一个视图的子视图总是定位在该视图的坐标系中。</p>
-<p><strong>Frames</strong></p>
-<p>如文档中说的，视图的<code>frame</code>是一个结构体，即一个<code>CGRect</code>,它定义了这个视图的大小和它在父视图中的位置，或者说父视图坐标系中的位置。看看下面的图应该就能明白了。</p>
-<p><img src="https://cms-assets.tutsplus.com/uploads/users/41/posts/21196/image/figure-1.jpg" alt=""></p>
-<p><strong>Bounds</strong></p>
-<p>视图的<code>bounds</code>属性定义了这个视图的大小和它在自身坐标系中的位置。这意味着大多数情况下一个视图的 bounds 的原点都是<code>{0,0}</code>，如下图。视图的<code>bounds</code>对于绘制这个视图很重要。</p>
-<p><img src="https://cms-assets.tutsplus.com/uploads/users/41/posts/21196/image/figure-2.jpg" alt=""></p>
-<p>当视图的<code>frame</code>属性被修改时，视图的<code>center</code>和<code>bounds</code>属性二者或者其一也同时被改变。</p>
-<h3 id="CGGeometry-Reference"><a href="#CGGeometry-Reference" class="headerlink" title="CGGeometry Reference"></a>CGGeometry Reference</h3><p><strong>方便的取值方法</strong><br>之前提到过，CGGeometry Reference 是一个让运用坐标和矩形更方便的结构体、常量和方法的集合。你可能碰到过类似的下面的代码片段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CGPoint point = CGPonitMake(self.view.frame.origin.x + self.view.frame.size.width, self.view.frame.origin.y + self.view.frame.size.height);</span><br></pre></td></tr></table></figure></p>
-<p>这样的片段不尽难阅读，而且过于冗长。我们可以用在 CGGeometry Reference 中定义的两个方便的方法重写这段代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CGRect frame = self.view.frame;</span><br><span class="line">CGPoint point = CGPointMake(CGRectGetMaxX(frame), CGRectGetMaxY(frame));</span><br></pre></td></tr></table></figure></p>
-<p>为了简化之前那段代码，我们把视图的<code>frame</code>储存到一个叫<code>frame</code>的变量中，并且使用了<code>CGRectGetMaxX</code>和<code>CGRectGetMaxY</code>两个方法。这两个方法的方法名解释了自己的功能。</p>
-<p>CGGeometry Reference 定义了返回一个矩形 x 轴坐标、y 轴坐标最小和最大值以及这个矩形中心坐标的方法。另外两个方便的取之方法是<code>CGRectGetWidth</code>和<code>CGRectGetHeight</code>。</p>
-<p><strong>创建结构体</strong></p>
-<p>当要创建<code>CGPoint</code>、<code>CGSize</code>和<code>CGRect</code>时，大多数人都用<code>CGPointMake</code>或者类似的方法。这些方法也被定义在 CGGeometry Reference 中。虽然它们的实现非常简单，它们特别有用并且让你少写一些代码。例如，<code>CGRectMake</code>是这样实现的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CGRectMake(CGFloat x, CGFloat y, CGFloat width, CGFloat height)</span><br><span class="line">&#123;</span><br><span class="line">	CGRect rect;</span><br><span class="line">	rect.origin.x = x; rect.origin.y = y;</span><br><span class="line">	rect.size.width = width; rect.size.height = height;</span><br><span class="line">	return rect;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>修改矩形</strong></p>
-<p>以上提到过的方法都是 iOS 开发者熟知的，它们减少了我们的代码量并且让它们可读性增加。不过，CGGeometry Reference 也定义了一切其他大家不太了解的方法。比如 CGGeometry Reference 定义了一堆修改<code>CGRect</code>结构的方法。让我们来看看其中一些。</p>
-<p><strong><code>CGRectUnion</code></strong><br><code>CGRectUnion</code>接受两个<code>CGRect</code>结构体作为参数并且返回一个能够包含这两个矩形的最小矩形。听起来可能没什么，我相信你也可以用几行代码轻松实现这个功能，不过 CGGeometry 做的是给你提供一些方法让你的代码更干净、可读性更强。</p>
-<p>如果你把下面代码片段加到一个 view controller 的<code>viewDidLoad</code>方法中，你将在模拟器中看到如下结果。那个灰色的矩形就是使用<code>CGRectUnion</code>的结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// CGRectUnion</span><br><span class="line">CGRect frame1 = CGRectMake(80.0, 100.0, 150.0, 240.0);</span><br><span class="line">CGRect frame2 = CGRectMake(140.0, 240.0, 120.0, 120.0);</span><br><span class="line">CGRect frame3 = CGRectUnion(frame1, frame2);</span><br><span class="line"> </span><br><span class="line">UIView *view1 = [[UIView alloc] initWithFrame:frame1];</span><br><span class="line">[view1 setBackgroundColor:[UIColor redColor]];</span><br><span class="line"> </span><br><span class="line">UIView *view2 = [[UIView alloc] initWithFrame:frame2];</span><br><span class="line">[view2 setBackgroundColor:[UIColor orangeColor]];</span><br><span class="line"> </span><br><span class="line">UIView *view3 = [[UIView alloc] initWithFrame:frame3];</span><br><span class="line">[view3 setBackgroundColor:[UIColor grayColor]];</span><br><span class="line"> </span><br><span class="line">[self.view addSubview:view3];</span><br><span class="line">[self.view addSubview:view2];</span><br><span class="line">[self.view addSubview:view1];</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://cms-assets.tutsplus.com/uploads/users/41/posts/21196/image/figure-3.jpg" alt=""></p>
-<p><strong><code>CGRectDivide</code></strong></p>
-<p>另一个有用的方法是<code>CGRectDivide</code>，它帮你把一个给定矩形分割成两个。看看下面的代码和截图来了解它是怎么运作的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// CGRectDivide</span><br><span class="line">CGRect frame = CGRectMake(10.0, 50.0, 300.0, 300.0);</span><br><span class="line">CGRect part1;</span><br><span class="line">CGRect part2;</span><br><span class="line">CGRectDivide(frame, &amp;part1, &amp;part2, 100.0, CGRectMaxYEdge);</span><br><span class="line"> </span><br><span class="line">UIView *view1 = [[UIView alloc] initWithFrame:frame];</span><br><span class="line">[view1 setBackgroundColor:[UIColor grayColor]];</span><br><span class="line"> </span><br><span class="line">UIView *view2 = [[UIView alloc] initWithFrame:part1];</span><br><span class="line">[view2 setBackgroundColor:[UIColor orangeColor]];</span><br><span class="line"> </span><br><span class="line">UIView *view3 = [[UIView alloc] initWithFrame:part2];</span><br><span class="line">[view3 setBackgroundColor:[UIColor redColor]];</span><br><span class="line"> </span><br><span class="line">[self.view addSubview:view1];</span><br><span class="line">[self.view addSubview:view2];</span><br><span class="line">[self.view addSubview:view3];</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://cms-assets.tutsplus.com/uploads/users/41/posts/21196/image/figure-4.jpg" alt=""></p>
-<p>如果你不使用<code>CGRectDivide</code>来计算红色和橙色矩形的话，你可能要多谢几十行代码。不信你就试试。</p>
-<p><strong>比较和包含</strong></p>
-<p>用下面六个方法来比较几何结构和检查包含关系非常简单。</p>
-<ul>
-<li><code>CGPointEqualToPoint</code></li>
-<li><code>CGSizeEqualToSize</code></li>
-<li><code>CGRectEqualToRect</code></li>
-<li><code>CGRectIntersectsRect</code></li>
-<li><code>CGRectContainsPoint</code></li>
-<li><code>CGRectContainsRect</code></li>
-</ul>
-<p>CGGeometry Reference 还有一些其他宝贝，比如<code>CGPointCreateDictionaryRepresentation</code>可以用来将一个 CGPoint 结构体转换为一个 <code>CGDictionaryRef</code>，<code>CGRectIsEmpty</code>可以用来检查一个矩形的宽高是否都为零。更多详情请看<a href="">《CGGeometry Reference 文档》</a>。</p>
-<h3 id="4-福利：打印日志"><a href="#4-福利：打印日志" class="headerlink" title="4.福利：打印日志"></a>4.福利：打印日志</h3><p>在 Xcode 控制台打印日志如果没有一些辅助方法的话很麻烦。幸运的是，UIKit 框架定义了一些让它变得很方便的方法。我天天用它们。看看下面的代码片段来了解它们是如何工作。并没有什么奇特的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CGPoint point = CGPointMake(10.0, 25.0);</span><br><span class="line">CGSize size = CGSizeMake(103.0, 223.0);</span><br><span class="line">CGRect frame = CGRectMake(point.x, point.y, size.width, size.height);</span><br><span class="line">NSLog(@&quot;\n%@\n%@\n%@&quot;, NSStringFromCGPoint(point), NSStringFromCGSize(size), NSStringFromCGRect(frame));</span><br></pre></td></tr></table></figure></p>
-<p>还有一些方便打印仿射变换（affine transforms）（<code>NSStringFromCGAffineTransform</code>）、边缘插入（<code>NSStringFromUIEdgeInsets</code>）、偏移（<code>NSStringFromUIOffset</code>）等的日志的方便方法。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>iOS SDK 包含了大量开发者们不了解的宝贝。我希望我给你们讲明白了 CGGeometry Reference 的实用性。一旦你开始使用它的那些方法，你就会开始问自己，以前没用它怎么活过来的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;原文：&lt;a href=&quot;http://code.tutsplus.com/tutorials/ios-fundamentals-frames-bounds-and-cggeometry--cms-21196&quot;&gt;《iOS Fundamentals: Frames, Bounds, and CGGeometry》&lt;/a&gt;&lt;br&gt;程康，2016 年 3 月 26 日&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;如果你习惯支持点语法的语言，要搞清楚&lt;code&gt;CGPoint&lt;/code&gt;、&lt;code&gt;CGSize&lt;/code&gt;和&lt;code&gt;CGRect&lt;/code&gt;并不难。不过编程式定位视图或者编写绘图代码一般都很长，因此变得很难读明白。&lt;/p&gt;
-&lt;p&gt;在这个教程里，我希望能澄清一些对 frames 和 bounds 的误解，并且介绍一下&lt;strong&gt;CGGeometry&lt;/strong&gt;，它是一个结构体、常量和功能的集合，能让你更轻松地运用&lt;code&gt;CGPoint&lt;/code&gt;，&lt;code&gt;CGSize&lt;/code&gt;和&lt;code&gt;CGRect&lt;/code&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;1-数据类型&quot;&gt;&lt;a href=&quot;#1-数据类型&quot; class=&quot;headerlink&quot; title=&quot;1.数据类型&quot;&gt;&lt;/a&gt;1.数据类型&lt;/h3&gt;&lt;p&gt;如果你刚开始接触 iOS 或者 OS X 开发，你可能会想&lt;code&gt;CGPoint&lt;/code&gt;、&lt;code&gt;CGSize&lt;/code&gt;和&lt;code&gt;CGRect&lt;/code&gt;到底是什么。CGGeometry Reference 定义了一系列几何图元（geometric primitives）或者说结构，我们现在关注的是其中的&lt;code&gt;CGPoint&lt;/code&gt;、&lt;code&gt;CGSize&lt;/code&gt;和&lt;code&gt;CGRect&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;大多数人应该知道，&lt;code&gt;CGPoint&lt;/code&gt;是定义了坐标系中一个点的 C 结构体。这个坐标系的原点在 iOS 的左上方以及 OS X 的左下方。换句话说，纵轴方向在 iOS 和 OS X 上不一样。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;CGSize&lt;/code&gt;是另一个简单的 C 结构体，它定义了一个宽度值（width）和高度值（height）。&lt;code&gt;CGRect&lt;/code&gt;包含一个&lt;code&gt;origin&lt;/code&gt;（原点）字段、一个&lt;code&gt;CGPoint&lt;/code&gt;和一个&lt;code&gt;size&lt;/code&gt;（大小）字段，即一个&lt;code&gt;CGSize&lt;/code&gt;。&lt;code&gt;origin&lt;/code&gt;（原点）和&lt;code&gt;size&lt;/code&gt;（大小）字段一起决定了一个矩形的位置和大小。&lt;/p&gt;
-&lt;p&gt;CGGeometry Reference 也定义了其他类型，例如&lt;code&gt;CGFloat&lt;/code&gt;和&lt;code&gt;CGVector&lt;/code&gt;。&lt;code&gt;CGFloat&lt;/code&gt;就是一个&lt;code&gt;float&lt;/code&gt;（单精度浮点型）或者&lt;code&gt;double&lt;/code&gt;(双精度浮点型)的&lt;code&gt;typedef&lt;/code&gt;（类型重定义），是哪一种取决于应用运行的机器结构是 32 位还是 64 位。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://chengkang.me/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
-    
-      <category term="CGGeometry" scheme="http://chengkang.me/tags/CGGeometry/"/>
-    
-      <category term="frame" scheme="http://chengkang.me/tags/frame/"/>
-    
-      <category term="bounds" scheme="http://chengkang.me/tags/bounds/"/>
     
   </entry>
   
