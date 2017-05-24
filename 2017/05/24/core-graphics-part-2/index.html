@@ -11,7 +11,7 @@
 context （上下文）就是 Quartz 的核心：你需要按照某种规范来与当前的 Core Graphics context 交互以真正绘制东西，因此熟悉它、它做什么以及为什么它是这样的是有益处的。
 Core Graphics 里面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Core Graphics, 第二部分：说说 context （上下文）">
+<meta property="og:title" content="【译】Core Graphics, 第二部分：说说 context （上下文）">
 <meta property="og:url" content="http://chengkang.me/2017/05/24/core-graphics-part-2/index.html">
 <meta property="og:site_name" content="CHENG KANG">
 <meta property="og:description" content="原文链接：Core Graphics, Part 2: Contextually Speaking看看上一篇吧：【译】Core Graphics，第一部分：序章
@@ -21,9 +21,9 @@ Core Graphics 里面">
 <meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/12/hat-path.png">
 <meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/12/gstates.png">
 <meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/12/good-vs-sloppy-drawing.png">
-<meta property="og:updated_time" content="2017-05-24T15:24:33.000Z">
+<meta property="og:updated_time" content="2017-05-24T15:33:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Core Graphics, 第二部分：说说 context （上下文）">
+<meta name="twitter:title" content="【译】Core Graphics, 第二部分：说说 context （上下文）">
 <meta name="twitter:description" content="原文链接：Core Graphics, Part 2: Contextually Speaking看看上一篇吧：【译】Core Graphics，第一部分：序章
 
 context （上下文）就是 Quartz 的核心：你需要按照某种规范来与当前的 Core Graphics context 交互以真正绘制东西，因此熟悉它、它做什么以及为什么它是这样的是有益处的。
@@ -48,7 +48,7 @@ Core Graphics 里面">
         
     
     <!-- title -->
-    <title>Core Graphics, 第二部分：说说 context （上下文）</title>
+    <title>【译】Core Graphics, 第二部分：说说 context （上下文）</title>
     <!-- styles -->
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/meslo-LG/styles.css">
@@ -93,6 +93,8 @@ Core Graphics 里面">
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2017/05/25/core-graphics-part-3/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
         
         <li><a class="icon" href="/2017/05/23/core-graphics-part-1/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
         
@@ -108,15 +110,15 @@ Core Graphics 里面">
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&text=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&is_video=false&description=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Core Graphics, 第二部分：说说 context （上下文）&body=Check out this article: http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&name=Core Graphics, 第二部分：说说 context （上下文）&description=&lt;blockquote&gt;
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&text=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&is_video=false&description=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【译】Core Graphics, 第二部分：说说 context （上下文）&body=Check out this article: http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&name=【译】Core Graphics, 第二部分：说说 context （上下文）&description=&lt;blockquote&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;https://www.bignerdranch.com/blog/core-graphics-part-2-contextually-speaking/&quot;&gt;Core Graphics, Part 2: Contextually Speaking&lt;/a&gt;&lt;br&gt;看看上一篇吧：&lt;a href=&quot;http://chengkang.me/2017/05/23/core-graphics-part-1/&quot;&gt;【译】Core Graphics，第一部分：序章&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;context （上下文）就是 Quartz 的核心：你需要按照某种规范来与当前的 Core Graphics context 交互以真正绘制东西，因此熟悉它、它做什么以及为什么它是这样的是有益处的。&lt;/p&gt;
@@ -138,7 +140,7 @@ Core Graphics 里面">
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Core Graphics, 第二部分：说说 context （上下文）
+        【译】Core Graphics, 第二部分：说说 context （上下文）
     </h1>
 
 
@@ -307,15 +309,15 @@ Core Graphics 里面">
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&text=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&is_video=false&description=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Core Graphics, 第二部分：说说 context （上下文）&body=Check out this article: http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&name=Core Graphics, 第二部分：说说 context （上下文）&description=&lt;blockquote&gt;
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&text=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&is_video=false&description=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【译】Core Graphics, 第二部分：说说 context （上下文）&body=Check out this article: http://chengkang.me/2017/05/24/core-graphics-part-2/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&title=【译】Core Graphics, 第二部分：说说 context （上下文）"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/05/24/core-graphics-part-2/&name=【译】Core Graphics, 第二部分：说说 context （上下文）&description=&lt;blockquote&gt;
 &lt;p&gt;原文链接：&lt;a href=&quot;https://www.bignerdranch.com/blog/core-graphics-part-2-contextually-speaking/&quot;&gt;Core Graphics, Part 2: Contextually Speaking&lt;/a&gt;&lt;br&gt;看看上一篇吧：&lt;a href=&quot;http://chengkang.me/2017/05/23/core-graphics-part-1/&quot;&gt;【译】Core Graphics，第一部分：序章&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;context （上下文）就是 Quartz 的核心：你需要按照某种规范来与当前的 Core Graphics context 交互以真正绘制东西，因此熟悉它、它做什么以及为什么它是这样的是有益处的。&lt;/p&gt;
