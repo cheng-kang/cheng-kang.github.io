@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-05-24T23:24:56.000Z</updated>
+  <updated>2017-05-25T19:11:24.000Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -14,6 +14,100 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【译】哥们儿，我的调用方法哪儿去了？</title>
+    <link href="http://chengkang.me/2017/05/25/dude-where-is-my-call/"/>
+    <id>http://chengkang.me/2017/05/25/dude-where-is-my-call/</id>
+    <published>2017-05-25T19:09:58.000Z</published>
+    <updated>2017-05-25T19:11:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>原文链接：<a href="https://www.bignerdranch.com/blog/dude-wheres-my-call/" target="_blank" rel="external">Dude, Where’s my Call?</a></p>
+</blockquote>
+<p>想象有一天你正在给 Swift 编译器喂一些看起来无害的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// xcrun -sdk macosx swiftc -emit-executable cg.swift</span><br><span class="line"></span><br><span class="line">import CoreGraphics</span><br><span class="line"></span><br><span class="line">let path = CGPathCreateMutable()</span><br><span class="line">CGPathMoveToPoint(path, nil, 0.0, 23.0)</span><br></pre></td></tr></table></figure>
+<p>然后一个冲击波打来：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cg.swift:7:12: error: &apos;CGPathCreateMutable()&apos; has been replaced by &apos;CGMutablePath.init()&apos;</span><br><span class="line">&lt;unknown&gt;:0: note: &apos;CGPathCreateMutable()&apos; has been explicitly marked unavailable here</span><br><span class="line">cg.swift:8:1: error: &apos;CGPathMoveToPoint&apos; has been replaced by instance method &apos;CGMutablePath.moveTo(_:x:y:)&apos;</span><br><span class="line">&lt;unknown&gt;:0: note: &apos;CGPathMoveToPoint&apos; has been explicitly marked unavailable here</span><br></pre></td></tr></table></figure>
+<p>它们哪儿去了？被重命名了。</p>
+<a id="more"></a>
+<p>Swift 3 一个重大的特性就是由 Swift-Evolution 提议 <a href="https://github.com/apple/swift-evolution/blob/master/proposals/0005-objective-c-name-translation.md" target="_blank" rel="external">SE-0005 (Better Translation of Objective-C APIs Into Swift)</a> 和 <a href="https://github.com/apple/swift-evolution/blob/master/proposals/0006-apply-api-guidelines-to-the-standard-library.md" target="_blank" rel="external">SE-0006 (Apply API Guidelines to the Standard Library)</a> 带来的”超级重命名“，这次超级重命名重命名了 C 和 Objective-C API 中的一些方法以给它们一种更 Swift 的感觉。Xcode 里面有一个移植器会将你的 Swift 2 代码转换成新的风格。它会执行很多机械的改变，给你留一些由于其他语言改变需要扫尾的工作，例如<a href="https://github.com/apple/swift-evolution/blob/master/proposals/0007-remove-c-style-for-loops.md" target="_blank" rel="external">移除 C 的 for 循环</a>。</p>
+<p>有一些重命名相当轻微，比如 NSView 中的这个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Swift 2</span><br><span class="line">let localPoint = someView.convertPoint(event.locationInWindow, fromView: nil)</span><br><span class="line"></span><br><span class="line">// Swift 3</span><br><span class="line">let localPoint = someView.convert(event.locationInWindow, from: nil)</span><br></pre></td></tr></table></figure>
+<p>在这里 <code>Point</code> 从方法名里移除了。你知道自己正在处理一个 point，所以没必要重复这一事实。<code>fromView</code> 重命名为了 <code>from</code> 因为 <code>View</code> 只是提供了冗余的类型信息，并没有让这个调用更清楚。</p>
+<p>其他的改变更大一些，比如 Core Graphics：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Swift 2 / (Objective-C)</span><br><span class="line">let path = CGPathCreateMutable()</span><br><span class="line">CGPathMoveToPoint (path, nil, points[i].x, points[i].y)</span><br><span class="line">CGPathAddLineToPoint (path, nil, points[i + 1].x, points[i + 1].y)</span><br><span class="line">CGContextAddPath (context, path)</span><br><span class="line">CGContextStrokePath (context)</span><br><span class="line"></span><br><span class="line">// Swift 3</span><br><span class="line">let path = CGMutablePath()</span><br><span class="line">path.move (to: points[i])</span><br><span class="line">path.addLine (to: points[i + 1])</span><br><span class="line"></span><br><span class="line">context.addPath (path)</span><br><span class="line">context.strokePath ()</span><br></pre></td></tr></table></figure>
+<p>喔噢。这变化太大了。这个 API 现在看起来就是让人喜欢的 Swift 风格 API 而不是旧式的 C API。Apple 在 Swift 里面完全改变了 Core Graphics API （还有 GCD）以让它们更好用。你在 Swift 3 里不能再用老式的 CG C 风格的 API，因此你需要开始习惯新的风格。我已经将 GrafDemo （我这些 <a href="http://chengkang.me/2017/05/23/core-graphics-part-1/">Core Graphics</a> 博文的示例程序） 在自动翻译器中跑过（两次）了。你可以在这个 <a href="https://github.com/markd2/GrafDemo/pull/17/files" target="_blank" rel="external">pull</a> 请求中看到 Swift 3 第一个版本前后的变化，在这个 <a href="https://github.com/markd2/GrafDemo/pull/18/files" target="_blank" rel="external">pull</a> 请求中看到 Xcode8b6 的 Swift 3 版本前后变化。</p>
+<h2 id="他们干什么了？"><a href="#他们干什么了？" class="headerlink" title="他们干什么了？"></a>他们干什么了？</h2><p>Core Graphics API 就是一堆全局变量和全局自由方法。就是说，方法并不是直接和某些比如说类或者结构体这样的实例绑定的。用 <code>CGContextAddArcToPoint</code> 来操作 <code>CGContext</code> 仅仅是一个传统，不过你传进去一个 <code>CGColor</code> 也不会有人拦着你。无非就是会在运行时爆炸而已。只是在 C 风格的面向对象你才有一个隐晦类型作为第一个参数传过去，作为某种神奇饼干。<code>CGContext*</code> 方法需要一个 <code>CGContextRef</code>。<code>CGColor*</code> 方法需要一个 <code>CGColorRef</code>。</p>
+<p>通过一些编译器的魔法，Apple 将这些隐晦引用转成了类，并且添加了一些方法给这些类以将其映射到 C API。当编译器看到类似这样的东西时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let path = CGMutablePath()</span><br><span class="line">path.addLines(between: self.points)</span><br><span class="line">context.addPath(path)</span><br><span class="line">context.strokePath()</span><br></pre></td></tr></table></figure>
+<p>实际上，在背后，正在发出这一系列调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let path = CGPathCreateMutable()</span><br><span class="line">CGPathAddLines(path, nil, self.points, self.points.count)</span><br><span class="line">CGContextAddPath(context, path)</span><br><span class="line">CGContextStrokePath(context)</span><br></pre></td></tr></table></figure>
+<h2 id="“新的”类"><a href="#“新的”类" class="headerlink" title="“新的”类"></a>“新的”类</h2><p>以下是已经接受 Swift 3.0 治疗的常见的隐晦类型 （忽略了一些专用的类型比如 <code>CGDisplayMode</code> 或者 <code>CGEvent</code>），还有一两个作为代表的方法：</p>
+<ul>
+<li><code>CGAffineTransform - translateBy(x:30, y:50), rotate(by: CGFloat.pi / 2.0)</code></li>
+<li><code>CGPath / CGMutablePath - contains(point, using: evenOdd), .addRelativeArc(center: x, radius: r, startAngle: sa, delta: deltaAngle)</code></li>
+<li><code>CGContext - context.addPath(path), context.clip(to: cgrectArray)</code></li>
+<li><code>CGBitmapContext (folded in to CGContext) - let c = CGContext(data: bytes, width: 30, height: 30, bitsPerComponent: 8, bytesPerRow: 120, space: colorspace, bitmapInfo: 0)</code></li>
+<li><code>CGColor - let color = CGColor(red: 1.0, green: 0.5, blue: 0.333, alpha: 1.0)</code></li>
+<li><code>CGFont - let font = CGFont(&quot;Helvetica&quot;), font.fullName</code></li>
+<li><code>CGImage - image.masking(imageMask), image.cropping(to: rect)</code></li>
+<li><code>CGLayer - let layer = GCLayer(context, size: size, auxilaryInfo: aux), layer.size</code></li>
+<li><code>CGPDFContext (folded in to CGContext) / CGPDFDocument - context.beginPDFPage(pageInfo)</code></li>
+</ul>
+<p><code>CGRect</code> 和 <code>CGPoint</code> 在 Swift 3 之前早已有了一些很不错的扩展。</p>
+<h2 id="怎么做到的？"><a href="#怎么做到的？" class="headerlink" title="怎么做到的？"></a>怎么做到的？</h2><p>编译器有一个内置的语法转换器，它将 Objective-C 的明明风格转换成更 Swift 些的形式。去掉重复的单词和那些仅仅是重复类型信息的单词。还去掉了一些之前是在方法调用左括号之前的单词并将它们移到括号里面作为参数标签。通过这样自动清理了一大堆调用方法。</p>
+<p>当然，人类喜欢搞一些微妙复杂的言辞，因此在 Swift 编译器里有一个允许手动重写自动翻译器翻译的部分的机制。这是具体的实现了（别在输出产品时依靠他们），不过他们提供了深入了解用于让现存 API 出现在 Swift 中所做的那些工作的机会。</p>
+<p>其中一个涉及到的机制是 ”overlay“，它是当你引入一个框架或者 C 库时编译器引用的第二个库。<a href="https://raw.githubusercontent.com/apple/swift/master/docs/Lexicon.rst" target="_blank" rel="external">Swift Lexicon</a> 将 overlay 形容为”当库在系统中不发被修改时在系统中增强和扩大这个库“。一些一直都存在很棒的 <code>CGRect</code> 和 <code>CGPoint</code> 扩展，例如<code>someRect.divide(30.0, fromEdge: .MinXEdge)</code>，怎么来的？他们来自 overlay。工具链想啊”噢，我看到你在链接 Core Graphics。让我再加点方便方法吧。“</p>
+<p>还有另外一个机制，<a href="https://github.com/apple/swift/tree/master/apinotes" target="_blank" rel="external">apinotes</a>，特别是 <a href="https://github.com/apple/swift/blob/master/apinotes/CoreGraphics.apinotes" target="_blank" rel="external">CoreGraphics.apinotes</a>，一字一词地控制着 Core Graphics 中地命名和可见性。</p>
+<p>例如，在 Swift 中像 <code>CGRectMake</code> 这样用来初始化基础结构体的调用没有作用，因为已经有它们的初始化方法了。所以就让这些调用方法不可用了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># The below are inline functions that are irrelevant due to memberwise inits</span><br><span class="line">- Name: CGPointMake</span><br><span class="line">  Availability: nonswift</span><br><span class="line">- Name: CGSizeMake</span><br><span class="line">  Availability: nonswift</span><br><span class="line">- Name: CGVectorMake</span><br><span class="line">  Availability: nonswift</span><br><span class="line">- Name: CGRectMake</span><br><span class="line">  Availability: nonswift</span><br></pre></td></tr></table></figure>
+<p>然后还有其他的映射——如果你在 Swift 中看到这个，那就调用那个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># The below are fixups that inference didn&apos;t quite do what we wanted, and are</span><br><span class="line"># pulled over from what used to be in the overlays</span><br><span class="line">- Name: CGRectIsNull</span><br><span class="line">  SwiftName: &quot;getter:CGRect.isNull(self:)&quot;</span><br><span class="line">- Name: CGRectIsEmpty</span><br><span class="line">  SwiftName: &quot;getter:CGRect.isEmpty(self:)&quot;</span><br></pre></td></tr></table></figure>
+<p>如果编译器看到了比如 <code>rect.isEmpty()</code> 这样的东西，它会发送一个请求给 <code>CGRectIsEmpty</code>。</p>
+<p>以下还是一些方法和功能的重命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># The below are attempts at providing better names than inference</span><br><span class="line">- Name: CGPointApplyAffineTransform</span><br><span class="line">  SwiftName: CGPoint.applying(self:_:)</span><br><span class="line">- Name: CGSizeApplyAffineTransform</span><br><span class="line">  SwiftName: CGSize.applying(self:_:)</span><br><span class="line">- Name: CGRectApplyAffineTransform</span><br><span class="line">  SwiftName: CGRect.applying(self:_:)</span><br></pre></td></tr></table></figure>
+<p>当编译器看到 <code>rect.applying(transform)</code>，它就知道调用 <code>CGRectApplyAffineTransform</code>。</p>
+<p>编译器只能自动重命名 Objective-C API，因为其遵循良好的系统命名法。C API （比如 Core Graphics）需要通过 overlay 和 apinote 来实现。</p>
+<h2 id="你能做什么"><a href="#你能做什么" class="headerlink" title="你能做什么"></a>你能做什么</h2><p>你可以通过 <code>NS_SWIFT_NAME</code> 做一些类似 apinote 机制的事情。你可以用这个宏来注释 C/Objective-C 头文件，表示在 Swift 里要用那个名字。编译器会对你的 <code>NS_SWIFT_NAME</code> 采用同样的替换（”如果看到 X，就调用 Y“）。</p>
+<p>例如，这是一个 Intents(Siri) 框架中的调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (void)resolveWorkoutNameForEndWorkout:(INEndWorkoutIntent *)intent</span><br><span class="line">                         withCompletion:(void (^)(INSpeakableStringResolutionResult *resolutionResult))completion</span><br><span class="line">     NS_SWIFT_NAME(resolveWorkoutName(forEndWorkout:with:));</span><br></pre></td></tr></table></figure>
+<p>从 Objective-C 中调用它的话看起来是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NSObject&lt;INEndWorkoutIntentHandling&gt; *workout = ...;</span><br><span class="line"></span><br><span class="line">[workout resolveWorkoutNameForEndWorkout: intent  withCompletion: ^(INSpeakableStringResolutionResult) &#123;</span><br><span class="line">     ...</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>而在 Swift 中是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let workout: INEndWorkoutIntentHandling = ...</span><br><span class="line">workout.resolveWorkoutName(forEndWorkout: workout) &#123;</span><br><span class="line">    response in</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>NS_SWIFT_NAME</code>，和 Objective-C 中的轻量级泛型，nullability 注释，以及 Swift 编译器中的自动 Objective-C API 重命名一起，可以让你立刻有一种接口都回到 Swift 世界中的感觉。</p>
+<p>使用自制的 overlay 和 apinote 是可以的，但那些原本是在 Swift 和 Apple 的 SDK 结合在一起时用的。你可以在你自己的框架中分发 apinote，但是 overlay 需要从 Swift 编译器树中编译。</p>
+<p>为了自己创建更 Swift 的 API，你必须尽可能地做好头文件旁听（比如添加 nullability 注释和 NS_SWIFT_NAME），然后在你的项目中放一些 Swift 文件来伪造 overlay 以覆盖任何多余情况。这些 ”overlay” 文件在有 ABI 稳定性前都需要作为源文件传送。</p>
+<p>轻掠过 iOS 10 头文件，看起来新的 API 喜欢用 <code>NS_SWIFT_NAME</code>，而老一点的更久远一些的 API 用 apinote。这样有一些道理因为这些头文件是在不同 Swift 版本中共享的，而给更久远的头文件可能添加新的 <code>NS_SWIFT_NAME</code> 可能会在编译器未改变的情况下破坏当前的代码。而且，apinote 可以由编译器团队或者社区成员添加，而头文件的改变需要拥有这个头文件的团队的注意。而那个团队可能已经准备好正要发布他们的功能了。</p>
+<h2 id="它好吗？"><a href="#它好吗？" class="headerlink" title="它好吗？"></a>它好吗？</h2><p>Swift 3 版本的 Core Graphics 绝对是更优秀更加 Swift 化。老实说，我也想在 Objective-C 上这样用。你可能因此失掉一些可 Google 性，并且需要当你在 Stack Overflow 的文章或者网上的教程中看到现有的 CG 代码时做一些脑内转换。不过那也不必这些日子普通的 Swift 代码所需的脑力运动多多少。</p>
+<p>有一些由于 CG 类似 OO 本质及其如何进入 Swift 中带来的 API 的不协调。在这个 <code>CoreGraphics.apinotes</code> 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- Name: CGBitmapContextGetWidth</span><br><span class="line">  SwiftName: getter:CGContext.width(self:)</span><br><span class="line">- Name: CGPDFContextBeginPage</span><br><span class="line">  SwiftName: CGContext.beginPDFPage(self:_:)</span><br></pre></td></tr></table></figure>
+<p><code>CGBitmapContext</code> 和 <code>CGPDFContext</code> 方法都被 <code>CGContext</code> 偷去了。这意味着你可以对任何 <code>CGContext</code> 要它的宽度，或者叫它开始一个 PDF 页面。如果你找一个非位图 context 要它的宽，你会得到这样的运行时错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Error&gt;: CGBitmapContextGetWidth: invalid context 0x100e6c3c0.</span><br><span class="line">If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.</span><br></pre></td></tr></table></figure>
+<p>因此即使这个 API 非常 Swift 化了，编译器并不能捕获某些类型的 API 错用。Xcode 会高高兴兴地给你其实实际上不合适的方法补全。某种意义上来说，C API 更安全一点，因为 <code>CGBitmapContextGetWidth</code> 很清楚地告诉你它要的是一个位图 context 即使第一个参数从技术上来说就还是一个 <code>CGContextRef</code>。我希望这仅仅是一个 bug （<a href="https://openradar.appspot.com/radar?id=6161102635270144" target="_blank" rel="external">rdar://27626070</a>）。</p>
+<p>如果你想了解更多想超级重命名以及像 NS_SWIFT_NAME 这样的工具，看看这个吧 <a href="https://developer.apple.com/videos/play/wwdc2016/403/" target="_blank" rel="external">WWDC 2016 Session 403 - iOS API Design Guidelines</a>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://www.bignerdranch.com/blog/dude-wheres-my-call/&quot;&gt;Dude, Where’s my Call?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;想象有一天你正在给 Swift 编译器喂一些看起来无害的代码。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;// xcrun -sdk macosx swiftc -emit-executable cg.swift&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;import CoreGraphics&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;let path = CGPathCreateMutable()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CGPathMoveToPoint(path, nil, 0.0, 23.0)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后一个冲击波打来：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cg.swift:7:12: error: &amp;apos;CGPathCreateMutable()&amp;apos; has been replaced by &amp;apos;CGMutablePath.init()&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;unknown&amp;gt;:0: note: &amp;apos;CGPathCreateMutable()&amp;apos; has been explicitly marked unavailable here&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cg.swift:8:1: error: &amp;apos;CGPathMoveToPoint&amp;apos; has been replaced by instance method &amp;apos;CGMutablePath.moveTo(_:x:y:)&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;unknown&amp;gt;:0: note: &amp;apos;CGPathMoveToPoint&amp;apos; has been explicitly marked unavailable here&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;它们哪儿去了？被重命名了。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
+    
+      <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
+    
+  </entry>
   
   <entry>
     <title>【译】Core Graphics，第三部分：线</title>
@@ -1525,83 +1619,6 @@
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
     
       <category term="UIScrollView" scheme="http://chengkang.me/tags/UIScrollView/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）</title>
-    <link href="http://chengkang.me/2016/04/03/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"/>
-    <id>http://chengkang.me/2016/04/03/实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）/</id>
-    <published>2016-04-03T22:51:08.000Z</published>
-    <updated>2016-04-06T01:51:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="目标和成果"><a href="#目标和成果" class="headerlink" title="目标和成果"></a>目标和成果</h3><p>instagram 截图如下：</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG" alt=""></p>
-<p>成果如下：</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif" alt=""></p>
-<p>要实现的内容：</p>
-<ol>
-<li>黑色半透明遮罩层</li>
-<li>弹出动画</li>
-<li>点击取消按钮或者背景菜单收回</li>
-</ol>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。</p>
-<p>之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarController 里面添加 subview。</p>
-<p>但有两点不同：</p>
-<ol>
-<li>上次是点击 tabBarItem 来执行弹出，这次要点击第一个 tab 页里的按钮。怎么样让 TabBarController 得到消息？</li>
-<li>上次弹出的按钮是独立的，这次弹出的菜单和指定的图片有关。所以需要有一个标志记录当前点击的是哪一张图片的 more 按钮。<a id="more"></a>
-<h3 id="解决方案-Part-1-创建菜单视图"><a href="#解决方案-Part-1-创建菜单视图" class="headerlink" title="解决方案 Part.1 创建菜单视图"></a>解决方案 Part.1 创建菜单视图</h3></li>
-</ol>
-<p>在 storyboard 拖进一个 ViewController，添加好内容，设置好约束。如图：</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.25.13%20PM.png" alt=""></p>
-<p>注意，这个 ViewController 的 root view 要讲背景设置为 黑色、透明度 30%，以模拟遮罩层。</p>
-<p>新建一个视图文件 BottomMenuView.swift，继承 UIViewController。修改刚才新建的 ViewController 类为 BottomMenuView，并设置 StoryboardID 为”BottomMenu”。</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.49.49%20PM.png" alt=""></p>
-<p>关联好 IBOutlet 对象和点击事件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">import Foundation</span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class BottomMenuView: UIViewController &#123;</span><br><span class="line"></span><br><span class="line">    @IBOutlet weak var menuBgView: UIView!</span><br><span class="line">    @IBOutlet weak var reportBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var shareToFacebookBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var tweetBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var copyURLBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var noticeBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var dismissBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var buttonPanel: UIView!</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">        //这里是设置颜色、按钮边框形状。</span><br><span class="line">        let maskPathAllCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.BottomLeft, .BottomRight, .TopLeft, .TopRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let maskPathTopCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.TopLeft, .TopRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let maskPathBottomCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.BottomLeft, .BottomRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let shapeAllCorner = CAShapeLayer()</span><br><span class="line">        shapeAllCorner.path = maskPathAllCorner.CGPath</span><br><span class="line">        let shapeTopCorner = CAShapeLayer()</span><br><span class="line">        shapeTopCorner.path = maskPathTopCorner.CGPath</span><br><span class="line">        let shapeBottomCorner = CAShapeLayer()</span><br><span class="line">        shapeBottomCorner.path = maskPathBottomCorner.CGPath</span><br><span class="line">        </span><br><span class="line">        reportBtn.layer.mask = shapeTopCorner</span><br><span class="line">        noticeBtn.layer.mask = shapeBottomCorner</span><br><span class="line">        dismissBtn.layer.mask = shapeAllCorner</span><br><span class="line">    &#125;</span><br><span class="line">    @IBAction func bgTapped(sender: UITapGestureRecognizer) &#123;</span><br><span class="line">        //给背景 view 添加一个点击事件</span><br><span class="line">        //当点击时，让菜单收回</span><br><span class="line">    &#125;</span><br><span class="line">    @IBAction func dismissBtnPressed(sender: UIButton) &#123;</span><br><span class="line">		    //点击事件，当点击时，让菜单收回</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在 TabBarViewController.swift 中，修改 viewDidLoad 方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidLoad() &#123;</span><br><span class="line">    super.viewDidLoad()</span><br><span class="line">    </span><br><span class="line">    self.tabBar.tintColor = UIColor.whiteColor()</span><br><span class="line">    for it in self.tabBar.items! &#123;</span><br><span class="line">        it.badgeValue = &quot;100&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    self.delegate = self</span><br><span class="line">    </span><br><span class="line">    //找到对应视图，并添加为 TabBarView 的子视图。子视图默认 alpha 值为0。</span><br><span class="line">    //这样每次只用修改 alpha 值来显示和隐藏，不用重新添加子视图。</span><br><span class="line">    self.bottomMenu = self.storyboard?.instantiateViewControllerWithIdentifier(&quot;BottomMenu&quot;) as! BottomMenuView</span><br><span class="line">    self.bottomMenu.modalTransitionStyle = .CoverVertical</span><br><span class="line">    self.view.addSubview(self.bottomMenu.view)</span><br><span class="line">    self.bottomMenu.view.alpha = 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="解决方案-Part-2-给-TabBarController-传递消息"><a href="#解决方案-Part-2-给-TabBarController-传递消息" class="headerlink" title="解决方案 Part.2 给 TabBarController 传递消息"></a>解决方案 Part.2 给 TabBarController 传递消息</h3><p>因为 more 按钮在 tab 页的 viewController 里面，我们暂时没办法直接执行 TabBarController 里面的函数，或者对它的 view 进行操作，所以要想个办法发送通知。</p>
-<p>发送通知当然是用 NSNotification。</p>
-<p><strong>发送显示菜单通知</strong></p>
-<p>在 firstViewController （即第一个 tab 页的 controller）中添加 more 按钮点击事件，在里面发送一个通知。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func moreButtonPressed(sender: UIButton) &#123;</span><br><span class="line">	NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;ShowBottomMenu&quot;, object: sender.tag))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在这个通知里面，object 是当前按钮的 tag 值。这是在每个 cell 初始化的时候，给当前 cell 的每个 button 的 tag 赋值为当前图片的 id，保证之后能够判断每个点击事件来自哪个 cell/图片。</p>
-<p><strong>发送收回菜单通知</strong></p>
-<p>回到 BottomMenuView.swift，在两个点击事件添加发送通知：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func bgTapped(sender: UITapGestureRecognizer) &#123;</span><br><span class="line">    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;DismissBottomMenu&quot;, object: nil))</span><br><span class="line">&#125;</span><br><span class="line">@IBAction func dismissBtnPressed(sender: UIButton) &#123;</span><br><span class="line">    </span><br><span class="line">    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;DismissBottomMenu&quot;, object: nil))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>接收通知</strong></p>
-<p>在 TabBarViewController.swift 的 viewDidLoad 方法中添加一下两行用于接收通知：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSNotificationCenter.defaultCenter().addObserver(self, selector: &quot;showBottomMenu:&quot;, name: &quot;ShowBottomMenu&quot;, object: nil)</span><br><span class="line">NSNotificationCenter.defaultCenter().addObserver(self, selector: &quot;dismissBottomMenu:&quot;, name: &quot;DismissBottomMenu&quot;, object: nil)</span><br></pre></td></tr></table></figure></p>
-<p>经过上面的步骤，TabBarViewController 就能接收到显示或者收回底部菜单的通知了。然后我们可以在自定义的函数里面编写显示和隐藏的动画。</p>
-<h3 id="解决方案-Part-3-显示-收回菜单动画"><a href="#解决方案-Part-3-显示-收回菜单动画" class="headerlink" title="解决方案 Part.3 显示/收回菜单动画"></a>解决方案 Part.3 显示/收回菜单动画</h3><p>这部分很简单啦。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">func showBottomMenu(notification: NSNotification) &#123;</span><br><span class="line">    //获取当前 section id</span><br><span class="line">    let tag = notification.object as! Int</span><br><span class="line">    print(tag)</span><br><span class="line">    </span><br><span class="line">    self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height</span><br><span class="line">    UIView.animateWithDuration(0.3) &#123; () -&gt; Void in</span><br><span class="line">        self.bottomMenu.view.alpha = 1</span><br><span class="line">        self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height - self.bottomMenu.buttonPanel.frame.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func dismissBottomMenu(notification: NSNotification) &#123;</span><br><span class="line">    print(notification.object)</span><br><span class="line">    UIView.animateWithDuration(0.3) &#123; () -&gt; Void in</span><br><span class="line">        self.bottomMenu.view.alpha = 0</span><br><span class="line">        self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在 showBottomMenu 方法中，获取到了一个 tag 值，这个是留着将来编写对应的菜单按钮点击事件的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;目标和成果&quot;&gt;&lt;a href=&quot;#目标和成果&quot; class=&quot;headerlink&quot; title=&quot;目标和成果&quot;&gt;&lt;/a&gt;目标和成果&lt;/h3&gt;&lt;p&gt;instagram 截图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;成果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;要实现的内容：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;黑色半透明遮罩层&lt;/li&gt;
-&lt;li&gt;弹出动画&lt;/li&gt;
-&lt;li&gt;点击取消按钮或者背景菜单收回&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot; title=&quot;思路&quot;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。&lt;/p&gt;
-&lt;p&gt;之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarController 里面添加 subview。&lt;/p&gt;
-&lt;p&gt;但有两点不同：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;上次是点击 tabBarItem 来执行弹出，这次要点击第一个 tab 页里的按钮。怎么样让 TabBarController 得到消息？&lt;/li&gt;
-&lt;li&gt;上次弹出的按钮是独立的，这次弹出的菜单和指定的图片有关。所以需要有一个标志记录当前点击的是哪一张图片的 more 按钮。
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://chengkang.me/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
-    
-      <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
     
   </entry>
   
