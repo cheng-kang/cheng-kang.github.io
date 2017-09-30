@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-06-06T19:43:34.000Z</updated>
+  <updated>2017-09-30T13:09:49.000Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -16,10 +16,126 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Firebase 安全与规则</title>
+    <link href="http://chengkang.me/2017/09/30/firebase-security-rules/"/>
+    <id>http://chengkang.me/2017/09/30/firebase-security-rules/</id>
+    <published>2017-09-30T13:08:37.000Z</published>
+    <updated>2017-09-30T13:09:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>原文链接：<a href="https://howtofirebase.com/firebase-security-rules-88d94606ce4a" target="_blank" rel="external">Firebase Security &amp; Rules</a></p>
+</blockquote>
+<p>Firebase 是一个可以从任意建立连接了的客户端访问的云数据库。因为任意客户端都可以连接到任意 Firebase [数据库]，你<strong>必须</strong>制定安全规则来保护你的数据。写不好恰当的安全规则会让你暴露在攻击中。不过别着急！你马上就能学到帮你紧紧锁住你的数据的全部知识了。</p>
+<p>保持安全规则简洁。安全规则可能变得过于复杂，并很快变得不受控制如果你的数据结构不够设计充分的话。这篇文章展示了一些“最佳”实践。估计你会讲其略作修改就用到你的生产应用中去……如果你选择采用这些模式，记得仔细想想背后的含义就行。确保在你开始搞事之前，读了整篇文章以及<a href="https://firebase.google.com/docs/database/security/" target="_blank" rel="external">安全规则文档</a>全文。</p>
+<a id="more"></a>
+<h2 id="安全规则是基于节点的"><a href="#安全规则是基于节点的" class="headerlink" title="安全规则是基于节点的"></a>安全规则是基于节点的</h2><p>安全规则由一个单独的 JSON 对象管理，你可以在你的实时数据库控制台编辑或者使用 Firebase CLI [来编辑]。还有一个额外惊喜，如果你的规则格式错误的话，控制台和 CLI 会给你警告。</p>
+<p>规则对象开始是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line"> &quot;rules&quot;: </span><br><span class="line">  &#123; </span><br><span class="line">    &quot;.read&quot;: false,</span><br><span class="line">    &quot;.write&quot;: false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个 JSON 对象的根节点必须命名为 <code>rules</code>。<code>rules</code> 节点默认不可读写。上面的立即显式地设置了 <code>.read</code> 和 <code>.write</code> 为 <code>false</code>，但是留个空白的规则也会有同样的效果。</p>
+<h2 id="级联规则"><a href="#级联规则" class="headerlink" title="级联规则"></a>级联规则</h2><p>Firebase 级联规则是这样的：授予一个父母节点读写权限会同时授予其所有子节点读写权限。</p>
+<p>再说一遍。</p>
+<p>Firebase 级联规则是这样的：授予一个父母节点读写权限会同时授予其所有子节点读写权限。</p>
+<p>这里有个巨大的“坑”，即使是对于有经验的 Firebase 用户来说也是这样。让我们回顾一下为什么 Firebase 这样来处理，以及我们可以如何绕过这个限制。</p>
+<p>首先，Firebase 本质上要求这样的一种行为。如果你在 Firebase 里面查询一个节点，你将得到其<em>所有</em>的子节点。Firebase 非常注重性能表现，它不会花时间来在每一个子节点上套用规则并且做出可能的从父母节点移除的动作。那样会大大影响其表现。</p>
+<p>第二，你可以通过根据你的权限结构来结构化你的数据以轻易地避免这些级联规则的问题。将你的数据嵌套在这样命名的高级别的节点中，比如 “admin”、“userReadable”、“userWritable” 或者 “userOwned”。将有着类似安全需求的对象分组在高级别节点下会有效地降低你需要维护的安全规则数量。</p>
+<p><strong>关于验证规则小窍门：</strong>我们之后会谈到验证规则。验证规则用于阻止用于父母节点写权限的用户写入其子节点。这样的话，当你授予了写权限给 <code>userOwned/preferences/{uid}</code>，你可以编写一条验证规则，比如说 <code>userOwned/preferences/{uid}/isAdmin</code>，这样就可以阻止用户更新 <code>isAdmin</code> 这个子节点。</p>
+<p>这种方法会带来一些后果，基本上任何在 <code>userOwned/preferences/{uid}</code> 的 <code>ref.set()</code> 的操作都会失败，因为你不能重写 <code>isAdmin</code> 这个子节点…你需要使用 <code>ref.update()</code> 来单独更新每一个子节点。将 <code>isAdmin</code> 节点移到你的数据结构的其他本就是用户可读不可写的部分会比较轻松。你可以将其命名为 <code>userReadable/preferences/{uid}/isAdmin</code>。</p>
+<h2 id="示例数据结构"><a href="#示例数据结构" class="headerlink" title="示例数据结构"></a>示例数据结构</h2><p>我们将使用以下数据结构来继续剩下的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;users&quot;: &#123;</span><br><span class="line">    &quot;kanyesUID&quot;: &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Kanye West&quot;,</span><br><span class="line">      &quot;email&quot;: &quot;kwest@gmail.com&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;taylorsUID&quot;: &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Taylor Swift&quot;,</span><br><span class="line">      &quot;email&quot;: &quot;tswift@gmail.com&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;seacrestsUID&quot;: &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Ryan Seacrest&quot;,</span><br><span class="line">      &quot;email&quot;: &quot;rseacrest@gmail.com&quot;,</span><br><span class="line">      &quot;isAdmin&quot;: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;userReadable&quot;: &#123;</span><br><span class="line">    &quot;tweets&quot;: &#123;</span><br><span class="line">      &quot;kanyesUID&quot;: &#123;</span><br><span class="line">        &quot;aPushKey&quot;: &#123;</span><br><span class="line">          &quot;text&quot;: &quot;Imma let you finish, but...&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;bPushKey&quot;: &#123;</span><br><span class="line">          &quot;text&quot;: &quot;Queen B shoulda received this award...&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;retweets&quot;: &#123;</span><br><span class="line">      &quot;taylorsUID&quot;: &#123;</span><br><span class="line">        &quot;cPushKey&quot;: &#123;</span><br><span class="line">          &quot;key&quot;: &quot;aPushKey&quot;,</span><br><span class="line">          &quot;text&quot;: &quot;Imma let you finish, but...&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;dPushKey&quot;: &#123;</span><br><span class="line">          &quot;key&quot;: &quot;bPushKey&quot;,</span><br><span class="line">          &quot;text&quot;: &quot;Queen B shoulda received this award...&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;userWriteable&quot;: &#123;</span><br><span class="line">    &quot;tweetQueue&quot;: &#123;</span><br><span class="line">      &quot;taylorsUID&quot;: &#123;</span><br><span class="line">        &quot;text&quot;: &quot;I 💕 you all like Kanye 💕&apos;s Kanye&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;userOwned&quot;: &#123;</span><br><span class="line">    &quot;preferences&quot;: &#123;</span><br><span class="line">      &quot;kanyesUID&quot;: &#123;</span><br><span class="line">        &quot;loveKanye&quot;: true</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;taylorsUID&quot;: &#123;</span><br><span class="line">        &quot;listenToHaters&quot;: false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些数据有四个顶级节点：</p>
+<ol>
+<li>users</li>
+<li>userReadable</li>
+<li>userWriteable</li>
+<li>userOwned</li>
+</ol>
+<p>我们有两个用户：</p>
+<ol>
+<li>Kanye West</li>
+<li>Taylor Swift</li>
+</ol>
+<p><code>users</code> 节点包含了基础的用户数据，在这个例子中就是邮箱地址。我们设想当 Kanye 登陆了我们的 app，他的 uid 是 <code>kanyesUID</code>。类似的，Taylor 得到了这个 uid <code>taylorsUID</code>。这些 UID 会组成我们安全模型的基础。</p>
+<p>首先，来让每个用户数据<code>用户可读</code>…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;rules&quot;: &#123;</span><br><span class="line">    &quot;users&quot;: &#123;</span><br><span class="line">      &quot;$uid&quot;: &#123;</span><br><span class="line">        &quot;.read&quot;: &quot;auth.uid == $uid&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们在根节点 <code>rules</code> 上加了一个 <code>users</code> 节点。任何直接写在 <code>users</code> 节点下面的规则会被应用到所有其子节点中…但是我们并不想在 <code>users</code> 节点上设置规则。我们希望给每一个独立的用户基于其 uid 设置规则，因此我们创建了一个通配节点，<code>$uid</code>。我们可以随意命名通配节点，只要其开始字符是 <code>$</code>。最佳实践是给他们命名一些描述性的东西，因此我们将这个通配节点命名为 <code>$uid</code>，因为每个用户都将保存在其 uid 下。</p>
+<p>通配节点应用于所有其他没有明确指出的节点上。有点糊涂了？看看这个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;rules&quot;: &#123;</span><br><span class="line">    &quot;users&quot;: &#123;</span><br><span class="line">      &quot;$uid&quot;: &#123;</span><br><span class="line">        &quot;.read&quot;: &quot;auth.uid == $uid&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;taylorsUID&quot;: &#123;</span><br><span class="line">        &quot;.read&quot;: &quot;auth.uid == &apos;taylorsUID&apos;&quot;,</span><br><span class="line">        &quot;.write&quot;: &quot;auth.uid == &apos;taylorsUID&apos;&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到我们干了啥吗？我们仅赋予了 <code>$uid</code> 节点 <code>.read</code> 权限，但是我们给了 Taylor 这个用户 <code>.read</code> 和 <code>.write</code> 权限。</p>
+<p>你可能在想 <code>auth.uid == $uid</code> 是什么意思。当用户通过 Firebase Authentication 认证成功时，这个用户会从系统获得一个 uid，它可以通过 <code>auth.uid</code> 访问到。因此当 Kanye 在系统中认证时，他的 <code>auth.uid</code> 等于 <code>kanyesUID</code>。我们可以将 <code>auth.uid</code> 和 <code>$uid</code> 比较来授予用户对他们自己节点的读权限，但对其他节点无权限。也可以直接和字符串比较：<code>&quot;.read&quot;: &quot;auth.uid == &#39;taylorsUID&#39;&quot;</code>。</p>
+<h2 id="索引子键来加快查询"><a href="#索引子键来加快查询" class="headerlink" title="索引子键来加快查询"></a>索引子键来加快查询</h2><p>设想我们的 app 在进行这样一个查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref.child(&apos;users&apos;).orderByChild(&apos;email&apos;).equalTo(&apos;kwest@gmail.com&apos;).once(&apos;value&apos;, callback);</span><br></pre></td></tr></table></figure>
+<p>我们在要求 firebase 来从 <code>users</code> 节点中搜索一个 <code>email</code> 节点为 <code>kwest@gmail.com</code> 的子节点。根据我们数据库的大小，这可能是一个非常巨量且缓慢的查询，因此 Firebase 给我们提供了指定子节点的高性能索引。在这个例子中，我们希望 Firebase 通过 <code>email</code> 这个子节点索引所有用户。做法很简单，<code>&quot;.indexOn&quot;: &quot;email&quot;</code>。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;rules&quot;: &#123;</span><br><span class="line">    &quot;users&quot;: &#123;</span><br><span class="line">      &quot;$uid&quot;: &#123;</span><br><span class="line">        &quot;.read&quot;: &quot;auth.uid == $uid&quot;,</span><br><span class="line">        &quot;.indexOn&quot;: [</span><br><span class="line">          &quot;email&quot;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们还要索引其他子节点，比如说 <code>users/{$user}/username</code>，我们的规则就这么写 <code>&quot;.indexOn&quot;: [&quot;email&quot;, &quot;username&quot;]</code>。</p>
+<h2 id="遍历树以获取细节权限"><a href="#遍历树以获取细节权限" class="headerlink" title="遍历树以获取细节权限"></a>遍历树以获取细节权限</h2><p>让我们将这个设想的类似 twitter 的 app 的第三个用户称为： Ryan Seacrest。Ryan 的账号是管理员账号。注意到了他的用户账号里的 <code>&quot;isAdmin&quot;: true</code> 属性了吗？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;rules&quot;: &#123;</span><br><span class="line">    &quot;users&quot;: &#123;</span><br><span class="line">      &quot;$uid&quot;: &#123;</span><br><span class="line">        &quot;.read&quot;: &quot;auth.uid == $uid || root.child(&apos;users&apos;).child(auth.uid).child(&apos;isAdmin&apos;).val() == true&quot;,</span><br><span class="line">        &quot;.write&quot;: &quot;root.child(&apos;users&apos;).child(auth.uid).child(&apos;isAdmin&apos;).val() == true&quot;,</span><br><span class="line">        &quot;.indexOn&quot;: [</span><br><span class="line">          &quot;email&quot;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用户们仍然可以读取他们自己的账户数据，不过我们刚刚给所有有 <code>isAdmin</code> 标识的用户赋予了读写权限。用于检测这个标识的规则是 <code>root.child(‘users’).child(auth.uid).child(‘isAdmin’).val()</code>。<code>root</code> 对象代表我们的 Firebase 的根节点。接着我们调用 <code>.child(&#39;nodeName&#39;)</code> 来向下找到我们的认证过的用户的 <code>isAdmin</code> 节点。看到了是怎么使用 <code>auth.uid</code> 来深入到这个认证用户的吗？是，这样做很聪明。它同时也悄悄地让任何没有认证的用户访问失败，这样这些节点就安全了。</p>
+<p>还有一点要注意：我们在一个节点上调用 <code>.val()</code> 来获取它的值。这让人想起我们是如何使用 Firebase JavaScript SDK 来处理数据快照，应该看起来很熟悉吧。</p>
+<p>另外一点：还有别的遍历树的方式。我们可以调用 <code>data.parent().child(auth.uid).val()</code> 来从我们正在保护的节点往上走到 <code>users</code> 再往下走。这个方法会很实用，但是从 <code>root</code> 开始遍历会更可靠，因为 <code>root</code> 对于我们 app 的任何部分都是一样的。为了安全，还是用 <code>root</code> 吧。</p>
+<h2 id="使用-Bolt-规则编译器来-streamline-你的规则"><a href="#使用-Bolt-规则编译器来-streamline-你的规则" class="headerlink" title="使用 Bolt 规则编译器来 streamline 你的规则"></a>使用 Bolt 规则编译器来 streamline 你的规则</h2><p>到目前我们一直在直接修改我们的规则 JSON 对象。这没有问题，但是它可能总是在重复复制粘贴操作。Firebase 团队也已经疲于复制粘贴，于是写了一个和 <a href="https://github.com/firebase/firebase-tools" target="_blank" rel="external">firebase-tools</a> CLI 结合来让规则更容易写的编译器。</p>
+<p>你需要通过 <code>npm install -g firebase-bolt</code> 安装 Bolt 并且在你的项目根目录创建一个命名为类似 <code>security-rules.bolt</code> 的文件。然后你可以执行 <code>firebase-bolt sevurity-rules.bolt</code>，它会编译你的 Bolt 规则到一个新的文件并命名为 <code>firebase-rules.json</code>。生成的 JSON 可能会比我们之前写的 JSON 更啰嗦，但是 Bolt 语法很好用精炼。详见 <a href="https://github.com/firebase/bolt/blob/master/docs/language.md" target="_blank" rel="external">Bolt language reference</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">function isUser (auth, userKey) &#123;</span><br><span class="line">  return uid == userKey;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function isAdmin (auth) &#123;</span><br><span class="line">  return root.child(&apos;users&apos;).child(auth.uid).child(&apos;isAdmin&apos;).val() == true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">path /users/&#123;uid&#125; &#123;</span><br><span class="line">  read() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">  write() &#123; isAdmin(auth) &#125;</span><br><span class="line">  index() &#123; [&quot;email&quot;] &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">path /userReadable/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line">  read() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">  write() &#123; isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">path /userWriteable/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line">  read() &#123; isAdmin(auth) &#125;</span><br><span class="line">  write() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">path /userOwned/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line">  read() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">  write() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请注意我们是怎样写在顶部的两个方法的：<code>isUser(auth, uid)</code> 和 <code>isAdmin(auth)</code>。这些方法不是必须的，但是超级有用。它们让我们可以在我们的规则中重用一些逻辑。</p>
+<p>下一个部分有一堆 <code>path</code> 块。使用 <code>/[nodeName]/</code> 来通配你的路径。这些通配值在这些 path 的范围内都是可用的，因此你可从 <code>/userReadable/objectType/uid</code> 获取 <code>uid</code>，并传给 <code>read() { isUser(auth, uid) || isAdmin(auth) }</code>。</p>
+<h2 id="根据读写权限来结构化你的数据"><a href="#根据读写权限来结构化你的数据" class="headerlink" title="根据读写权限来结构化你的数据"></a>根据读写权限来结构化你的数据</h2><p>你可能注意到了有三个顶级节点被命名为：</p>
+<ul>
+<li>userReadable</li>
+<li>userWriteable</li>
+<li>userOwned</li>
+</ul>
+<p>上一节中我们授予了用户读权限给 <code>userReadable</code> 的子节点、写权限给 <code>userWriteable</code> 的子节点以及完整的读写权限给 <code>userOwned</code> 的子节点。</p>
+<p>这是只一个随意的数据结构…我们可以将这三个节点命名为随便什么。不过命名为描述性的名字会更好。接着我们用了通配路径（<code>path/userReadable/objectType/uid</code>）来给一组一组的对象应用规则。</p>
+<p>现在我们不需要给我们创建的每一类对象都编写规则。我们只需要将这些对象嵌套在恰当的权限节点下就好了。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;rules&quot;: &#123;</span><br><span class="line">    &quot;userOwned&quot;: &#123;</span><br><span class="line">      &quot;preferences&quot;: &#123;</span><br><span class="line">        &quot;kanyesUID&quot;: &#123;</span><br><span class="line">          &quot;loveKanye&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;taylorsUID&quot;: &#123;</span><br><span class="line">          &quot;listenToHaters&quot;: false</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>userOwned</code> 节点有对所有在匹配的用户 uid 下的对象的读写权限。因此只有 Kanye 可以访问 <code>/userOwned/preferences/kanyesUID</code>，并且 Kanye 有完整的读写权限。</p>
+<p>要记得我们可以通过制定另一条匹配路径规则来重写统配规则，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">path /userOwned/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line"> read() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">  write() &#123; isUser(auth, uid) || isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br><span class="line">path /userOwned/grammyNominations/taylorsUID &#123;</span><br><span class="line">  read() &#123; true &#125;</span><br><span class="line">  write() &#123; uid == kanyesUID &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二条规则重写了 <code>/userOwned/{objectType}/uid</code> 并仅授予 Kanye 对于 Taylor’s Grammy Nominations 的写权限。同时也让这个列表全世界可读，因此任何网站或者用户都可以通过 <code>https://&lt;some firebase&gt;.firebaseio.com/userOwned/grammyNominations/taylorsUID.json</code> 来获取这个列表。</p>
+<h2 id="保证安全性的同时验证你的数据"><a href="#保证安全性的同时验证你的数据" class="headerlink" title="保证安全性的同时验证你的数据"></a>保证安全性的同时验证你的数据</h2><p><code>read()</code>、<code>write()</code> 以及 <code>index()</code> 覆盖了大多数使用情况，但有时候你可能需要更多对于要写入的数据的更细节的控制。</p>
+<p>Bolt 允许你创建可以在多节点间重用的数据类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">path /userOwned/preferences/&#123;uid&#125; is Preferences;</span><br><span class="line">type Preferences &#123;</span><br><span class="line"> validate() &#123; this.excuse.length &lt; 20 &amp;&amp; this.respectRating &lt; 5 &#125;</span><br><span class="line">  useAutotune: Boolean,</span><br><span class="line">  excuse: String,</span><br><span class="line">  respectRating: Number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请注意，我们可以将验证规则和 <code>validate()</code> 混合在一起。</p>
+<p>你也可以将类型和读写权限混合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">path /userOwned/preferences/&#123;uid&#125; is Preferences &#123;</span><br><span class="line"> read() &#123; isUser(auth, uid) &#125;</span><br><span class="line"> write() &#123; isUser(auth, uid) &#125;</span><br><span class="line">&#125;</span><br><span class="line">type Preferences &#123;</span><br><span class="line">  validate() &#123; this.excuse.length &lt; 20 &amp;&amp; this.respectRating &lt; 5 &#125;</span><br><span class="line">  useAutotune: Boolean,</span><br><span class="line">  excuse: String,</span><br><span class="line">  respectRating: Number</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="别名规则"><a href="#别名规则" class="headerlink" title="别名规则"></a>别名规则</h2><p>目前为止我们仅仅使用了 <code>read()</code>、<code>write()</code>、<code>index()</code> 和 <code>validate()</code>，但是 Bolt 支持其它三个功能：</p>
+<ul>
+<li>create()</li>
+<li>update()</li>
+<li>delete()</li>
+</ul>
+<p>这些方法都是 <code>write()</code> 的别名，因此他们不能和 <code>write()</code> 一起混合到同一个 <code>path</code> 块。它们创建了分别仅适用于新建、更新或者删除操作的 <code>write()</code> 规则。下面的示例是如果你想要给用户权限创建对象但是不能编辑或者删除，<code>create()</code> 会生成处理这种情况的 <code>write()</code> 规则。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">path /dropbox/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line"> create() &#123; isUser(auth, uid) &#125;</span><br><span class="line">  read() &#123; isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">path /editable/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line">  update() &#123; isUser(auth, uid) &#125;</span><br><span class="line">  read() &#123; isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">path /deleteable/&#123;objectType&#125;/&#123;uid&#125; &#123;</span><br><span class="line">  delete() &#123; isUser(auth, uid) &#125;</span><br><span class="line">  read() &#123; isAdmin(auth) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="部署你的规则"><a href="#部署你的规则" class="headerlink" title="部署你的规则"></a>部署你的规则</h2><p>有两种方式：</p>
+<ol>
+<li>执行 <code>firebase-bolt my-rules-file.bolt</code> 来创建 <code>my-rules-files.json</code>，然后你可以复制粘贴到你的实时数据库规则控制台。</li>
+<li>执行 <code>firebase-tools init</code> 来创建你的 <code>firebase.json</code> 托管文件，然后在 <code>database.rules</code> 创建一个节点来指向你的 <code>.bolt</code> 或者 ‘.json’ 规则文件。接着运行 <code>firebase deploy --only rules</code> 来通过命令行部署你的规则。</li>
+</ol>
+<p>我们稍后会谈到 <code>firebase.json</code> 这个选项。现在，看看下面这个 <code>firebase.sjon</code> 例子并且留意 <code>database.rules</code> 这个节点。它指向了一个记录了我的 bolt 规则的叫做 <code>database.rules.bolt</code> 的文件。如果这个文件被命名为 <code>database.rules.json</code>，firebase 会知道我的规则是 JSON 格式，不过因为我命名了为 <code>.bolt</code>，它会在上传其到我的 Firebase 云上之前自动将其传给 <code>firebase-bolt</code> 编译器进行编译。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// Eample firebase.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;database&quot;: &#123;</span><br><span class="line">    &quot;rules&quot;: &quot;database.rules.bolt&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;hosting&quot;: &#123;</span><br><span class="line">    &quot;public&quot;: &quot;dist&quot;,</span><br><span class="line">    &quot;rewrites&quot;: [</span><br><span class="line">      &#123;</span><br><span class="line">        &quot;source&quot;: &quot;/app/**/*&quot;,</span><br><span class="line">        &quot;destination&quot;: &quot;/index.html&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;ignore&quot;: [</span><br><span class="line">      &quot;firebase.json&quot;,</span><br><span class="line">      &quot;**/.*&quot;,</span><br><span class="line">      &quot;**/node_modules/**&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;functions&quot;: &#123;</span><br><span class="line">    &quot;.source&quot;: &quot;functions&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>差不多就这样了。</p>
+<p>具体练习见原文吧 ：D。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://howtofirebase.com/firebase-security-rules-88d94606ce4a&quot;&gt;Firebase Security &amp;amp; Rules&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Firebase 是一个可以从任意建立连接了的客户端访问的云数据库。因为任意客户端都可以连接到任意 Firebase [数据库]，你&lt;strong&gt;必须&lt;/strong&gt;制定安全规则来保护你的数据。写不好恰当的安全规则会让你暴露在攻击中。不过别着急！你马上就能学到帮你紧紧锁住你的数据的全部知识了。&lt;/p&gt;
+&lt;p&gt;保持安全规则简洁。安全规则可能变得过于复杂，并很快变得不受控制如果你的数据结构不够设计充分的话。这篇文章展示了一些“最佳”实践。估计你会讲其略作修改就用到你的生产应用中去……如果你选择采用这些模式，记得仔细想想背后的含义就行。确保在你开始搞事之前，读了整篇文章以及&lt;a href=&quot;https://firebase.google.com/docs/database/security/&quot;&gt;安全规则文档&lt;/a&gt;全文。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Firebase" scheme="http://chengkang.me/tags/Firebase/"/>
+    
+  </entry>
+  
+  <entry>
     <title>《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础</title>
     <link href="http://chengkang.me/2017/06/06/learning-av-foundation-1/"/>
     <id>http://chengkang.me/2017/06/06/learning-av-foundation-1/</id>
-    <published>2017-06-06T18:20:16.000Z</published>
+    <published>2017-06-06T11:20:16.000Z</published>
     <updated>2017-06-06T19:43:34.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -80,7 +196,7 @@
     <title>Core Graphics 教程第一部分：开始</title>
     <link href="http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/"/>
     <id>http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/</id>
-    <published>2017-05-30T11:20:08.000Z</published>
+    <published>2017-05-30T04:20:08.000Z</published>
     <updated>2017-05-30T11:21:13.000Z</updated>
     
     <summary type="html">
@@ -98,7 +214,7 @@
     <title>【译】Core Graphics，第四部分：Path！Path！</title>
     <link href="http://chengkang.me/2017/05/29/core-graphics-part-4/"/>
     <id>http://chengkang.me/2017/05/29/core-graphics-part-4/</id>
-    <published>2017-05-29T20:18:57.000Z</published>
+    <published>2017-05-29T13:18:57.000Z</published>
     <updated>2017-05-29T20:20:17.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -184,7 +300,7 @@
     <title>【译】哥们儿，我的方法哪儿去了？</title>
     <link href="http://chengkang.me/2017/05/25/dude-where-is-my-call/"/>
     <id>http://chengkang.me/2017/05/25/dude-where-is-my-call/</id>
-    <published>2017-05-25T19:09:58.000Z</published>
+    <published>2017-05-25T12:09:58.000Z</published>
     <updated>2017-05-25T19:14:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -278,7 +394,7 @@
     <title>【译】Core Graphics，第三部分：线</title>
     <link href="http://chengkang.me/2017/05/25/core-graphics-part-3/"/>
     <id>http://chengkang.me/2017/05/25/core-graphics-part-3/</id>
-    <published>2017-05-24T23:23:05.000Z</published>
+    <published>2017-05-24T16:23:05.000Z</published>
     <updated>2017-05-24T23:24:56.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -380,7 +496,7 @@
     <title>【译】Core Graphics, 第二部分：说说 context （上下文）</title>
     <link href="http://chengkang.me/2017/05/24/core-graphics-part-2/"/>
     <id>http://chengkang.me/2017/05/24/core-graphics-part-2/</id>
-    <published>2017-05-24T15:20:19.000Z</published>
+    <published>2017-05-24T08:20:19.000Z</published>
     <updated>2017-05-24T15:33:30.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -504,7 +620,7 @@
     <title>【译】Core Graphics，第一部分：序章</title>
     <link href="http://chengkang.me/2017/05/23/core-graphics-part-1/"/>
     <id>http://chengkang.me/2017/05/23/core-graphics-part-1/</id>
-    <published>2017-05-23T21:20:01.000Z</published>
+    <published>2017-05-23T14:20:01.000Z</published>
     <updated>2017-05-23T21:21:36.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -560,7 +676,7 @@
     <title>react-native-lahk-marquee-label（跑马灯文字组件）</title>
     <link href="http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/"/>
     <id>http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/</id>
-    <published>2017-04-11T17:33:17.000Z</published>
+    <published>2017-04-11T10:33:17.000Z</published>
     <updated>2017-04-14T21:36:51.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -638,7 +754,7 @@
     <title>DoubanFMPlayer, A mimic of Douban.fm player</title>
     <link href="http://chengkang.me/2017/02/03/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"/>
     <id>http://chengkang.me/2017/02/03/DoubanFMPlayer, A mimic of Douban.fm player/</id>
-    <published>2017-02-03T22:31:30.000Z</published>
+    <published>2017-02-03T14:31:30.000Z</published>
     <updated>2017-02-12T19:24:08.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -710,7 +826,7 @@
     <title>Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”</title>
     <link href="http://chengkang.me/2017/01/18/Examples%20to%20understand%20how%20to%20find%20Nash%20equilibrium%20by%20eliminating%20%E2%80%9Cdominated%20strategies%E2%80%9D/"/>
     <id>http://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/</id>
-    <published>2017-01-18T17:14:22.000Z</published>
+    <published>2017-01-18T09:14:22.000Z</published>
     <updated>2017-01-18T17:18:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what <code>dominated strategies</code> are and especially what <strong>weakly dominated strategy</strong> is.</p>
@@ -836,7 +952,7 @@
     <title>QnA，一个 Hexo FAQ 主题</title>
     <link href="http://chengkang.me/2017/01/14/QnA%EF%BC%8C%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"/>
     <id>http://chengkang.me/2017/01/14/QnA，一个 Hexo FAQ 主题/</id>
-    <published>2017-01-14T11:47:03.000Z</published>
+    <published>2017-01-14T03:47:03.000Z</published>
     <updated>2017-01-14T12:08:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -895,7 +1011,7 @@
     <title>DanmuManager 一个简单的弹幕工具</title>
     <link href="http://chengkang.me/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
-    <published>2017-01-05T18:14:32.000Z</published>
+    <published>2017-01-05T10:14:32.000Z</published>
     <updated>2017-01-05T13:54:40.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -993,7 +1109,7 @@
     <title>Pauseable Timer 一个可暂停的计时器</title>
     <link href="http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
     <id>http://chengkang.me/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
-    <published>2017-01-05T15:31:35.000Z</published>
+    <published>2017-01-05T07:31:35.000Z</published>
     <updated>2017-01-05T13:58:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1059,7 +1175,7 @@
     <title>Pauseable Timer</title>
     <link href="http://chengkang.me/2017/01/04/Pauseable%20Timer/"/>
     <id>http://chengkang.me/2017/01/04/Pauseable Timer/</id>
-    <published>2017-01-04T22:58:48.000Z</published>
+    <published>2017-01-04T14:58:48.000Z</published>
     <updated>2017-01-05T13:57:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1127,7 +1243,7 @@
     <title>【译】我最喜欢的 JavaScript 设计模式</title>
     <link href="http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/"/>
     <id>http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/</id>
-    <published>2016-07-02T09:50:25.000Z</published>
+    <published>2016-07-02T02:50:25.000Z</published>
     <updated>2016-07-02T02:51:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1183,7 +1299,7 @@
     <title>【译】JavaScript 命名空间</title>
     <link href="http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/"/>
     <id>http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/</id>
-    <published>2016-06-28T15:07:58.000Z</published>
+    <published>2016-06-28T08:07:58.000Z</published>
     <updated>2016-06-28T08:12:50.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1287,7 +1403,7 @@
     <title>【译】JavaScript 中的命名空间</title>
     <link href="http://chengkang.me/2016/06/21/Namespacing%20in%20JavaScript/"/>
     <id>http://chengkang.me/2016/06/21/Namespacing in JavaScript/</id>
-    <published>2016-06-21T20:59:30.000Z</published>
+    <published>2016-06-21T13:59:30.000Z</published>
     <updated>2016-06-28T08:08:49.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1352,7 +1468,7 @@
     <title>【译】Swift2 中的错误处理：try，catch，do 以及 throw</title>
     <link href="http://chengkang.me/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"/>
     <id>http://chengkang.me/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/</id>
-    <published>2016-05-15T22:14:40.000Z</published>
+    <published>2016-05-15T15:14:40.000Z</published>
     <updated>2016-05-15T15:21:48.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1427,7 +1543,7 @@
     <title>UICollectionView 总结</title>
     <link href="http://chengkang.me/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/"/>
     <id>http://chengkang.me/2016/04/13/UICollectionView 总结/</id>
-    <published>2016-04-13T06:13:54.000Z</published>
+    <published>2016-04-12T23:13:54.000Z</published>
     <updated>2016-04-13T06:18:48.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1544,65 +1660,6 @@
 &lt;p&gt;主要内容如图：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://chengkang.me/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
-    
-      <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
-    
-      <category term="UICollectionView" scheme="http://chengkang.me/tags/UICollectionView/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【译】UICollectionView 轻松重排</title>
-    <link href="http://chengkang.me/2016/04/12/%E3%80%90%E8%AF%91%E3%80%91UICollectionView%20%E8%BD%BB%E6%9D%BE%E9%87%8D%E6%8E%92/"/>
-    <id>http://chengkang.me/2016/04/12/【译】UICollectionView 轻松重排/</id>
-    <published>2016-04-12T22:38:28.000Z</published>
-    <updated>2016-04-12T22:40:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>原文链接：<a href="http://nshint.io/blog/2015/07/16/uicollectionviews-now-have-easy-reordering/" target="_blank" rel="external">UICollectionViews Now Have Easy Reordering</a></p>
-<p>原本打算总结一下 UICollectionView 的一些用法，看到一篇比较好的文章，所以直接翻译了。翻译得比较生硬，见谅。</p>
-</blockquote>
-<p>我超喜欢<code>UICollectionView</code>。相比<code>UITableView</code>，它容易自定义得多。现在我使用甚至使用 collection view 比使用 table view 还要频繁了。在 iOS9 中，它开始支持使用起来很简单的重排。在之前是不可能直接重排的，而且实现起来很麻烦。让我们一起来看看 API。你可以在 <a href="https://github.com/nshintio/uicollectionview-reordering" target="_blank" rel="external">Github</a> 上找到对应的 Xcode 项目。</p>
-<p>最简单的实现重排是通过使用<code>UICollectionViewController</code>。它现在有一个新的属性叫做<code>installsStandardGestureForInteractiveMovement</code>，作用是添加手势（gestures）来重排 cells。这个属性默认值为<code>True</code>，这意味着要使用它我们只需要重写一个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(collectionView: UICollectionView,</span><br><span class="line">    moveItemAtIndexPath sourceIndexPath: NSIndexPath,</span><br><span class="line">    toIndexPath destinationIndexPath: NSIndexPath) &#123;</span><br><span class="line">    // move your data order</span><br><span class="line">    // 可以留空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当前的 collection view 判定 items 可以被移动，因为<code>moveItemAtIndexPath</code>被重写了。</p>
-<p><img src="http://nshint.io/images/uicollectionview-reordering/1.gif" alt=""></p>
-<a id="more"></a>
-<p>当我们希望在一个简单的<code>UIViewController</code>中使用 collection view 时，会麻烦一点。我们也要实现之前提到的<code>UICollectionViewDataSource</code>方法，不过我们需要重写<code>installsStandardGestureForInteractiveMovement</code>。不用担心，也很简单。<code>UILongPressGestureRecognizer</code>是一种持续性的手势识别器并且完全支持拖动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidLoad() &#123;</span><br><span class="line">    super.viewDidLoad()</span><br><span class="line"></span><br><span class="line">            longPressGesture = UILongPressGestureRecognizer(target: self, action: &quot;handleLongGesture:&quot;)</span><br><span class="line">        self.collectionView.addGestureRecognizer(longPressGesture)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    func handleLongGesture(gesture: UILongPressGestureRecognizer) &#123;</span><br><span class="line"></span><br><span class="line">        switch(gesture.state) &#123;</span><br><span class="line"></span><br><span class="line">        case UIGestureRecognizerState.Began:</span><br><span class="line">            guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(gesture.locationInView(self.collectionView)) else &#123;</span><br><span class="line">                break</span><br><span class="line">            &#125;</span><br><span class="line">            collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)</span><br><span class="line">        case UIGestureRecognizerState.Changed:</span><br><span class="line">            collectionView.updateInteractiveMovementTargetPosition(gesture.locationInView(gesture.view!))</span><br><span class="line">        case UIGestureRecognizerState.Ended:</span><br><span class="line">            collectionView.endInteractiveMovement()</span><br><span class="line">        default:</span><br><span class="line">            collectionView.cancelInteractiveMovement()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们保存了在 long press gesture 中不活的被选中的 index path 并且基于它是否有值决定允不允许拖动手势生效。然后，我们根据手势状态调用一些新的 collection view 方法。</p>
-<ul>
-<li><code>beginInteractiveMovementForItemAtIndexPath(indexPath: NSIndexPath)</code>：开始指定位置 cell 的交互移动。</li>
-<li><code>updateInteractiveMovementTargetPosition(targetPosition: CGPoint)</code>：更新交互移动对象的位置</li>
-<li><code>endInteractiveMovement()</code>：在你结束拖动手势之后结束交互移动</li>
-<li><code>cancelInteractiveMovement()</code>：取消交互移动</li>
-</ul>
-<p>这些让搞定拖动手势非常容易。</p>
-<p><img src="http://nshint.io/images/uicollectionview-reordering/2.gif" alt=""></p>
-<p>效果和标准的<code>UICollectionViewController</code>一样。很酷对吧，不过更酷的是我们可以将我们自定义的 collection view layout 应用到重排中去。看看下面在简单的瀑布视图中的交互移动。</p>
-<p><img src="http://nshint.io/images/uicollectionview-reordering/3.gif" alt=""></p>
-<p>嗯，看起来不错，不过如果我们不想在移动的时候改变 cell 大小呢？选中的 cell 大小应该在交互移动时保持一致。这是可以实现的。<code>UICollectionViewLayout</code>也有一些其他的方法来负责重排。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func invalidationContextForInteractivelyMovingItems(targetIndexPaths: [NSIndexPath],</span><br><span class="line">    withTargetPosition targetPosition: CGPoint,</span><br><span class="line">    previousIndexPaths: [NSIndexPath],</span><br><span class="line">    previousPosition: CGPoint) -&gt; UICollectionViewLayoutInvalidationContext</span><br><span class="line"></span><br><span class="line">func invalidationContextForEndingInteractiveMovementOfItemsToFinalIndexPaths(indexPaths: [NSIndexPath],</span><br><span class="line">    previousIndexPaths: [NSIndexPath],</span><br><span class="line">    movementCancelled: Bool) -&gt; UICollectionViewLayoutInvalidationContext</span><br></pre></td></tr></table></figure></p>
-<p>前一个在目标 indexPath 和之前的 indexPath 之间进行移动时调用。另一个类似，不过是在移动结束之后调用。有了这些我们就可以通过一些小手段达到我们的要求。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">internal override func invalidationContextForInteractivelyMovingItems(targetIndexPaths: [NSIndexPath],</span><br><span class="line">    withTargetPosition targetPosition: CGPoint,</span><br><span class="line">    previousIndexPaths: [NSIndexPath],</span><br><span class="line">    previousPosition: CGPoint) -&gt; UICollectionViewLayoutInvalidationContext &#123;</span><br><span class="line"></span><br><span class="line">    var context = super.invalidationContextForInteractivelyMovingItems(targetIndexPaths,</span><br><span class="line">        withTargetPosition: targetPosition, previousIndexPaths: previousIndexPaths,</span><br><span class="line">        previousPosition: previousPosition)</span><br><span class="line"></span><br><span class="line">    self.delegate?.collectionView!(self.collectionView!, moveItemAtIndexPath: previousIndexPaths[0],</span><br><span class="line">        toIndexPath: targetIndexPaths[0])</span><br><span class="line"></span><br><span class="line">    return context</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>解决方案非常清晰。获取正在移动的 cell 之前和目标 index path。然后调用<code>UICollectionViewDataSource</code>来移动这些 item。</p>
-<p><img src="http://nshint.io/images/uicollectionview-reordering/4.gif" alt=""></p>
-<p>不用怀疑，collection view 重排是一个非常棒的更新。UIKit 工程师干得太棒了！：）</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;原文链接：&lt;a href=&quot;http://nshint.io/blog/2015/07/16/uicollectionviews-now-have-easy-reordering/&quot;&gt;UICollectionViews Now Have Easy Reordering&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;原本打算总结一下 UICollectionView 的一些用法，看到一篇比较好的文章，所以直接翻译了。翻译得比较生硬，见谅。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我超喜欢&lt;code&gt;UICollectionView&lt;/code&gt;。相比&lt;code&gt;UITableView&lt;/code&gt;，它容易自定义得多。现在我使用甚至使用 collection view 比使用 table view 还要频繁了。在 iOS9 中，它开始支持使用起来很简单的重排。在之前是不可能直接重排的，而且实现起来很麻烦。让我们一起来看看 API。你可以在 &lt;a href=&quot;https://github.com/nshintio/uicollectionview-reordering&quot;&gt;Github&lt;/a&gt; 上找到对应的 Xcode 项目。&lt;/p&gt;
-&lt;p&gt;最简单的实现重排是通过使用&lt;code&gt;UICollectionViewController&lt;/code&gt;。它现在有一个新的属性叫做&lt;code&gt;installsStandardGestureForInteractiveMovement&lt;/code&gt;，作用是添加手势（gestures）来重排 cells。这个属性默认值为&lt;code&gt;True&lt;/code&gt;，这意味着要使用它我们只需要重写一个方法。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;func collectionView(collectionView: UICollectionView,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    moveItemAtIndexPath sourceIndexPath: NSIndexPath,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    toIndexPath destinationIndexPath: NSIndexPath) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // move your data order&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    // 可以留空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;当前的 collection view 判定 items 可以被移动，因为&lt;code&gt;moveItemAtIndexPath&lt;/code&gt;被重写了。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://nshint.io/images/uicollectionview-reordering/1.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
