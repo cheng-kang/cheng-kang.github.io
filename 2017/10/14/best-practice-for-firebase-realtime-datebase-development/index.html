@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="原文链接：Best Practices for Firebase Realtime Database Development
+此文非全文翻译，一些可以省略的话就省略掉了。
+
+读文档！Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。
+另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：
+
+Group Security in the Firebase Data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Firebase 实时数据库开发最佳实践">
+<meta property="og:url" content="http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="原文链接：Best Practices for Firebase Realtime Database Development
+此文非全文翻译，一些可以省略的话就省略掉了。
+
+读文档！Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。
+另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：
+
+Group Security in the Firebase Data">
+<meta property="og:updated_time" content="2017-10-14T15:44:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Firebase 实时数据库开发最佳实践">
+<meta name="twitter:description" content="原文链接：Best Practices for Firebase Realtime Database Development
+此文非全文翻译，一些可以省略的话就省略掉了。
+
+读文档！Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。
+另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：
+
+Group Security in the Firebase Data">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Firebase 实时数据库开发最佳实践</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+    <link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    <script src="/lib/jquery/jquery.min.js"></script>
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-2379838451092125",
+        enable_page_level_ads: true
+      });
+    </script>
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/index.html">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/09/30/firebase-security-rules/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&text=Firebase 实时数据库开发最佳实践"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&is_video=false&description=Firebase 实时数据库开发最佳实践"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Firebase 实时数据库开发最佳实践&body=Check out this article: http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&name=Firebase 实时数据库开发最佳实践&description=&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44&quot;&gt;Best Practices for Firebase Realtime Database Development&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;此文非全文翻译，一些可以省略的话就省略掉了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;读文档！&quot;&gt;&lt;a href=&quot;#读文档！&quot; class=&quot;headerlink&quot; title=&quot;读文档！&quot;&gt;&lt;/a&gt;读文档！&lt;/h2&gt;&lt;p&gt;Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。&lt;/p&gt;
+&lt;p&gt;另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2016/10/group-security-in-firebase-database.html&quot;&gt;Group Security in the Firebase Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2013/10/queries-part-1-common-sql-queries.html&quot;&gt;Queries, Part 1: Common SQL Queries Converted for Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html&quot;&gt;Best Practices: Arrays in Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;a href=&quot;#推论：”无模式”（schema-less）不意味着无脑！&quot; class=&quot;headerlink&quot; title=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;/a&gt;推论：”无模式”（schema-less）不意味着无脑！&lt;/h2&gt;&lt;p&gt;有一个普遍的误解是面向文档的数据库对于数据结构不重视。恰恰相反，&lt;strong&gt;它们更需要注意数据结构&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;好的规划能让所有的软件组件都有最好的性能，这已经没啥可多说的了。不过在 SQL 数据库中，通常是通过 &lt;code&gt;joining more tables&lt;/code&gt;、&lt;code&gt;doing sub-queries&lt;/code&gt; 或者 &lt;code&gt;doing bulk data updates&lt;/code&gt; 来修复规划中的错误。由于 Firebase 中并不存在这些概念，因此还是花些时间来设计你的数据模型并提前处理好这些问题。你会庆幸自己这么做了的。&lt;/p&gt;
+&lt;p&gt;还有啊，记得读文档。&lt;/p&gt;"><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读文档！"><span class="toc-number">1.</span> <span class="toc-text">读文档！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推论：”无模式”（schema-less）不意味着无脑！"><span class="toc-number">2.</span> <span class="toc-text">推论：”无模式”（schema-less）不意味着无脑！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref-和简单的查询都很“廉价”"><span class="toc-number">3.</span> <span class="toc-text">Ref 和简单的查询都很“廉价”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#避免数组"><span class="toc-number">4.</span> <span class="toc-text">避免数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Firebase-没有时间数据类型"><span class="toc-number">5.</span> <span class="toc-text">Firebase 没有时间数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#它并不是万能的"><span class="toc-number">6.</span> <span class="toc-text">它并不是万能的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-还是-Update"><span class="toc-number">7.</span> <span class="toc-text">Set 还是 Update</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FirebaseUI-超级棒！"><span class="toc-number">8.</span> <span class="toc-text">FirebaseUI 超级棒！</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Firebase 实时数据库开发最佳实践
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-14T15:43:51.000Z" itemprop="datePublished">2017-10-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Firebase/">Firebase</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>原文链接：<a href="https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44" target="_blank" rel="external">Best Practices for Firebase Realtime Database Development</a></p>
+<p>此文非全文翻译，一些可以省略的话就省略掉了。</p>
+</blockquote>
+<h2 id="读文档！"><a href="#读文档！" class="headerlink" title="读文档！"></a>读文档！</h2><p>Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。</p>
+<p>另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：</p>
+<ul>
+<li><a href="https://firebase.googleblog.com/2016/10/group-security-in-firebase-database.html" target="_blank" rel="external">Group Security in the Firebase Database</a></li>
+<li><a href="https://firebase.googleblog.com/2013/10/queries-part-1-common-sql-queries.html" target="_blank" rel="external">Queries, Part 1: Common SQL Queries Converted for Firebase</a></li>
+<li><a href="https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html" target="_blank" rel="external">Best Practices: Arrays in Firebase</a></li>
+</ul>
+<h2 id="推论：”无模式”（schema-less）不意味着无脑！"><a href="#推论：”无模式”（schema-less）不意味着无脑！" class="headerlink" title="推论：”无模式”（schema-less）不意味着无脑！"></a>推论：”无模式”（schema-less）不意味着无脑！</h2><p>有一个普遍的误解是面向文档的数据库对于数据结构不重视。恰恰相反，<strong>它们更需要注意数据结构</strong>。</p>
+<p>好的规划能让所有的软件组件都有最好的性能，这已经没啥可多说的了。不过在 SQL 数据库中，通常是通过 <code>joining more tables</code>、<code>doing sub-queries</code> 或者 <code>doing bulk data updates</code> 来修复规划中的错误。由于 Firebase 中并不存在这些概念，因此还是花些时间来设计你的数据模型并提前处理好这些问题。你会庆幸自己这么做了的。</p>
+<p>还有啊，记得读文档。</p>
+<a id="more"></a>
+<h2 id="Ref-和简单的查询都很“廉价”"><a href="#Ref-和简单的查询都很“廉价”" class="headerlink" title="Ref 和简单的查询都很“廉价”"></a>Ref 和简单的查询都很“廉价”</h2><p>在 Firebase 中，一个 “ref” 就像一个对数据的指针。你可能本能地就像将其缓存或者用其他方式管理好它们，但是在现有的 Firebase 客户端库中你没必要这么做。它们仅仅就是对数据对象的 URL 引用的包装而已，并且其提供的事件回调每个监听器也只能访问一次。如果你需要在两个不同的地方引用同一个对象，就用两个 ref 去引用。根本没有额外“花销”哦。</p>
+<p>数据查询也是一样的。从 SQL 数据库转过来的假货已经习惯了用尽可能少的查询语句来查询更多的对象以减少来回的时间、查询成本。在扁平化数据结构里来说，就是把一些数据复制到多个位置以达到一次请求获取到所有所需数据的目的。</p>
+<p>在 Firebase 中，这样就大错特错了。一是基于 key/ref 的查询被非常好地优化过了，并且 Firebase 为其提供了大规模的横向扩展。我们在性能测试中发现，Firebase 在有更多小型数据查询时性能更好。即使是移除一些不必要的查询字段都可以带来可观的性能提升。</p>
+<p>Firebase 的大规模横向可扩展性是一个很重要的特性。它不是仅仅“有很好”。它应该作为你 app 设计中的一个重要工具。</p>
+<h2 id="避免数组"><a href="#避免数组" class="headerlink" title="避免数组"></a>避免数组</h2><p>Firebase 文档里面已经提到了这个话题。完全正确。请避免它们。</p>
+<h2 id="Firebase-没有时间数据类型"><a href="#Firebase-没有时间数据类型" class="headerlink" title="Firebase 没有时间数据类型"></a>Firebase 没有时间数据类型</h2><p>Firebase 没有时间数据类型，并且不支持倒序排序。你可以自己将时间转换成时间戳以数字形式存放，并且将其负数作为排序标识一同存储。利用这个排序标识值可以实现倒序查询。</p>
+<h2 id="它并不是万能的"><a href="#它并不是万能的" class="headerlink" title="它并不是万能的"></a>它并不是万能的</h2><p>好好利用 Firebase 的长处。不要用它去解决每一个问题。以下是一些 Firebase 不能做的：</p>
+<ul>
+<li>作为搜索引擎。它有一些基本的操作比如前缀匹配，但也就这些了。如果你需要全功能的搜索，去用 ELK，Algolia 等等吧。</li>
+<li>作为 API 栈。Firebase 的 Cloud Functions 看起来很棒，但它还处于 Beta 时期。如果你的 app 比 to-do list 应用复杂的话，还是规划规划如何做服务器端的可信任代码执行吧。</li>
+<li>A reporting engine. You may still want to leverage a relational database when you need to slice/dice/filter/mutate/munge/etc your data.</li>
+<li>用于全离线应用。它提供了离线功能，但始终还是需要先连上云。</li>
+</ul>
+<h2 id="Set-还是-Update"><a href="#Set-还是-Update" class="headerlink" title="Set 还是 Update"></a>Set 还是 Update</h2><p>SET 和 UPDATE 之间存在着巨大的差别。它影响着如果 key 还不存在时会发生什么，特别是在复杂对象里面的 key。请务必留意。</p>
+<h2 id="FirebaseUI-超级棒！"><a href="#FirebaseUI-超级棒！" class="headerlink" title="FirebaseUI 超级棒！"></a>FirebaseUI 超级棒！</h2><p>噢，我必须要提到，针对各个平台都有一些 FirebaseUI 同类的项目。它们对于建立一个展示 Firebase 数据集中的对象列表的表格真是好用到爆。</p>
+<p>去了解一下 FirebaseUI 吧。</p>
+
+  </div>
+  <script type="text/javascript">
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'http://7u2sl0.com1.z0.glb.clouddn.com/dbfmplayer.js';
+    (d.head || d.body).appendChild(s);
+    })();
+  </script>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/index.html">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#读文档！"><span class="toc-number">1.</span> <span class="toc-text">读文档！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推论：”无模式”（schema-less）不意味着无脑！"><span class="toc-number">2.</span> <span class="toc-text">推论：”无模式”（schema-less）不意味着无脑！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ref-和简单的查询都很“廉价”"><span class="toc-number">3.</span> <span class="toc-text">Ref 和简单的查询都很“廉价”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#避免数组"><span class="toc-number">4.</span> <span class="toc-text">避免数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Firebase-没有时间数据类型"><span class="toc-number">5.</span> <span class="toc-text">Firebase 没有时间数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#它并不是万能的"><span class="toc-number">6.</span> <span class="toc-text">它并不是万能的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Set-还是-Update"><span class="toc-number">7.</span> <span class="toc-text">Set 还是 Update</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FirebaseUI-超级棒！"><span class="toc-number">8.</span> <span class="toc-text">FirebaseUI 超级棒！</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&text=Firebase 实时数据库开发最佳实践"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&is_video=false&description=Firebase 实时数据库开发最佳实践"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Firebase 实时数据库开发最佳实践&body=Check out this article: http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&title=Firebase 实时数据库开发最佳实践"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/&name=Firebase 实时数据库开发最佳实践&description=&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44&quot;&gt;Best Practices for Firebase Realtime Database Development&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;此文非全文翻译，一些可以省略的话就省略掉了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;读文档！&quot;&gt;&lt;a href=&quot;#读文档！&quot; class=&quot;headerlink&quot; title=&quot;读文档！&quot;&gt;&lt;/a&gt;读文档！&lt;/h2&gt;&lt;p&gt;Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。&lt;/p&gt;
+&lt;p&gt;另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2016/10/group-security-in-firebase-database.html&quot;&gt;Group Security in the Firebase Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2013/10/queries-part-1-common-sql-queries.html&quot;&gt;Queries, Part 1: Common SQL Queries Converted for Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html&quot;&gt;Best Practices: Arrays in Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;a href=&quot;#推论：”无模式”（schema-less）不意味着无脑！&quot; class=&quot;headerlink&quot; title=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;/a&gt;推论：”无模式”（schema-less）不意味着无脑！&lt;/h2&gt;&lt;p&gt;有一个普遍的误解是面向文档的数据库对于数据结构不重视。恰恰相反，&lt;strong&gt;它们更需要注意数据结构&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;好的规划能让所有的软件组件都有最好的性能，这已经没啥可多说的了。不过在 SQL 数据库中，通常是通过 &lt;code&gt;joining more tables&lt;/code&gt;、&lt;code&gt;doing sub-queries&lt;/code&gt; 或者 &lt;code&gt;doing bulk data updates&lt;/code&gt; 来修复规划中的错误。由于 Firebase 中并不存在这些概念，因此还是花些时间来设计你的数据模型并提前处理好这些问题。你会庆幸自己这么做了的。&lt;/p&gt;
+&lt;p&gt;还有啊，记得读文档。&lt;/p&gt;"><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/index.html">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+    <script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'chengkang';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-09-30T13:09:49.000Z</updated>
+  <updated>2017-10-14T15:44:41.000Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -16,10 +16,74 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Firebase 实时数据库开发最佳实践</title>
+    <link href="http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"/>
+    <id>http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/</id>
+    <published>2017-10-14T15:43:51.000Z</published>
+    <updated>2017-10-14T15:44:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>原文链接：<a href="https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44" target="_blank" rel="external">Best Practices for Firebase Realtime Database Development</a></p>
+<p>此文非全文翻译，一些可以省略的话就省略掉了。</p>
+</blockquote>
+<h2 id="读文档！"><a href="#读文档！" class="headerlink" title="读文档！"></a>读文档！</h2><p>Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。</p>
+<p>另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：</p>
+<ul>
+<li><a href="https://firebase.googleblog.com/2016/10/group-security-in-firebase-database.html" target="_blank" rel="external">Group Security in the Firebase Database</a></li>
+<li><a href="https://firebase.googleblog.com/2013/10/queries-part-1-common-sql-queries.html" target="_blank" rel="external">Queries, Part 1: Common SQL Queries Converted for Firebase</a></li>
+<li><a href="https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html" target="_blank" rel="external">Best Practices: Arrays in Firebase</a></li>
+</ul>
+<h2 id="推论：”无模式”（schema-less）不意味着无脑！"><a href="#推论：”无模式”（schema-less）不意味着无脑！" class="headerlink" title="推论：”无模式”（schema-less）不意味着无脑！"></a>推论：”无模式”（schema-less）不意味着无脑！</h2><p>有一个普遍的误解是面向文档的数据库对于数据结构不重视。恰恰相反，<strong>它们更需要注意数据结构</strong>。</p>
+<p>好的规划能让所有的软件组件都有最好的性能，这已经没啥可多说的了。不过在 SQL 数据库中，通常是通过 <code>joining more tables</code>、<code>doing sub-queries</code> 或者 <code>doing bulk data updates</code> 来修复规划中的错误。由于 Firebase 中并不存在这些概念，因此还是花些时间来设计你的数据模型并提前处理好这些问题。你会庆幸自己这么做了的。</p>
+<p>还有啊，记得读文档。</p>
+<a id="more"></a>
+<h2 id="Ref-和简单的查询都很“廉价”"><a href="#Ref-和简单的查询都很“廉价”" class="headerlink" title="Ref 和简单的查询都很“廉价”"></a>Ref 和简单的查询都很“廉价”</h2><p>在 Firebase 中，一个 “ref” 就像一个对数据的指针。你可能本能地就像将其缓存或者用其他方式管理好它们，但是在现有的 Firebase 客户端库中你没必要这么做。它们仅仅就是对数据对象的 URL 引用的包装而已，并且其提供的事件回调每个监听器也只能访问一次。如果你需要在两个不同的地方引用同一个对象，就用两个 ref 去引用。根本没有额外“花销”哦。</p>
+<p>数据查询也是一样的。从 SQL 数据库转过来的假货已经习惯了用尽可能少的查询语句来查询更多的对象以减少来回的时间、查询成本。在扁平化数据结构里来说，就是把一些数据复制到多个位置以达到一次请求获取到所有所需数据的目的。</p>
+<p>在 Firebase 中，这样就大错特错了。一是基于 key/ref 的查询被非常好地优化过了，并且 Firebase 为其提供了大规模的横向扩展。我们在性能测试中发现，Firebase 在有更多小型数据查询时性能更好。即使是移除一些不必要的查询字段都可以带来可观的性能提升。</p>
+<p>Firebase 的大规模横向可扩展性是一个很重要的特性。它不是仅仅“有很好”。它应该作为你 app 设计中的一个重要工具。</p>
+<h2 id="避免数组"><a href="#避免数组" class="headerlink" title="避免数组"></a>避免数组</h2><p>Firebase 文档里面已经提到了这个话题。完全正确。请避免它们。</p>
+<h2 id="Firebase-没有时间数据类型"><a href="#Firebase-没有时间数据类型" class="headerlink" title="Firebase 没有时间数据类型"></a>Firebase 没有时间数据类型</h2><p>Firebase 没有时间数据类型，并且不支持倒序排序。你可以自己将时间转换成时间戳以数字形式存放，并且将其负数作为排序标识一同存储。利用这个排序标识值可以实现倒序查询。</p>
+<h2 id="它并不是万能的"><a href="#它并不是万能的" class="headerlink" title="它并不是万能的"></a>它并不是万能的</h2><p>好好利用 Firebase 的长处。不要用它去解决每一个问题。以下是一些 Firebase 不能做的：</p>
+<ul>
+<li>作为搜索引擎。它有一些基本的操作比如前缀匹配，但也就这些了。如果你需要全功能的搜索，去用 ELK，Algolia 等等吧。</li>
+<li>作为 API 栈。Firebase 的 Cloud Functions 看起来很棒，但它还处于 Beta 时期。如果你的 app 比 to-do list 应用复杂的话，还是规划规划如何做服务器端的可信任代码执行吧。</li>
+<li>A reporting engine. You may still want to leverage a relational database when you need to slice/dice/filter/mutate/munge/etc your data.</li>
+<li>用于全离线应用。它提供了离线功能，但始终还是需要先连上云。</li>
+</ul>
+<h2 id="Set-还是-Update"><a href="#Set-还是-Update" class="headerlink" title="Set 还是 Update"></a>Set 还是 Update</h2><p>SET 和 UPDATE 之间存在着巨大的差别。它影响着如果 key 还不存在时会发生什么，特别是在复杂对象里面的 key。请务必留意。</p>
+<h2 id="FirebaseUI-超级棒！"><a href="#FirebaseUI-超级棒！" class="headerlink" title="FirebaseUI 超级棒！"></a>FirebaseUI 超级棒！</h2><p>噢，我必须要提到，针对各个平台都有一些 FirebaseUI 同类的项目。它们对于建立一个展示 Firebase 数据集中的对象列表的表格真是好用到爆。</p>
+<p>去了解一下 FirebaseUI 吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&quot;https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44&quot;&gt;Best Practices for Firebase Realtime Database Development&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;此文非全文翻译，一些可以省略的话就省略掉了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;读文档！&quot;&gt;&lt;a href=&quot;#读文档！&quot; class=&quot;headerlink&quot; title=&quot;读文档！&quot;&gt;&lt;/a&gt;读文档！&lt;/h2&gt;&lt;p&gt;Firebase 的文档和示例都非常友好易懂。有问题找文档。有空的话请通读全文。&lt;/p&gt;
+&lt;p&gt;另外还有一个很有用的博客，以下是其中几篇对我们很重要的文章：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2016/10/group-security-in-firebase-database.html&quot;&gt;Group Security in the Firebase Database&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2013/10/queries-part-1-common-sql-queries.html&quot;&gt;Queries, Part 1: Common SQL Queries Converted for Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://firebase.googleblog.com/2014/04/best-practices-arrays-in-firebase.html&quot;&gt;Best Practices: Arrays in Firebase&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;a href=&quot;#推论：”无模式”（schema-less）不意味着无脑！&quot; class=&quot;headerlink&quot; title=&quot;推论：”无模式”（schema-less）不意味着无脑！&quot;&gt;&lt;/a&gt;推论：”无模式”（schema-less）不意味着无脑！&lt;/h2&gt;&lt;p&gt;有一个普遍的误解是面向文档的数据库对于数据结构不重视。恰恰相反，&lt;strong&gt;它们更需要注意数据结构&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;好的规划能让所有的软件组件都有最好的性能，这已经没啥可多说的了。不过在 SQL 数据库中，通常是通过 &lt;code&gt;joining more tables&lt;/code&gt;、&lt;code&gt;doing sub-queries&lt;/code&gt; 或者 &lt;code&gt;doing bulk data updates&lt;/code&gt; 来修复规划中的错误。由于 Firebase 中并不存在这些概念，因此还是花些时间来设计你的数据模型并提前处理好这些问题。你会庆幸自己这么做了的。&lt;/p&gt;
+&lt;p&gt;还有啊，记得读文档。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Firebase" scheme="http://chengkang.me/tags/Firebase/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Firebase 安全与规则</title>
     <link href="http://chengkang.me/2017/09/30/firebase-security-rules/"/>
     <id>http://chengkang.me/2017/09/30/firebase-security-rules/</id>
-    <published>2017-09-30T13:08:37.000Z</published>
+    <published>2017-10-01T04:08:37.000Z</published>
     <updated>2017-09-30T13:09:49.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -135,7 +199,7 @@
     <title>《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础</title>
     <link href="http://chengkang.me/2017/06/06/learning-av-foundation-1/"/>
     <id>http://chengkang.me/2017/06/06/learning-av-foundation-1/</id>
-    <published>2017-06-06T11:20:16.000Z</published>
+    <published>2017-06-07T02:20:16.000Z</published>
     <updated>2017-06-06T19:43:34.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -196,7 +260,7 @@
     <title>Core Graphics 教程第一部分：开始</title>
     <link href="http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/"/>
     <id>http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/</id>
-    <published>2017-05-30T04:20:08.000Z</published>
+    <published>2017-05-30T19:20:08.000Z</published>
     <updated>2017-05-30T11:21:13.000Z</updated>
     
     <summary type="html">
@@ -214,7 +278,7 @@
     <title>【译】Core Graphics，第四部分：Path！Path！</title>
     <link href="http://chengkang.me/2017/05/29/core-graphics-part-4/"/>
     <id>http://chengkang.me/2017/05/29/core-graphics-part-4/</id>
-    <published>2017-05-29T13:18:57.000Z</published>
+    <published>2017-05-30T04:18:57.000Z</published>
     <updated>2017-05-29T20:20:17.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -300,7 +364,7 @@
     <title>【译】哥们儿，我的方法哪儿去了？</title>
     <link href="http://chengkang.me/2017/05/25/dude-where-is-my-call/"/>
     <id>http://chengkang.me/2017/05/25/dude-where-is-my-call/</id>
-    <published>2017-05-25T12:09:58.000Z</published>
+    <published>2017-05-26T03:09:58.000Z</published>
     <updated>2017-05-25T19:14:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -394,7 +458,7 @@
     <title>【译】Core Graphics，第三部分：线</title>
     <link href="http://chengkang.me/2017/05/25/core-graphics-part-3/"/>
     <id>http://chengkang.me/2017/05/25/core-graphics-part-3/</id>
-    <published>2017-05-24T16:23:05.000Z</published>
+    <published>2017-05-25T07:23:05.000Z</published>
     <updated>2017-05-24T23:24:56.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -496,7 +560,7 @@
     <title>【译】Core Graphics, 第二部分：说说 context （上下文）</title>
     <link href="http://chengkang.me/2017/05/24/core-graphics-part-2/"/>
     <id>http://chengkang.me/2017/05/24/core-graphics-part-2/</id>
-    <published>2017-05-24T08:20:19.000Z</published>
+    <published>2017-05-24T23:20:19.000Z</published>
     <updated>2017-05-24T15:33:30.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -620,7 +684,7 @@
     <title>【译】Core Graphics，第一部分：序章</title>
     <link href="http://chengkang.me/2017/05/23/core-graphics-part-1/"/>
     <id>http://chengkang.me/2017/05/23/core-graphics-part-1/</id>
-    <published>2017-05-23T14:20:01.000Z</published>
+    <published>2017-05-24T05:20:01.000Z</published>
     <updated>2017-05-23T21:21:36.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -676,7 +740,7 @@
     <title>react-native-lahk-marquee-label（跑马灯文字组件）</title>
     <link href="http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/"/>
     <id>http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/</id>
-    <published>2017-04-11T10:33:17.000Z</published>
+    <published>2017-04-12T01:33:17.000Z</published>
     <updated>2017-04-14T21:36:51.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -754,7 +818,7 @@
     <title>DoubanFMPlayer, A mimic of Douban.fm player</title>
     <link href="http://chengkang.me/2017/02/03/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"/>
     <id>http://chengkang.me/2017/02/03/DoubanFMPlayer, A mimic of Douban.fm player/</id>
-    <published>2017-02-03T14:31:30.000Z</published>
+    <published>2017-02-04T05:31:30.000Z</published>
     <updated>2017-02-12T19:24:08.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -826,7 +890,7 @@
     <title>Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”</title>
     <link href="http://chengkang.me/2017/01/18/Examples%20to%20understand%20how%20to%20find%20Nash%20equilibrium%20by%20eliminating%20%E2%80%9Cdominated%20strategies%E2%80%9D/"/>
     <id>http://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/</id>
-    <published>2017-01-18T09:14:22.000Z</published>
+    <published>2017-01-19T00:14:22.000Z</published>
     <updated>2017-01-18T17:18:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what <code>dominated strategies</code> are and especially what <strong>weakly dominated strategy</strong> is.</p>
@@ -952,7 +1016,7 @@
     <title>QnA，一个 Hexo FAQ 主题</title>
     <link href="http://chengkang.me/2017/01/14/QnA%EF%BC%8C%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"/>
     <id>http://chengkang.me/2017/01/14/QnA，一个 Hexo FAQ 主题/</id>
-    <published>2017-01-14T03:47:03.000Z</published>
+    <published>2017-01-14T18:47:03.000Z</published>
     <updated>2017-01-14T12:08:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1011,7 +1075,7 @@
     <title>DanmuManager 一个简单的弹幕工具</title>
     <link href="http://chengkang.me/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
-    <published>2017-01-05T10:14:32.000Z</published>
+    <published>2017-01-06T01:14:32.000Z</published>
     <updated>2017-01-05T13:54:40.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1109,7 +1173,7 @@
     <title>Pauseable Timer 一个可暂停的计时器</title>
     <link href="http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
     <id>http://chengkang.me/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
-    <published>2017-01-05T07:31:35.000Z</published>
+    <published>2017-01-05T22:31:35.000Z</published>
     <updated>2017-01-05T13:58:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1175,7 +1239,7 @@
     <title>Pauseable Timer</title>
     <link href="http://chengkang.me/2017/01/04/Pauseable%20Timer/"/>
     <id>http://chengkang.me/2017/01/04/Pauseable Timer/</id>
-    <published>2017-01-04T14:58:48.000Z</published>
+    <published>2017-01-05T05:58:48.000Z</published>
     <updated>2017-01-05T13:57:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1243,7 +1307,7 @@
     <title>【译】我最喜欢的 JavaScript 设计模式</title>
     <link href="http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/"/>
     <id>http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/</id>
-    <published>2016-07-02T02:50:25.000Z</published>
+    <published>2016-07-02T17:50:25.000Z</published>
     <updated>2016-07-02T02:51:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1299,7 +1363,7 @@
     <title>【译】JavaScript 命名空间</title>
     <link href="http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/"/>
     <id>http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/</id>
-    <published>2016-06-28T08:07:58.000Z</published>
+    <published>2016-06-28T23:07:58.000Z</published>
     <updated>2016-06-28T08:12:50.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1403,7 +1467,7 @@
     <title>【译】JavaScript 中的命名空间</title>
     <link href="http://chengkang.me/2016/06/21/Namespacing%20in%20JavaScript/"/>
     <id>http://chengkang.me/2016/06/21/Namespacing in JavaScript/</id>
-    <published>2016-06-21T13:59:30.000Z</published>
+    <published>2016-06-22T04:59:30.000Z</published>
     <updated>2016-06-28T08:08:49.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1468,7 +1532,7 @@
     <title>【译】Swift2 中的错误处理：try，catch，do 以及 throw</title>
     <link href="http://chengkang.me/2016/05/15/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"/>
     <id>http://chengkang.me/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/</id>
-    <published>2016-05-15T15:14:40.000Z</published>
+    <published>2016-05-16T06:14:40.000Z</published>
     <updated>2016-05-15T15:21:48.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1536,141 +1600,6 @@
       <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
     
       <category term="error" scheme="http://chengkang.me/tags/error/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UICollectionView 总结</title>
-    <link href="http://chengkang.me/2016/04/13/UICollectionView%20%E6%80%BB%E7%BB%93/"/>
-    <id>http://chengkang.me/2016/04/13/UICollectionView 总结/</id>
-    <published>2016-04-12T23:13:54.000Z</published>
-    <updated>2016-04-13T06:18:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>项目源码：<a href="https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen" target="_blank" rel="external">模拟凤凰新闻 Github 仓库</a></p>
-</blockquote>
-<h3 id="引语"><a href="#引语" class="headerlink" title="引语"></a>引语</h3><p>昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。</p>
-<p>文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：</p>
-<ul>
-<li>同一个 section 内拖动 cell<ul>
-<li>直接使用 UICollectionViewController（<code>TestCollectionViewController.swift</code>）</li>
-<li>在 UIViewController 中使用 UICollectionView（<code>EditTabsViewController.swift</code>）</li>
-</ul>
-</li>
-<li>不同 section 间拖动 cell（<code>Test.swift</code>）</li>
-<li>不同 section 间点击移动 cell（<code>TabsViewController.swift</code>）</li>
-<li>点击移除 cell（<code>EditTabsViewController.swift</code>）</li>
-</ul>
-<p>主要内容如图：</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif" alt=""></p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif" alt=""></p>
-<a id="more"></a>
-<h3 id="《【译】UICollectionView-轻松重排》"><a href="#《【译】UICollectionView-轻松重排》" class="headerlink" title="《【译】UICollectionView 轻松重排》"></a>《【译】UICollectionView 轻松重排》</h3><p>这篇文章主要介绍了在 iOS9 之后 UICollectionView 自带的重新排列方法。</p>
-<ol>
-<li>如果直接使用 UICollectionViewController，通过重写<code>func collectionView(collectionView: UICollectionView,
- moveItemAtIndexPath sourceIndexPath: NSIndexPath,
- toIndexPath destinationIndexPath: NSIndexPath)</code>即可以实现拖动重排。</li>
-<li>如果是在 UIViewController 里面使用 UICollectionView，则需要自己添加一个 UILongPressGestureRecognizer，对应状态进行对应处理。</li>
-</ol>
-<p>比较重要的几个方法是：</p>
-<ul>
-<li>func collectionView(collectionView: UICollectionView,<br>  moveItemAtIndexPath sourceIndexPath: NSIndexPath,<br>  toIndexPath destinationIndexPath: NSIndexPath)</li>
-<li>indexPathForItemAtPoint</li>
-<li>beginInteractiveMovementForItemAtIndexPath</li>
-<li>updateInteractiveMovementTargetPosition</li>
-<li>endInteractiveMovement</li>
-<li>cancelInteractiveMovement</li>
-</ul>
-<p><strong>特别注意</strong></p>
-<p>这个方法<code>func collectionView(collectionView: UICollectionView,
-    moveItemAtIndexPath sourceIndexPath: NSIndexPath,
-    toIndexPath destinationIndexPath: NSIndexPath)</code>,</p>
-<ul>
-<li>重写这个方法之后，自带的拖动重排才能生效。</li>
-<li>这个方法究竟有什么作用？这个方法是在 cell 位置变换之后触发的。它包含两个很有用的参数，被拖动的 cell 的初始 indexPath 和落点 indexPath。因为这个位置的变换只是视图的改变，这些 cell 背后的数据的 index 其实并没有受到影响。因此如果此时 reloadData() 会发现，格子位置又恢复了，但这不是我们想要的，在实际项目中我们希望移动后就一直保持那个位置，也就是说数据的 index 发生相应改变。这个方法就是方便我们处理数据的。具体请看之后内容中的例子。</li>
-<li>另外这个方法只与通过交互移动 cell 事件有关。如果是直接调用移动 cell 的方法并不会触发这个方法。所以在类似凤凰新闻编辑订阅频道页面，”点击下面 section 中的频道，移动到上面的 section 中”，实现时需要在 didSelect 方法中添加对应修改数据源的代码。具体参看源码中<code>TabsViewController.swift</code>。</li>
-</ul>
-<h3 id="使用-UICollectionView-必做的事情"><a href="#使用-UICollectionView-必做的事情" class="headerlink" title="使用 UICollectionView 必做的事情"></a>使用 UICollectionView 必做的事情</h3><p>首先你的 UIViewController 要继承 UICollectionViewDataSource，UICollectionViewDelegate，UICollectionViewDelegateFlowLayout。</p>
-<p>其次，记得绑定 delegate 和 datasource。</p>
-<p>然后是：</p>
-<ul>
-<li>func numberOfSectionsInCollectionView(collectionView: UICollectionView) -&gt; Int</li>
-<li>collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int</li>
-<li>collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&gt; UICollectionViewCell</li>
-</ul>
-<p>有需要的话用上：</p>
-<ul>
-<li>func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -&gt; CGSize</li>
-<li>func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView </li>
-</ul>
-<p><strong>特别注意</strong></p>
-<p>当你在 storyboard 设置了使用 header 或者 footer 或者两者都用的时候，记得添加对应的内容在 viewForSupplementaryElementOfKind 里面。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView &#123;</span><br><span class="line">    </span><br><span class="line">    if kind == UICollectionElementKindSectionHeader &#123;</span><br><span class="line">        let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &quot;TabSectionHeader&quot;, forIndexPath: indexPath) as! TabSectionHeader</span><br><span class="line">        return header</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        let footer = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &quot;TabSectionFooter&quot;, forIndexPath: indexPath)</span><br><span class="line">        return footer</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>个人对这个方法的设计持怀疑态度，觉得像 UITableView 那样分离开会更好。（又或许是我理解不够深刻吧。）</p>
-<p>记得设置 reuseIdentifier。</p>
-<h3 id="插入、移动、删除-cell-以及-cell-总数的问题"><a href="#插入、移动、删除-cell-以及-cell-总数的问题" class="headerlink" title="插入、移动、删除 cell 以及 cell 总数的问题"></a>插入、移动、删除 cell 以及 cell 总数的问题</h3><p>UICollectionView 是在生成 cell 的时候，先通过 numberOfItemsInSection 获得 cell 数量，然后一个一个生成添加在视图中。</p>
-<p>你可通过这些方法来插入、移动、删除 cell：</p>
-<ul>
-<li>insertItemAtIndexPaths</li>
-<li>moveItemAtIndexPath</li>
-<li>deleteItemsAtIndexPaths</li>
-</ul>
-<p>比如，当来自服务器的数据更新了，新增或者减少了一个数据，我们可以想到有两种情况：</p>
-<ol>
-<li>通过 reloadData() 将整个 UICollectionView 更新。</li>
-<li>只在对应的位置插入或删除对应的那一个 cell。</li>
-</ol>
-<p>用第一种方法是没有任何问题的。问题在第二种方法。</p>
-<p>当我们直接通过 insertItemAtIndexPaths 或者 deleteItemsAtIndexPaths 添加或删除 cell 时，UICollectionView 中的 cell 数量发生变化了。貌似没问题？如果你尝试滑动一下屏幕，你会发现程序崩溃了。你会看到类似下面的报错：</p>
-<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-13%20at%206.20.09%20AM.png" alt=""></p>
-<p>原因在于，当 UICollectionView 进行任何的更新时，包括局部更新，都会检查 numberOfItemInSection 方法返回的值和当前 UICollectionView 中实际包含的 cell 数量。如果二者不一致就会报错。</p>
-<p><strong>特别注意</strong></p>
-<p>UICollectionView 中实际包含的 cell 数量在下一次更新前 collection view 视图前一定要和 numberOfItemInSection 的返回值一直。</p>
-<p>所以我们在新增或者删除 cell 之后，记得要修改对应的数据源。（当然在实际项目中应该不会忘记。）</p>
-<p><strong>插入、移动、删除 section 类似</strong></p>
-<h3 id="不同-section-间拖动-cell"><a href="#不同-section-间拖动-cell" class="headerlink" title="不同 section 间拖动 cell"></a>不同 section 间拖动 cell</h3><p>项目中的 Test.swift 是关于不同 section 间拖动 cell 的例子。</p>
-<p>基本原理和在一个 section 内拖动 cell 一样，都是调用那几个方法。</p>
-<p><strong>第一点</strong></p>
-<p>需要注意的还是上面提到的记得修改对应数据源，否则第二次拖动就会报错。因为此时两个 section 内 cell 数量和 numberOfItemInSection 返回值不一样了。</p>
-<p><strong>第二点</strong></p>
-<p>请看一下两个实现方法：</p>
-<p>一，『原始』方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &#123;</span><br><span class="line">    switch sender.state &#123;</span><br><span class="line">    case .Began:</span><br><span class="line">        let location = sender.locationInView(self.collectionView)</span><br><span class="line">        let indexPath = self.collectionView.indexPathForItemAtPoint(location)</span><br><span class="line">        self.originalSectionIndex = (indexPath?.section)!</span><br><span class="line">        self.interactiveItem = self.collectionView.cellForItemAtIndexPath(indexPath!)</span><br><span class="line">        self.collectionView.beginInteractiveMovementForItemAtIndexPath(indexPath!)</span><br><span class="line">        break</span><br><span class="line">    case .Changed:</span><br><span class="line">        let location = sender.locationInView(self.collectionView)</span><br><span class="line">        print(location)</span><br><span class="line">        let indexPath = self.collectionView.indexPathForItemAtPoint(location)</span><br><span class="line">        print(indexPath)</span><br><span class="line">        self.collectionView.updateInteractiveMovementTargetPosition(location)</span><br><span class="line">    case .Ended:</span><br><span class="line">        self.collectionView.endInteractiveMovement()</span><br><span class="line">        let currentSectionIndex = (self.collectionView.indexPathForCell(self.interactiveItem)?.section)!</span><br><span class="line">        self.sections[currentSectionIndex]++</span><br><span class="line">        self.sections[self.originalSectionIndex]--</span><br><span class="line">    default:</span><br><span class="line">        self.collectionView.cancelInteractiveMovement()</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>二，借助自带方法的简便方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) &#123;</span><br><span class="line">    self.sections[destinationIndexPath.section]++</span><br><span class="line">    self.sections[sourceIndexPath.section]--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &#123;</span><br><span class="line">    switch sender.state &#123;</span><br><span class="line">    case .Began:</span><br><span class="line">        guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(sender.locationInView(self.collectionView)) else &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">        self.collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)</span><br><span class="line">        break</span><br><span class="line">    case .Changed:</span><br><span class="line">        self.collectionView.updateInteractiveMovementTargetPosition(sender.locationInView(self.collectionView))</span><br><span class="line">        break</span><br><span class="line">    case .Ended:</span><br><span class="line">        self.collectionView.endInteractiveMovement()</span><br><span class="line">    default:</span><br><span class="line">        self.collectionView.cancelInteractiveMovement()</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>第一个方法定义了两个全局变量<code>var originalSectionIndex = 0</code>和<code>var interactiveItem:UICollectionViewCell!</code>来记录初始位置和正在进行移动的 cell。</p>
-<p>而第二个方法，通过使用<code>func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)</code>，直接就可以使用开始和结束位置 indexPath。非常方便。</p>
-<p>所以当然一定要用第二种方法。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;项目源码：&lt;a href=&quot;https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen&quot;&gt;模拟凤凰新闻 Github 仓库&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;引语&quot;&gt;&lt;a href=&quot;#引语&quot; class=&quot;headerlink&quot; title=&quot;引语&quot;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。&lt;/p&gt;
-&lt;p&gt;文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;同一个 section 内拖动 cell&lt;ul&gt;
-&lt;li&gt;直接使用 UICollectionViewController（&lt;code&gt;TestCollectionViewController.swift&lt;/code&gt;）&lt;/li&gt;
-&lt;li&gt;在 UIViewController 中使用 UICollectionView（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;不同 section 间拖动 cell（&lt;code&gt;Test.swift&lt;/code&gt;）&lt;/li&gt;
-&lt;li&gt;不同 section 间点击移动 cell（&lt;code&gt;TabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
-&lt;li&gt;点击移除 cell（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;主要内容如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://chengkang.me/categories/iOS/"/>
-    
-    
-      <category term="iOS" scheme="http://chengkang.me/tags/iOS/"/>
-    
-      <category term="Swift" scheme="http://chengkang.me/tags/Swift/"/>
-    
-      <category term="UICollectionView" scheme="http://chengkang.me/tags/UICollectionView/"/>
     
   </entry>
   
