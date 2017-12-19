@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-12-19T00:36:14.087Z</updated>
+  <updated>2017-12-19T00:40:16.458Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -17,15 +17,13 @@
   
   <entry>
     <title>Introduction to Wildfire</title>
-    <link href="http://chengkang.me/2017/12/19/wildfire/"/>
-    <id>http://chengkang.me/2017/12/19/wildfire/</id>
+    <link href="http://chengkang.me/2017/12/19/introduction-to-wildfire/"/>
+    <id>http://chengkang.me/2017/12/19/introduction-to-wildfire/</id>
     <published>2017-12-19T00:34:07.000Z</published>
-    <updated>2017-12-19T00:36:14.087Z</updated>
+    <updated>2017-12-19T00:40:16.458Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://badge.fury.io/js/wildfire" target="_blank" rel="external"><img src="https://badge.fury.io/js/wildfire.svg" alt="npm version"></a></p>
 <p><a href="https://github.com/cheng-kang/wildfire#wildfire-" target="_blank" rel="external">English Doc</a> | <a href="https://github.com/cheng-kang/wildfire/blob/master/README-ZH.md" target="_blank" rel="external">中文说明文档</a></p>
-<p><br><!-- <p align="center"> --><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/wildfire-logo.svg" height="60"><br>  <span>&emsp;=&emsp;</span><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/wilddog.svg" height="40"><br>  <span>&emsp;+&emsp;</span><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/firebase.png" height="45"><br></p>
-
 <p>A drop-in replacement for other comment systems.</p>
 <blockquote>
 <p><em>“From a little spark may burst a flame”.</em></p>
@@ -110,8 +108,9 @@
 </ul>
 </li>
 </ol>
-<h2 id="Screenshots"><a href="#Screenshots" class="headerlink" title="Screenshots"></a>Screenshots</h2><p align="center"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/1.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/2.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/3.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/4.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/5.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/6.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/7.png" height="320"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/8.png" height="320"><br></p>
+<h2 id="Screenshots"><a href="#Screenshots" class="headerlink" title="Screenshots"></a>Screenshots</h2><p align="center"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/0a063275/resources/screenshots/1.png" height="320"><br></p>
 
+<p>More screenshots <a href="https://github.com/cheng-kang/wildfire#screenshots" target="_blank" rel="external">here</a>.</p>
 <h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p><a href="https://github.com/cheng-kang/wildfire/blob/master/LICENSE" target="_blank" rel="external">GNU General Public License v3.0</a></p>
 ]]></content>
     
@@ -119,8 +118,6 @@
     
       &lt;p&gt;&lt;a href=&quot;https://badge.fury.io/js/wildfire&quot;&gt;&lt;img src=&quot;https://badge.fury.io/js/wildfire.svg&quot; alt=&quot;npm version&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/cheng-kang/wildfire#wildfire-&quot;&gt;English Doc&lt;/a&gt; | &lt;a href=&quot;https://github.com/cheng-kang/wildfire/blob/master/README-ZH.md&quot;&gt;中文说明文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;!-- &lt;p align=&quot;center&quot;&gt; --&gt;&lt;br&gt;  &lt;img src=&quot;https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/wildfire-logo.svg&quot; height=&quot;60&quot;&gt;&lt;br&gt;  &lt;span&gt;&amp;emsp;=&amp;emsp;&lt;/span&gt;&lt;br&gt;  &lt;img src=&quot;https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/wilddog.svg&quot; height=&quot;40&quot;&gt;&lt;br&gt;  &lt;span&gt;&amp;emsp;+&amp;emsp;&lt;/span&gt;&lt;br&gt;  &lt;img src=&quot;https://cdn.rawgit.com/cheng-kang/wildfire/d37678ae/resources/firebase.png&quot; height=&quot;45&quot;&gt;&lt;br&gt;&lt;/p&gt;
-
 &lt;p&gt;A drop-in replacement for other comment systems.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;em&gt;“From a little spark may burst a flame”.&lt;/em&gt;&lt;/p&gt;
