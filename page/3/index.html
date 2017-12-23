@@ -286,18 +286,35 @@
 
 <!-- Disqus Comments -->
 
-    <script type="text/javascript">
-        var disqus_shortname = 'chengkang';
+<script type="text/javascript">
+    var disqus_shortname = 'null';
 
-        (function(){
-            var dsq = document.createElement('script');
-            dsq.type = 'text/javascript';
-            dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        }());
-    </script>
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
+<script>
+  var wildfireConfig = () => ({
+    databaseProvider: 'firebae',
+    databaseConfig: {
+        apiKey: "AIzaSyA962a46AZyKFhyhEvBy3L2sjaNmwN5a2Q",
+        authDomain: "chengkang-me.firebaseapp.com",
+        databaseURL: "https://chengkang-me.firebaseio.com",
+        projectId: "chengkang-me",
+        storageBucket: "chengkang-me.appspot.com",
+        messagingSenderId: "1040071529318"
+    },
+    theme: 'dark',
+    locale: 'zh',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire/dist/wildfire.auto.js"></script>
 
 </body>
 </html>
