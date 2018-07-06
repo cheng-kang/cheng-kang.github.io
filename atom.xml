@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://chengkang.me/"/>
-  <updated>2017-12-29T21:39:56.322Z</updated>
+  <updated>2017-12-29T21:39:56.323Z</updated>
   <id>http://chengkang.me/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>Introduction to Wildfire</title>
     <link href="http://chengkang.me/2017/12/19/introduction-to-wildfire/"/>
     <id>http://chengkang.me/2017/12/19/introduction-to-wildfire/</id>
-    <published>2017-12-19T00:34:07.000Z</published>
-    <updated>2017-12-29T21:39:56.322Z</updated>
+    <published>2017-12-19T07:34:07.000Z</published>
+    <updated>2017-12-29T21:39:56.323Z</updated>
     
     <content type="html"><![CDATA[<p align="center"><br><a href="https://www.npmjs.com/wildfire" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/wildfire.svg?style=flat-square" alt=""></a><br></p>
 
@@ -122,7 +122,7 @@
     <title>Firebase 实时数据库开发最佳实践</title>
     <link href="http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"/>
     <id>http://chengkang.me/2017/10/14/best-practice-for-firebase-realtime-datebase-development/</id>
-    <published>2017-10-14T07:43:51.000Z</published>
+    <published>2017-10-14T15:43:51.000Z</published>
     <updated>2017-10-14T15:44:41.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -186,7 +186,7 @@
     <title>Firebase 安全与规则</title>
     <link href="http://chengkang.me/2017/09/30/firebase-security-rules/"/>
     <id>http://chengkang.me/2017/09/30/firebase-security-rules/</id>
-    <published>2017-09-30T20:08:37.000Z</published>
+    <published>2017-10-01T04:08:37.000Z</published>
     <updated>2017-09-30T13:09:49.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -302,7 +302,7 @@
     <title>《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础</title>
     <link href="http://chengkang.me/2017/06/06/learning-av-foundation-1/"/>
     <id>http://chengkang.me/2017/06/06/learning-av-foundation-1/</id>
-    <published>2017-06-06T18:20:16.000Z</published>
+    <published>2017-06-07T02:20:16.000Z</published>
     <updated>2017-06-06T19:43:34.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -363,7 +363,7 @@
     <title>Core Graphics 教程第一部分：开始</title>
     <link href="http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/"/>
     <id>http://chengkang.me/2017/05/30/core-graphics-tutorial-part-1/</id>
-    <published>2017-05-30T11:20:08.000Z</published>
+    <published>2017-05-30T19:20:08.000Z</published>
     <updated>2017-05-30T11:21:13.000Z</updated>
     
     <summary type="html">
@@ -381,7 +381,7 @@
     <title>【译】Core Graphics，第四部分：Path！Path！</title>
     <link href="http://chengkang.me/2017/05/29/core-graphics-part-4/"/>
     <id>http://chengkang.me/2017/05/29/core-graphics-part-4/</id>
-    <published>2017-05-29T20:18:57.000Z</published>
+    <published>2017-05-30T04:18:57.000Z</published>
     <updated>2017-05-29T20:20:17.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -467,7 +467,7 @@
     <title>【译】哥们儿，我的方法哪儿去了？</title>
     <link href="http://chengkang.me/2017/05/25/dude-where-is-my-call/"/>
     <id>http://chengkang.me/2017/05/25/dude-where-is-my-call/</id>
-    <published>2017-05-25T19:09:58.000Z</published>
+    <published>2017-05-26T03:09:58.000Z</published>
     <updated>2017-05-25T19:14:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -561,7 +561,7 @@
     <title>【译】Core Graphics，第三部分：线</title>
     <link href="http://chengkang.me/2017/05/25/core-graphics-part-3/"/>
     <id>http://chengkang.me/2017/05/25/core-graphics-part-3/</id>
-    <published>2017-05-24T23:23:05.000Z</published>
+    <published>2017-05-25T07:23:05.000Z</published>
     <updated>2017-05-24T23:24:56.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -663,7 +663,7 @@
     <title>【译】Core Graphics, 第二部分：说说 context （上下文）</title>
     <link href="http://chengkang.me/2017/05/24/core-graphics-part-2/"/>
     <id>http://chengkang.me/2017/05/24/core-graphics-part-2/</id>
-    <published>2017-05-24T15:20:19.000Z</published>
+    <published>2017-05-24T23:20:19.000Z</published>
     <updated>2017-05-24T15:33:30.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -787,7 +787,7 @@
     <title>【译】Core Graphics，第一部分：序章</title>
     <link href="http://chengkang.me/2017/05/23/core-graphics-part-1/"/>
     <id>http://chengkang.me/2017/05/23/core-graphics-part-1/</id>
-    <published>2017-05-23T21:20:01.000Z</published>
+    <published>2017-05-24T05:20:01.000Z</published>
     <updated>2017-05-23T21:21:36.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -843,7 +843,7 @@
     <title>react-native-lahk-marquee-label（跑马灯文字组件）</title>
     <link href="http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/"/>
     <id>http://chengkang.me/2017/04/11/react-native-lahk-marquee-label/</id>
-    <published>2017-04-11T17:33:17.000Z</published>
+    <published>2017-04-12T01:33:17.000Z</published>
     <updated>2017-04-14T21:36:51.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -921,7 +921,7 @@
     <title>DoubanFMPlayer, A mimic of Douban.fm player</title>
     <link href="http://chengkang.me/2017/02/03/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"/>
     <id>http://chengkang.me/2017/02/03/DoubanFMPlayer, A mimic of Douban.fm player/</id>
-    <published>2017-02-03T22:31:30.000Z</published>
+    <published>2017-02-04T05:31:30.000Z</published>
     <updated>2017-02-12T19:24:08.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -993,7 +993,7 @@
     <title>Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”</title>
     <link href="http://chengkang.me/2017/01/18/Examples%20to%20understand%20how%20to%20find%20Nash%20equilibrium%20by%20eliminating%20%E2%80%9Cdominated%20strategies%E2%80%9D/"/>
     <id>http://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/</id>
-    <published>2017-01-18T17:14:22.000Z</published>
+    <published>2017-01-19T00:14:22.000Z</published>
     <updated>2017-01-18T17:18:11.000Z</updated>
     
     <content type="html"><![CDATA[<p>This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what <code>dominated strategies</code> are and especially what <strong>weakly dominated strategy</strong> is.</p>
@@ -1119,7 +1119,7 @@
     <title>QnA，一个 Hexo FAQ 主题</title>
     <link href="http://chengkang.me/2017/01/14/QnA%EF%BC%8C%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"/>
     <id>http://chengkang.me/2017/01/14/QnA，一个 Hexo FAQ 主题/</id>
-    <published>2017-01-14T11:47:03.000Z</published>
+    <published>2017-01-14T18:47:03.000Z</published>
     <updated>2017-01-14T12:08:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1178,7 +1178,7 @@
     <title>DanmuManager 一个简单的弹幕工具</title>
     <link href="http://chengkang.me/2017/01/05/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"/>
     <id>http://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/</id>
-    <published>2017-01-05T18:14:32.000Z</published>
+    <published>2017-01-06T01:14:32.000Z</published>
     <updated>2017-01-05T13:54:40.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1276,7 +1276,7 @@
     <title>Pauseable Timer 一个可暂停的计时器</title>
     <link href="http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/"/>
     <id>http://chengkang.me/2017/01/05/PauseableTimer 一个可暂停的计时器/</id>
-    <published>2017-01-05T15:31:35.000Z</published>
+    <published>2017-01-05T22:31:35.000Z</published>
     <updated>2017-01-05T13:58:05.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1342,7 +1342,7 @@
     <title>Pauseable Timer</title>
     <link href="http://chengkang.me/2017/01/04/Pauseable%20Timer/"/>
     <id>http://chengkang.me/2017/01/04/Pauseable Timer/</id>
-    <published>2017-01-04T22:58:48.000Z</published>
+    <published>2017-01-05T05:58:48.000Z</published>
     <updated>2017-01-05T13:57:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1410,7 +1410,7 @@
     <title>【译】我最喜欢的 JavaScript 设计模式</title>
     <link href="http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/"/>
     <id>http://chengkang.me/2016/07/02/my-favorite-javascript-pattern/</id>
-    <published>2016-07-02T09:50:25.000Z</published>
+    <published>2016-07-02T17:50:25.000Z</published>
     <updated>2016-07-02T02:51:54.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1466,7 +1466,7 @@
     <title>【译】JavaScript 命名空间</title>
     <link href="http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/"/>
     <id>http://chengkang.me/2016/06/28/javascript-namespace-by-michaux/</id>
-    <published>2016-06-28T15:07:58.000Z</published>
+    <published>2016-06-28T23:07:58.000Z</published>
     <updated>2016-06-28T08:12:50.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
@@ -1570,7 +1570,7 @@
     <title>【译】JavaScript 中的命名空间</title>
     <link href="http://chengkang.me/2016/06/21/Namespacing%20in%20JavaScript/"/>
     <id>http://chengkang.me/2016/06/21/Namespacing in JavaScript/</id>
-    <published>2016-06-21T20:59:30.000Z</published>
+    <published>2016-06-22T04:59:30.000Z</published>
     <updated>2016-06-28T08:08:49.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
