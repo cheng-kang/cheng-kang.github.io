@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的整体浅灰色背景+输入框白色背景，发现直接使用IBOutlet建立连接修改bordercolor或者borderwidth没有用。所以研究了一下如何修改UIsearchBar相关的颜色。   另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。  因为微博客户端首页上面的 search bar">
+<meta name="keywords" content="iOS,AutoLayout,UISearchBar,color">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色">
+<meta property="og:url" content="https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的整体浅灰色背景+输入框白色背景，发现直接使用IBOutlet建立连接修改bordercolor或者borderwidth没有用。所以研究了一下如何修改UIsearchBar相关的颜色。   另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。  因为微博客户端首页上面的 search bar">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%207.57.34%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%207.54.24%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.10.51%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.15.12%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.45.34%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.46.09%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.27.49%20PM.png">
+<meta property="og:updated_time" content="2016-03-21T03:21:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色">
+<meta name="twitter:description" content="在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的整体浅灰色背景+输入框白色背景，发现直接使用IBOutlet建立连接修改bordercolor或者borderwidth没有用。所以研究了一下如何修改UIsearchBar相关的颜色。   另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。  因为微博客户端首页上面的 search bar">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%207.57.34%20PM.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/03/19/AutoLayout：UITableViewCell 自适应高度的一个例子/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/03/18/Fire-Blog-中文说明/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&text=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&is_video=false&description=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色&body=Check out this article: https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&name=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色&description=&lt;blockquote&gt;
+&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBar&lt;/code&gt;相关的颜色。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因为微博客户端首页上面的 search bar 高度很小，自己尝试修改没成功，于是 google 了一下。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/30858969/can-the-height-of-the-uisearchbar-textfield-be-modified&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;《StackOverflow: Can the height of the UISearchbar TextField be modified?》&lt;/a&gt; 中提到一种方案：&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;override func viewDidAppear(animated: Bool) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    super.viewDidAppear(animated)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    for subView in searchBar.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        print(subView)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        for subsubView in subView.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            print(subsubView)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            if let textField = subsubView as? UITextField &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;								textField.font = UIFont.systemFontOfSize(20)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;把这个函数放在&lt;code&gt;viewDidAppear&lt;/code&gt;会不会有点问题？是不是放在&lt;code&gt;viewWillAppear&lt;/code&gt;比较好？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;才发现 search bar 的结构很复杂。&lt;br&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#试验"><span class="toc-number">1.</span> <span class="toc-text">试验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使-borderwidth-和-backgroundColor-生效"><span class="toc-number">2.</span> <span class="toc-text">如何使 borderwidth 和 backgroundColor 生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背后的-view"><span class="toc-number">3.</span> <span class="toc-text">背后的 view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#另一个问题：当-searchBarStyle-为-UISearchBarStyle-Minimal-时"><span class="toc-number">4.</span> <span class="toc-text">另一个问题：当 searchBarStyle 为 UISearchBarStyle.Minimal 时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#默认的黑色边框"><span class="toc-number">5.</span> <span class="toc-text">默认的黑色边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后附一张我的截图-D"><span class="toc-number">6.</span> <span class="toc-text">最后附一张我的截图 : D</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-03-20T03:51:09.000Z" itemprop="datePublished">2016-03-19</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/AutoLayout/">AutoLayout</a>, <a class="tag-link" href="/tags/UISearchBar/">UISearchBar</a>, <a class="tag-link" href="/tags/color/">color</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的<strong>整体浅灰色背景+输入框白色背景</strong>，发现直接使用<code>IBOutlet</code>建立连接修改<code>bordercolor</code>或者<code>borderwidth</code>没有用。所以研究了一下如何修改<code>UIsearchBar</code>相关的颜色。</p>
+</blockquote>
+<blockquote>
+<p>另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。</p>
+</blockquote>
+<p>因为微博客户端首页上面的 search bar 高度很小，自己尝试修改没成功，于是 google 了一下。</p>
+<p><a href="http://stackoverflow.com/questions/30858969/can-the-height-of-the-uisearchbar-textfield-be-modified" target="_blank" rel="noopener">《StackOverflow: Can the height of the UISearchbar TextField be modified?》</a> 中提到一种方案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">    super.viewDidAppear(animated)</span><br><span class="line">    for subView in searchBar.subviews  &#123;</span><br><span class="line">        print(subView)</span><br><span class="line">        for subsubView in subView.subviews  &#123;</span><br><span class="line">            print(subsubView)</span><br><span class="line">            if let textField = subsubView as? UITextField &#123;</span><br><span class="line">								textField.font = UIFont.systemFontOfSize(20)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>把这个函数放在<code>viewDidAppear</code>会不会有点问题？是不是放在<code>viewWillAppear</code>比较好？</p>
+</blockquote>
+<p>才发现 search bar 的结构很复杂。<br><a id="more"></a><br>我加了两行打印，把子视图简单地打印出来。得到的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;UIView: 0x7fb6204a09c0; frame = (390 0; 195 25); autoresize = RM+BM; gestureRecognizers = &lt;NSArray: 0x7fb622479cf0&gt;; layer = &lt;CALayer: 0x7fb6204806e0&gt;&gt;</span><br><span class="line">&lt;UIView: 0x7fb622122760; frame = (0 0; 320 44); clipsToBounds = YES; autoresize = W+H; layer = &lt;CALayer: 0x7fb622120180&gt;&gt;</span><br><span class="line">&lt;UISearchBarBackground: 0x7fb622123340; frame = (0 0; 320 44); opaque = NO; userInteractionEnabled = NO; layer = &lt;CALayer: 0x7fb622123800&gt;&gt;</span><br><span class="line">&lt;UISearchBarTextField: 0x7fb622124bf0; frame = (8 8; 304 28); text = &apos;&apos;; clipsToBounds = YES; opaque = NO; layer = &lt;CALayer: 0x7fb622120290&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>不去深究，简而言之，在它的第二层子视图(subview)中至少包含了一个<code>UIView</code>和一个<code>UiTextField</code>，分别是 search bar 的背景视图和文本输入框。</p>
+<p>Search bar 的样式就是它们定义的。所以我们对它们进行修改就能达到目的。</p>
+<h3 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h3><p>假设： @IBOutlet weak var searchBar: UISearchBar!</p>
+<ul>
+<li>searchBar.tintColor: 设置输入框光标颜色</li>
+<li>searchBar.barTintColor: 设置外层背景颜色</li>
+</ul>
+<p>我通过下面的代码，试着给各种背景、边框设置不同颜色，得到的效果如图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">override func viewWillAppear(animated: Bool) &#123;</span><br><span class="line">    for subView in searchBar.subviews  &#123;</span><br><span class="line">        for subsubView in subView.subviews  &#123;</span><br><span class="line">            if let bg = subsubView as? UIView &#123;</span><br><span class="line">                bg.backgroundColor = UIColor.whiteColor()</span><br><span class="line">                bg.layer.backgroundColor = UIColor.orangeColor().CGColor</span><br><span class="line">                bg.layer.borderColor = UIColor.redColor().CGColor</span><br><span class="line">                bg.layer.borderWidth = 1</span><br><span class="line">            &#125;</span><br><span class="line">            if let textField = subsubView as? UITextField &#123;</span><br><span class="line">                textField.backgroundColor = UIColor.blueColor()</span><br><span class="line">                textField.layer.borderColor = UIColor.greenColor().CGColor</span><br><span class="line">                textField.layer.borderWidth = 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    searchBar.barTintColor = UIColor.yellowColor()</span><br><span class="line">    searchBar.tintColor = UIColor.blackColor()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%207.57.34%20PM.png" alt=""><br>可以看到，红色、蓝色、绿色、黑色和黄色产生了效果。</p>
+<h3 id="如何使-borderwidth-和-backgroundColor-生效"><a href="#如何使-borderwidth-和-backgroundColor-生效" class="headerlink" title="如何使 borderwidth 和 backgroundColor 生效"></a>如何使 borderwidth 和 backgroundColor 生效</h3><p>有一个问题是：</p>
+<ul>
+<li>必须设置<code>borderwidth</code>，否则自定义的<code>bordercolor</code>和<code>backgroundColor</code>都不会生效。</li>
+</ul>
+<p>比如注释掉<code>borderwidth</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">override func viewWillAppear(animated: Bool) &#123;</span><br><span class="line">    for subView in searchBar.subviews  &#123;</span><br><span class="line">        for subsubView in subView.subviews  &#123;</span><br><span class="line">            if let bg = subsubView as? UIView &#123;</span><br><span class="line">                bg.backgroundColor = UIColor.whiteColor()</span><br><span class="line">                bg.layer.backgroundColor = UIColor.orangeColor().CGColor</span><br><span class="line">                bg.layer.borderColor = UIColor.redColor().CGColor</span><br><span class="line">                //bg.layer.borderWidth = 1</span><br><span class="line">            &#125;</span><br><span class="line">            if let textField = subsubView as? UITextField &#123;</span><br><span class="line">                textField.backgroundColor = UIColor.blueColor()</span><br><span class="line">                textField.layer.borderColor = UIColor.greenColor().CGColor</span><br><span class="line">                //textField.layer.borderWidth = 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    searchBar.barTintColor = UIColor.yellowColor()</span><br><span class="line">    searchBar.tintColor = UIColor.blackColor()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%207.54.24%20PM.png" alt=""><br>会发现<strong>红色</strong>和<strong>绿色</strong>不见了。</p>
+<h3 id="背后的-view"><a href="#背后的-view" class="headerlink" title="背后的 view"></a>背后的 view</h3><p><strong>仔细看</strong><br>这个时候在文本输入框的角落出现了橙色。</p>
+<p>这说明，searchBar 的子视图中，除了一个作为整体背景的<code>UIView</code>和文本输入框之外，还有一个和文本输入框相同大小的<code>UIView</code>。</p>
+<p>所以我把文本输入框的背景色设置为<code>clearColor</code>，然后得到下图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.10.51%20PM.png" alt=""></p>
+<blockquote>
+<p>这个 view 具体作用是什么，之后再来和另外几个一起一个一个弄清楚。</p>
+</blockquote>
+<h3 id="另一个问题：当-searchBarStyle-为-UISearchBarStyle-Minimal-时"><a href="#另一个问题：当-searchBarStyle-为-UISearchBarStyle-Minimal-时" class="headerlink" title="另一个问题：当 searchBarStyle 为 UISearchBarStyle.Minimal 时"></a>另一个问题：当 searchBarStyle 为 UISearchBarStyle.Minimal 时</h3><p><code>searchBarStyle</code>默认为<code>Prominent</code>，你可以自己修改为<code>Minimal</code>，它的样式更简洁。</p>
+<p>但是，当我切换成<code>Minimal</code>之后，结果变成这样了：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.15.12%20PM.png" alt=""></p>
+<p>可以看到，<code>searchBar.barTintColor = UIColor.yellowColor()</code>没有生效。</p>
+<p>暂时不知道为什么，我猜是<code>Apple</code>故意设置的不允许修改。</p>
+<h3 id="默认的黑色边框"><a href="#默认的黑色边框" class="headerlink" title="默认的黑色边框"></a>默认的黑色边框</h3><p>当我把 search bar 背景颜色设置为我想要的浅灰色之后，又一个问题出现了。</p>
+<p>居然有默认的边框。而且我取色看了一下，在背景颜色不同时，边框颜色值还不一样……</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.45.34%20PM.png" alt=""></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.46.09%20PM.png" alt=""></p>
+<p>我尝试设置<code>borderwidth</code>为<code>0</code>，可是边框依旧显示。（不信你试试：D ）</p>
+<p>所以我猜这可能是，当 search bar 没有边框的时候自动添加的强制性边框，用于和其他元素区别吧。</p>
+<p>不过刚才已经找到修改边框颜色的方法了。所以用上面的方法修改即可，记得设置<code>borderWidth</code>。</p>
+<p>这里也有一点要注意：</p>
+<p>因为上面我们并没有把每个<code>UIView</code>单独拿出来进行操作，而是遍历子视图里的所有<code>UIView</code>修改边框，这就导致包含的<code>textField</code>边框也被修改为背景层的边框颜色。假如我们自定义的<code>textField</code>边框颜色和背景层边框颜色不一样，那么这就不是我们想要的。记得在<code>if let bg = subsubView as? UIView</code>后面再执行<code>if let textField = subsubView as? UITextField</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">override func viewWillAppear(animated: Bool) &#123;</span><br><span class="line">        for subView in searchBar.subviews  &#123;</span><br><span class="line">            print(subView)</span><br><span class="line">            for subsubView in subView.subviews  &#123;</span><br><span class="line">                print(subsubView)</span><br><span class="line">                if let bg = subsubView as? UIView &#123;</span><br><span class="line">                    bg.layer.borderColor = UIColor(red: 242/250, green: 242/250, blue: 242/250, alpha: 1).CGColor</span><br><span class="line">                    bg.layer.borderWidth = 1</span><br><span class="line">                &#125;</span><br><span class="line">                if let textField = subsubView as? UITextField &#123;</span><br><span class="line">                    textField.layer.borderWidth = 0</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        searchBar.barTintColor = UIColor(red: 242/250, green: 242/250, blue: 242/250, alpha: 1)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="最后附一张我的截图-D"><a href="#最后附一张我的截图-D" class="headerlink" title="最后附一张我的截图 : D"></a>最后附一张我的截图 : D</h3><p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-19%20at%208.27.49%20PM.png" alt=""></p>
+<hr>
+<p><strong>如有错误，望指正。</strong><br><strong>如有更优方案，望赐教。</strong></p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#试验"><span class="toc-number">1.</span> <span class="toc-text">试验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何使-borderwidth-和-backgroundColor-生效"><span class="toc-number">2.</span> <span class="toc-text">如何使 borderwidth 和 backgroundColor 生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#背后的-view"><span class="toc-number">3.</span> <span class="toc-text">背后的 view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#另一个问题：当-searchBarStyle-为-UISearchBarStyle-Minimal-时"><span class="toc-number">4.</span> <span class="toc-text">另一个问题：当 searchBarStyle 为 UISearchBarStyle.Minimal 时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#默认的黑色边框"><span class="toc-number">5.</span> <span class="toc-text">默认的黑色边框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后附一张我的截图-D"><span class="toc-number">6.</span> <span class="toc-text">最后附一张我的截图 : D</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&text=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&is_video=false&description=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色&body=Check out this article: https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&title=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2016/03/19/UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色/&name=UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色&description=&lt;blockquote&gt;
+&lt;p&gt;在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的&lt;strong&gt;整体浅灰色背景+输入框白色背景&lt;/strong&gt;，发现直接使用&lt;code&gt;IBOutlet&lt;/code&gt;建立连接修改&lt;code&gt;bordercolor&lt;/code&gt;或者&lt;code&gt;borderwidth&lt;/code&gt;没有用。所以研究了一下如何修改&lt;code&gt;UIsearchBar&lt;/code&gt;相关的颜色。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因为微博客户端首页上面的 search bar 高度很小，自己尝试修改没成功，于是 google 了一下。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/30858969/can-the-height-of-the-uisearchbar-textfield-be-modified&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;《StackOverflow: Can the height of the UISearchbar TextField be modified?》&lt;/a&gt; 中提到一种方案：&lt;br&gt;&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;override func viewDidAppear(animated: Bool) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    super.viewDidAppear(animated)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    for subView in searchBar.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        print(subView)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        for subsubView in subView.subviews  &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            print(subsubView)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            if let textField = subsubView as? UITextField &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;								textField.font = UIFont.systemFontOfSize(20)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;把这个函数放在&lt;code&gt;viewDidAppear&lt;/code&gt;会不会有点问题？是不是放在&lt;code&gt;viewWillAppear&lt;/code&gt;比较好？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;才发现 search bar 的结构很复杂。&lt;br&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+

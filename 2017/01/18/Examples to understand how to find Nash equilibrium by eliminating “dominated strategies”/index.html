@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what dominated strategies are and especially what weakly dominated strategy is">
+<meta name="keywords" content="Game Theory,Dominated Strategies">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”">
+<meta property="og:url" content="https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what dominated strategies are and especially what weakly dominated strategy is">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-01-18T17:18:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”">
+<meta name="twitter:description" content="This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what dominated strategies are and especially what weakly dominated strategy is">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/02/03/DoubanFMPlayer, A mimic of Douban.fm player/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/14/QnA，一个 Hexo FAQ 主题/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&text=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&is_video=false&description=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”&body=Check out this article: https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&name=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”&description=&lt;p&gt;This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what &lt;code&gt;dominated strategies&lt;/code&gt; are and especially what &lt;strong&gt;weakly dominated strategy&lt;/strong&gt; is.&lt;/p&gt;
+&lt;h2 id=&#34;Definition&#34;&gt;&lt;a href=&#34;#Definition&#34; class=&#34;headerlink&#34; title=&#34;Definition&#34;&gt;&lt;/a&gt;Definition&lt;/h2&gt;&lt;p&gt;Suppose &lt;em&gt;si&lt;/em&gt; and &lt;em&gt;s’i&lt;/em&gt; are two strategies for player &lt;em&gt;i&lt;/em&gt; in a normal form game.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;strictly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;strictly greater than&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;We call &lt;em&gt;s’i&lt;/em&gt; dominated strategy and &lt;em&gt;si&lt;/em&gt; dominant strategy.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;weakly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from chossing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;at least as great as&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remarks"><span class="toc-number">2.</span> <span class="toc-text">Remarks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-of-eliminating-strictly-dominated-strategies"><span class="toc-number">3.</span> <span class="toc-text">Example of eliminating strictly dominated strategies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-of-eliminating-weakly-dominated-strategies"><span class="toc-number">4.</span> <span class="toc-text">Example of eliminating weakly dominated strategies</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#References"><span class="toc-number"></span> <span class="toc-text">References</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-01-19T00:14:22.000Z" itemprop="datePublished">2017-01-18</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Dominated-Strategies/">Dominated Strategies</a>, <a class="tag-link" href="/tags/Game-Theory/">Game Theory</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what <code>dominated strategies</code> are and especially what <strong>weakly dominated strategy</strong> is.</p>
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>Suppose <em>si</em> and <em>s’i</em> are two strategies for player <em>i</em> in a normal form game.</p>
+<p>We say <em>s’i</em> is <strong>strictly dominated</strong> by <em>si</em> if, for every choice of strategies of the other players, <em>i</em>’s payoff from choosing <em>si</em> is <code>strictly greater than</code> <em>i</em>’s payoff from choosing <em>s’i</em>.</p>
+<p>We call <em>s’i</em> dominated strategy and <em>si</em> dominant strategy.</p>
+<p>We say <em>s’i</em> is <strong>weakly dominated</strong> by <em>si</em> if, for every choice of strategies of the other players, <em>i</em>’s payoff from chossing <em>si</em> is <code>at least as great as</code> <em>i</em>’s payoff from choosing <em>s’i</em>.</p>
+<a id="more"></a>
+<h2 id="Remarks"><a href="#Remarks" class="headerlink" title="Remarks"></a>Remarks</h2><ol>
+<li>If a unique strategy remains for the player, we call this the player’s dominant strategy.</li>
+<li>If a unique strategy remains for all players, we call this strategy profile a dominant<br>strategy equilibrium.</li>
+<li>A dominant strategy equilibrium is a Nash equilibrium. And we can eliminate<br>dominated strategies without losing any Nash equilibria.</li>
+<li>If the iterated elimination of weakly dominated strategies leaves exactly one strategy<br>for each player, the resulting strategy profile is a Nash equilibrium. <strong>However some Nash equilibria can be discarded this way.</strong></li>
+</ol>
+<h2 id="Example-of-eliminating-strictly-dominated-strategies"><a href="#Example-of-eliminating-strictly-dominated-strategies" class="headerlink" title="Example of eliminating strictly dominated strategies"></a>Example of eliminating strictly dominated strategies</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">Agent2</th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">R</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Agent1</strong></td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">73, 25</td>
+<td style="text-align:center">57, 42</td>
+<td style="text-align:center">66,32</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">80, 26</td>
+<td style="text-align:center">35, 12</td>
+<td style="text-align:center">32,54</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">28, 27</td>
+<td style="text-align:center">63, 31</td>
+<td style="text-align:center">54,29</td>
+</tr>
+</tbody>
+</table>
+<p>L can be eliminated since it is strictly dominated by R, and then M can be eliminated since it is strictly dominated by both T and B, and then R can be eliminated since it is strictly dominated by C. Now Agent1 will choose B, which will result in a payoff of <strong>63, 31</strong>.</p>
+<h2 id="Example-of-eliminating-weakly-dominated-strategies"><a href="#Example-of-eliminating-weakly-dominated-strategies" class="headerlink" title="Example of eliminating weakly dominated strategies"></a>Example of eliminating weakly dominated strategies</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center">Agent2</th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">L</td>
+<td style="text-align:center">R</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Agent1</strong></td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">1, 1</td>
+<td style="text-align:center">0, 0</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">1, 1</td>
+<td style="text-align:center">2, 1</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">0, 0</td>
+<td style="text-align:center">2, 1</td>
+</tr>
+</tbody>
+</table>
+<p>This example illustrates the difficulties that may occur when eliminating weakly dominated strategies.</p>
+<p>The actions that survive iterated elimination of weakly dominated strategiescan depend on the order in which the actions are eliminated.</p>
+<ol>
+<li><p>For example, T can be eliminated since it is weakly dominated by M,and then L can be eliminated since it is weakly dominated by R. Now, agent2 will choose action R, which will result in a payoff of <strong>(2, 1)</strong> for which ever action agent 1 selects.</p>
+</li>
+<li><p>On the other hand, action B could have been eliminated first since it is weakly dominated by M, and then R could have been eliminated since it is weakly dominated by L. Now, the payoff is <strong>(1, 1)</strong> for which ever action agent 1 selects.</p>
+</li>
+</ol>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1]<a href="http://tuvalu.santafe.edu/~jkchoi/ch2_a.pdf" target="_blank" rel="noopener">Leading fromStrength: Eliminating Dominated Strategies</a></p>
+<p>[2]<a href="https://cs.uwaterloo.ca/~klarson/teaching/F08-886/WeaklyDominatedStrats.pdf" target="_blank" rel="noopener">Weakly Dominated Strategies</a></p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition"><span class="toc-number">1.</span> <span class="toc-text">Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remarks"><span class="toc-number">2.</span> <span class="toc-text">Remarks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-of-eliminating-strictly-dominated-strategies"><span class="toc-number">3.</span> <span class="toc-text">Example of eliminating strictly dominated strategies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Example-of-eliminating-weakly-dominated-strategies"><span class="toc-number">4.</span> <span class="toc-text">Example of eliminating weakly dominated strategies</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#References"><span class="toc-number"></span> <span class="toc-text">References</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&text=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&is_video=false&description=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”&body=Check out this article: https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&title=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/01/18/Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”/&name=Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”&description=&lt;p&gt;This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what &lt;code&gt;dominated strategies&lt;/code&gt; are and especially what &lt;strong&gt;weakly dominated strategy&lt;/strong&gt; is.&lt;/p&gt;
+&lt;h2 id=&#34;Definition&#34;&gt;&lt;a href=&#34;#Definition&#34; class=&#34;headerlink&#34; title=&#34;Definition&#34;&gt;&lt;/a&gt;Definition&lt;/h2&gt;&lt;p&gt;Suppose &lt;em&gt;si&lt;/em&gt; and &lt;em&gt;s’i&lt;/em&gt; are two strategies for player &lt;em&gt;i&lt;/em&gt; in a normal form game.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;strictly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;strictly greater than&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;We call &lt;em&gt;s’i&lt;/em&gt; dominated strategy and &lt;em&gt;si&lt;/em&gt; dominant strategy.&lt;/p&gt;
+&lt;p&gt;We say &lt;em&gt;s’i&lt;/em&gt; is &lt;strong&gt;weakly dominated&lt;/strong&gt; by &lt;em&gt;si&lt;/em&gt; if, for every choice of strategies of the other players, &lt;em&gt;i&lt;/em&gt;’s payoff from chossing &lt;em&gt;si&lt;/em&gt; is &lt;code&gt;at least as great as&lt;/code&gt; &lt;em&gt;i&lt;/em&gt;’s payoff from choosing &lt;em&gt;s’i&lt;/em&gt;.&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+

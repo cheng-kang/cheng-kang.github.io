@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="A drop-in replacement for other comment plug-ins.   Please visit the brand new Wildfire Home Page (https://wildfire.js.org). Detailed documentation is available. Started using wildfire? Share your">
+<meta name="keywords" content="wildfire,comment system,firebase,wilddog,hexo,vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Wildfire">
+<meta property="og:url" content="https://chengkang.me/2017/12/19/introduction-to-wildfire/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="A drop-in replacement for other comment plug-ins.   Please visit the brand new Wildfire Home Page (https://wildfire.js.org). Detailed documentation is available. Started using wildfire? Share your">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://img.shields.io/npm/v/wildfire.svg?style=flat-square">
+<meta property="og:image" content="https://camo.githubusercontent.com/db04154ce710cab507967593f9b8da56e79adbed/68747470733a2f2f63646e2e7261776769742e636f6d2f6368656e672d6b616e672f77696c64666972652f31623861373338372f7265736f75726365732f73637265656e73686f74732f686f6d652d706167652e706e67">
+<meta property="og:image" content="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/paypal-me.png">
+<meta property="og:image" content="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/alipay.jpg">
+<meta property="og:image" content="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/wechat.jpg">
+<meta property="og:updated_time" content="2017-12-29T21:39:56.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction to Wildfire">
+<meta name="twitter:description" content="A drop-in replacement for other comment plug-ins.   Please visit the brand new Wildfire Home Page (https://wildfire.js.org). Detailed documentation is available. Started using wildfire? Share your">
+<meta name="twitter:image" content="https://img.shields.io/npm/v/wildfire.svg?style=flat-square">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Introduction to Wildfire</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/10/14/best-practice-for-firebase-realtime-datebase-development/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/12/19/introduction-to-wildfire/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&text=Introduction to Wildfire"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&is_video=false&description=Introduction to Wildfire"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Introduction to Wildfire&body=Check out this article: https://chengkang.me/2017/12/19/introduction-to-wildfire/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&name=Introduction to Wildfire&description=&lt;p align=&#34;center&#34;&gt;&lt;br&gt;&lt;a href=&#34;https://www.npmjs.com/wildfire&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.shields.io/npm/v/wildfire.svg?style=flat-square&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A drop-in replacement for other comment plug-ins.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://camo.githubusercontent.com/db04154ce710cab507967593f9b8da56e79adbed/68747470733a2f2f63646e2e7261776769742e636f6d2f6368656e672d6b616e672f77696c64666972652f31623861373338372f7265736f75726365732f73637265656e73686f74732f686f6d652d706167652e706e67&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Please visit the brand new &lt;a href=&#34;https://wildfire.js.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wildfire Home Page&lt;/a&gt; (&lt;a href=&#34;https://wildfire.js.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://wildfire.js.org&lt;/a&gt;). Detailed documentation is available.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Started using &lt;code&gt;wildfire&lt;/code&gt;? Share your website with others: &lt;a href=&#34;https://github.com/cheng-kang/wildfire/issues/9&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;We are using Wildfire! &lt;/a&gt;!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;全新的 &lt;a href=&#34;https://wildfire.js.org/#/zh-cn/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wildfire 主页&lt;/a&gt; (&lt;a href=&#34;https://wildfire.js.org/#/zh-cn/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://wildfire.js.org/#/zh-cn/&lt;/a&gt;) 已经启用了，快去那儿看看详细的文档吧。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;点此查看 &lt;a href=&#34;https://github.com/cheng-kang/wildfire/blob/master/README-ZH.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;中文版 README.md&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-number">2.</span> <span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Showcase"><span class="toc-number">3.</span> <span class="toc-text">Showcase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Donation"><span class="toc-number">4.</span> <span class="toc-text">Donation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Paypal-Me"><span class="toc-number">4.0.1.</span> <span class="toc-text">- Paypal Me</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alipay-amp-Wechat"><span class="toc-number">4.0.2.</span> <span class="toc-text">- Alipay &amp; Wechat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#License"><span class="toc-number">5.</span> <span class="toc-text">License</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Introduction to Wildfire
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-12-19T07:34:07.000Z" itemprop="datePublished">2017-12-19</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/comment-system/">comment system</a>, <a class="tag-link" href="/tags/firebase/">firebase</a>, <a class="tag-link" href="/tags/hexo/">hexo</a>, <a class="tag-link" href="/tags/vue/">vue</a>, <a class="tag-link" href="/tags/wilddog/">wilddog</a>, <a class="tag-link" href="/tags/wildfire/">wildfire</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p align="center"><br><a href="https://www.npmjs.com/wildfire" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/wildfire.svg?style=flat-square" alt=""></a><br></p>
+
+<blockquote>
+<p>A drop-in replacement for other comment plug-ins.</p>
+</blockquote>
+<p><img src="https://camo.githubusercontent.com/db04154ce710cab507967593f9b8da56e79adbed/68747470733a2f2f63646e2e7261776769742e636f6d2f6368656e672d6b616e672f77696c64666972652f31623861373338372f7265736f75726365732f73637265656e73686f74732f686f6d652d706167652e706e67" alt=""></p>
+<p><strong>Please visit the brand new <a href="https://wildfire.js.org" target="_blank" rel="noopener">Wildfire Home Page</a> (<a href="https://wildfire.js.org" target="_blank" rel="noopener">https://wildfire.js.org</a>). Detailed documentation is available.</strong></p>
+<p><strong>Started using <code>wildfire</code>? Share your website with others: <a href="https://github.com/cheng-kang/wildfire/issues/9" target="_blank" rel="noopener">We are using Wildfire! </a>!</strong></p>
+<p><strong>全新的 <a href="https://wildfire.js.org/#/zh-cn/" target="_blank" rel="noopener">Wildfire 主页</a> (<a href="https://wildfire.js.org/#/zh-cn/" target="_blank" rel="noopener">https://wildfire.js.org/#/zh-cn/</a>) 已经启用了，快去那儿看看详细的文档吧。</strong></p>
+<p><em>点此查看 <a href="https://github.com/cheng-kang/wildfire/blob/master/README-ZH.md" target="_blank" rel="noopener">中文版 README.md</a>。</em></p>
+<a id="more"></a>
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p><code>wildfire</code> aims to be an <strong>it-just-works</strong> comment plug-in for personal websites, like your <code>Hexo</code> blogs. It takes advantage of free real-time databases (<a href="https://firebase.google.com" target="_blank" rel="noopener">Firebase</a> and <a href="https://wilddog.com" target="_blank" rel="noopener">Wilddog</a>) to store your comments data, and provide you real-time communicating experience.</p>
+<p>Continue reading <a href="https://wildfire.js.org/#/preface" target="_blank" rel="noopener">Get Started</a>, and start your journey with <code>wildfire</code>!</p>
+<blockquote>
+<p>If you are using <code>Wildfire</code>, please share your website here: <a href="https://github.com/cheng-kang/wildfire/issues/9" target="_blank" rel="noopener">We are using Wildfire!</a> :-D.</p>
+</blockquote>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><p><strong>For site owners:</strong></p>
+<ul>
+<li>Database Support: <ul>
+<li><a href="https://firebase.google.com/" target="_blank" rel="noopener">Firebase</a></li>
+<li><a href="https://www.wilddog.com/" target="_blank" rel="noopener">Wilddog</a>.</li>
+</ul>
+</li>
+<li>Admin Function: <ul>
+<li>Delete comment</li>
+<li>Ban users by their IP/email</li>
+<li><a href="https://wildfire.js.org/#/admin-helpers?id=_1-reset-discussion-count-for-all-pages" target="_blank" rel="noopener">Reset discussion count of all pages</a></li>
+<li><a href="https://wildfire.js.org/#/get-discussion-count" target="_blank" rel="noopener">Get discussion count</a></li>
+<li><a href="https://wildfire.js.org/#/admin-helpers" target="_blank" rel="noopener">Admin Helper Functions</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>For all visitors (anonymous &amp; authorized):</strong></p>
+<ul>
+<li>Comment (with <code>Markdown</code> support)</li>
+<li>Mention (@username)</li>
+</ul>
+<p><strong>For authorized visitors:</strong></p>
+<ul>
+<li>Like/dislike a comment</li>
+<li>Delete own comments</li>
+<li>Report inappropriate comments</li>
+<li>Update user profile<ul>
+<li>Display name</li>
+<li>Avatar</li>
+</ul>
+</li>
+<li>Personal Center:<ul>
+<li>Notification</li>
+</ul>
+</li>
+</ul>
+<h2 id="Showcase"><a href="#Showcase" class="headerlink" title="Showcase"></a>Showcase</h2><p>A live <code>wildfire</code> is at the bottom of this page.</p>
+<p>For more showcases, check this Wiki page: <a href="https://github.com/cheng-kang/wildfire/wiki/1.-%E8%BF%99%E4%BA%9B%E7%BD%91%E7%AB%99%E6%AD%A3%E5%9C%A8%E4%BD%BF%E7%94%A8-Wildfire-%E9%87%8E%E7%81%AB%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%81" target="_blank" rel="noopener">Who is using Wildfire?</a>.</p>
+<h2 id="Donation"><a href="#Donation" class="headerlink" title="Donation"></a>Donation</h2><p>Buy us a cup of tea if you think <code>wildfire</code> does work! </p>
+<blockquote>
+<p>B.t.w., don’t worry, the donation will be shared with <a href="http://maliao.cn" target="_blank" rel="noopener">@mrliao</a> ;-D.</p>
+</blockquote>
+<h4 id="Paypal-Me"><a href="#Paypal-Me" class="headerlink" title="- Paypal Me"></a>- Paypal Me</h4><p align="center"><br>  <a href="https://www.paypal.me/chengkang" target="_blank"><img src="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/paypal-me.png" width="320"></a><br></p>
+
+<h4 id="Alipay-amp-Wechat"><a href="#Alipay-amp-Wechat" class="headerlink" title="- Alipay &amp; Wechat"></a>- Alipay &amp; Wechat</h4><p align="center"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/alipay.jpg" width="160"><br>  <img src="https://cdn.rawgit.com/cheng-kang/wildfire/5f5ee7b5/resources/donate/wechat.jpg" width="160"><br> </p>
+
+<p>We appreciate your kindness!</p>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p><a href="https://github.com/cheng-kang/wildfire/blob/master/LICENSE" target="_blank" rel="noopener">GNU General Public License v3.0</a></p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">1.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-number">2.</span> <span class="toc-text">Features</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Showcase"><span class="toc-number">3.</span> <span class="toc-text">Showcase</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Donation"><span class="toc-number">4.</span> <span class="toc-text">Donation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Paypal-Me"><span class="toc-number">4.0.1.</span> <span class="toc-text">- Paypal Me</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alipay-amp-Wechat"><span class="toc-number">4.0.2.</span> <span class="toc-text">- Alipay &amp; Wechat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#License"><span class="toc-number">5.</span> <span class="toc-text">License</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/12/19/introduction-to-wildfire/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&text=Introduction to Wildfire"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&is_video=false&description=Introduction to Wildfire"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Introduction to Wildfire&body=Check out this article: https://chengkang.me/2017/12/19/introduction-to-wildfire/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&title=Introduction to Wildfire"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/12/19/introduction-to-wildfire/&name=Introduction to Wildfire&description=&lt;p align=&#34;center&#34;&gt;&lt;br&gt;&lt;a href=&#34;https://www.npmjs.com/wildfire&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&lt;img src=&#34;https://img.shields.io/npm/v/wildfire.svg?style=flat-square&#34; alt=&#34;&#34;&gt;&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A drop-in replacement for other comment plug-ins.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://camo.githubusercontent.com/db04154ce710cab507967593f9b8da56e79adbed/68747470733a2f2f63646e2e7261776769742e636f6d2f6368656e672d6b616e672f77696c64666972652f31623861373338372f7265736f75726365732f73637265656e73686f74732f686f6d652d706167652e706e67&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Please visit the brand new &lt;a href=&#34;https://wildfire.js.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wildfire Home Page&lt;/a&gt; (&lt;a href=&#34;https://wildfire.js.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://wildfire.js.org&lt;/a&gt;). Detailed documentation is available.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Started using &lt;code&gt;wildfire&lt;/code&gt;? Share your website with others: &lt;a href=&#34;https://github.com/cheng-kang/wildfire/issues/9&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;We are using Wildfire! &lt;/a&gt;!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;全新的 &lt;a href=&#34;https://wildfire.js.org/#/zh-cn/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wildfire 主页&lt;/a&gt; (&lt;a href=&#34;https://wildfire.js.org/#/zh-cn/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://wildfire.js.org/#/zh-cn/&lt;/a&gt;) 已经启用了，快去那儿看看详细的文档吧。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;点此查看 &lt;a href=&#34;https://github.com/cheng-kang/wildfire/blob/master/README-ZH.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;中文版 README.md&lt;/a&gt;。&lt;/em&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+

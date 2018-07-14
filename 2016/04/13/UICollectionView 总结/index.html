@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目源码：模拟凤凰新闻 Github 仓库  引语昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。 文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：  同一个 section 内拖动 cell 直接">
+<meta name="keywords" content="iOS,Swift,UICollectionView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UICollectionView 总结">
+<meta property="og:url" content="https://chengkang.me/2016/04/13/UICollectionView 总结/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="项目源码：模拟凤凰新闻 Github 仓库  引语昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。 文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：  同一个 section 内拖动 cell 直接">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-13%20at%206.20.09%20AM.png">
+<meta property="og:updated_time" content="2016-04-13T06:18:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UICollectionView 总结">
+<meta name="twitter:description" content="项目源码：模拟凤凰新闻 Github 仓库  引语昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。 文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：  同一个 section 内拖动 cell 直接">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>UICollectionView 总结</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2016/05/15/Swift2 中的错误处理：try，catch，do 以及 throw/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2016/04/12/【译】UICollectionView 轻松重排/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2016/04/13/UICollectionView 总结/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&text=UICollectionView 总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&is_video=false&description=UICollectionView 总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UICollectionView 总结&body=Check out this article: https://chengkang.me/2016/04/13/UICollectionView 总结/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&name=UICollectionView 总结&description=&lt;blockquote&gt;
+&lt;p&gt;项目源码：&lt;a href=&#34;https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;模拟凤凰新闻 Github 仓库&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;引语&#34;&gt;&lt;a href=&#34;#引语&#34; class=&#34;headerlink&#34; title=&#34;引语&#34;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。&lt;/p&gt;
+&lt;p&gt;文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同一个 section 内拖动 cell&lt;ul&gt;
+&lt;li&gt;直接使用 UICollectionViewController（&lt;code&gt;TestCollectionViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;在 UIViewController 中使用 UICollectionView（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不同 section 间拖动 cell（&lt;code&gt;Test.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;不同 section 间点击移动 cell（&lt;code&gt;TabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;点击移除 cell（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;主要内容如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引语"><span class="toc-number">1.</span> <span class="toc-text">引语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#《【译】UICollectionView-轻松重排》"><span class="toc-number">2.</span> <span class="toc-text">《【译】UICollectionView 轻松重排》</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-UICollectionView-必做的事情"><span class="toc-number">3.</span> <span class="toc-text">使用 UICollectionView 必做的事情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入、移动、删除-cell-以及-cell-总数的问题"><span class="toc-number">4.</span> <span class="toc-text">插入、移动、删除 cell 以及 cell 总数的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同-section-间拖动-cell"><span class="toc-number">5.</span> <span class="toc-text">不同 section 间拖动 cell</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        UICollectionView 总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2016-04-13T14:13:54.000Z" itemprop="datePublished">2016-04-13</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>, <a class="tag-link" href="/tags/UICollectionView/">UICollectionView</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>项目源码：<a href="https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen" target="_blank" rel="noopener">模拟凤凰新闻 Github 仓库</a></p>
+</blockquote>
+<h3 id="引语"><a href="#引语" class="headerlink" title="引语"></a>引语</h3><p>昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。</p>
+<p>文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：</p>
+<ul>
+<li>同一个 section 内拖动 cell<ul>
+<li>直接使用 UICollectionViewController（<code>TestCollectionViewController.swift</code>）</li>
+<li>在 UIViewController 中使用 UICollectionView（<code>EditTabsViewController.swift</code>）</li>
+</ul>
+</li>
+<li>不同 section 间拖动 cell（<code>Test.swift</code>）</li>
+<li>不同 section 间点击移动 cell（<code>TabsViewController.swift</code>）</li>
+<li>点击移除 cell（<code>EditTabsViewController.swift</code>）</li>
+</ul>
+<p>主要内容如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif" alt=""></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif" alt=""></p>
+<a id="more"></a>
+<h3 id="《【译】UICollectionView-轻松重排》"><a href="#《【译】UICollectionView-轻松重排》" class="headerlink" title="《【译】UICollectionView 轻松重排》"></a>《【译】UICollectionView 轻松重排》</h3><p>这篇文章主要介绍了在 iOS9 之后 UICollectionView 自带的重新排列方法。</p>
+<ol>
+<li>如果直接使用 UICollectionViewController，通过重写<code>func collectionView(collectionView: UICollectionView,
+ moveItemAtIndexPath sourceIndexPath: NSIndexPath,
+ toIndexPath destinationIndexPath: NSIndexPath)</code>即可以实现拖动重排。</li>
+<li>如果是在 UIViewController 里面使用 UICollectionView，则需要自己添加一个 UILongPressGestureRecognizer，对应状态进行对应处理。</li>
+</ol>
+<p>比较重要的几个方法是：</p>
+<ul>
+<li>func collectionView(collectionView: UICollectionView,<br>  moveItemAtIndexPath sourceIndexPath: NSIndexPath,<br>  toIndexPath destinationIndexPath: NSIndexPath)</li>
+<li>indexPathForItemAtPoint</li>
+<li>beginInteractiveMovementForItemAtIndexPath</li>
+<li>updateInteractiveMovementTargetPosition</li>
+<li>endInteractiveMovement</li>
+<li>cancelInteractiveMovement</li>
+</ul>
+<p><strong>特别注意</strong></p>
+<p>这个方法<code>func collectionView(collectionView: UICollectionView,
+    moveItemAtIndexPath sourceIndexPath: NSIndexPath,
+    toIndexPath destinationIndexPath: NSIndexPath)</code>,</p>
+<ul>
+<li>重写这个方法之后，自带的拖动重排才能生效。</li>
+<li>这个方法究竟有什么作用？这个方法是在 cell 位置变换之后触发的。它包含两个很有用的参数，被拖动的 cell 的初始 indexPath 和落点 indexPath。因为这个位置的变换只是视图的改变，这些 cell 背后的数据的 index 其实并没有受到影响。因此如果此时 reloadData() 会发现，格子位置又恢复了，但这不是我们想要的，在实际项目中我们希望移动后就一直保持那个位置，也就是说数据的 index 发生相应改变。这个方法就是方便我们处理数据的。具体请看之后内容中的例子。</li>
+<li>另外这个方法只与通过交互移动 cell 事件有关。如果是直接调用移动 cell 的方法并不会触发这个方法。所以在类似凤凰新闻编辑订阅频道页面，”点击下面 section 中的频道，移动到上面的 section 中”，实现时需要在 didSelect 方法中添加对应修改数据源的代码。具体参看源码中<code>TabsViewController.swift</code>。</li>
+</ul>
+<h3 id="使用-UICollectionView-必做的事情"><a href="#使用-UICollectionView-必做的事情" class="headerlink" title="使用 UICollectionView 必做的事情"></a>使用 UICollectionView 必做的事情</h3><p>首先你的 UIViewController 要继承 UICollectionViewDataSource，UICollectionViewDelegate，UICollectionViewDelegateFlowLayout。</p>
+<p>其次，记得绑定 delegate 和 datasource。</p>
+<p>然后是：</p>
+<ul>
+<li>func numberOfSectionsInCollectionView(collectionView: UICollectionView) -&gt; Int</li>
+<li>collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int</li>
+<li>collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -&gt; UICollectionViewCell</li>
+</ul>
+<p>有需要的话用上：</p>
+<ul>
+<li>func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -&gt; CGSize</li>
+<li>func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView </li>
+</ul>
+<p><strong>特别注意</strong></p>
+<p>当你在 storyboard 设置了使用 header 或者 footer 或者两者都用的时候，记得添加对应的内容在 viewForSupplementaryElementOfKind 里面。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -&gt; UICollectionReusableView &#123;</span><br><span class="line">    </span><br><span class="line">    if kind == UICollectionElementKindSectionHeader &#123;</span><br><span class="line">        let header = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &quot;TabSectionHeader&quot;, forIndexPath: indexPath) as! TabSectionHeader</span><br><span class="line">        return header</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        let footer = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: &quot;TabSectionFooter&quot;, forIndexPath: indexPath)</span><br><span class="line">        return footer</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>个人对这个方法的设计持怀疑态度，觉得像 UITableView 那样分离开会更好。（又或许是我理解不够深刻吧。）</p>
+<p>记得设置 reuseIdentifier。</p>
+<h3 id="插入、移动、删除-cell-以及-cell-总数的问题"><a href="#插入、移动、删除-cell-以及-cell-总数的问题" class="headerlink" title="插入、移动、删除 cell 以及 cell 总数的问题"></a>插入、移动、删除 cell 以及 cell 总数的问题</h3><p>UICollectionView 是在生成 cell 的时候，先通过 numberOfItemsInSection 获得 cell 数量，然后一个一个生成添加在视图中。</p>
+<p>你可通过这些方法来插入、移动、删除 cell：</p>
+<ul>
+<li>insertItemAtIndexPaths</li>
+<li>moveItemAtIndexPath</li>
+<li>deleteItemsAtIndexPaths</li>
+</ul>
+<p>比如，当来自服务器的数据更新了，新增或者减少了一个数据，我们可以想到有两种情况：</p>
+<ol>
+<li>通过 reloadData() 将整个 UICollectionView 更新。</li>
+<li>只在对应的位置插入或删除对应的那一个 cell。</li>
+</ol>
+<p>用第一种方法是没有任何问题的。问题在第二种方法。</p>
+<p>当我们直接通过 insertItemAtIndexPaths 或者 deleteItemsAtIndexPaths 添加或删除 cell 时，UICollectionView 中的 cell 数量发生变化了。貌似没问题？如果你尝试滑动一下屏幕，你会发现程序崩溃了。你会看到类似下面的报错：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-13%20at%206.20.09%20AM.png" alt=""></p>
+<p>原因在于，当 UICollectionView 进行任何的更新时，包括局部更新，都会检查 numberOfItemInSection 方法返回的值和当前 UICollectionView 中实际包含的 cell 数量。如果二者不一致就会报错。</p>
+<p><strong>特别注意</strong></p>
+<p>UICollectionView 中实际包含的 cell 数量在下一次更新前 collection view 视图前一定要和 numberOfItemInSection 的返回值一直。</p>
+<p>所以我们在新增或者删除 cell 之后，记得要修改对应的数据源。（当然在实际项目中应该不会忘记。）</p>
+<p><strong>插入、移动、删除 section 类似</strong></p>
+<h3 id="不同-section-间拖动-cell"><a href="#不同-section-间拖动-cell" class="headerlink" title="不同 section 间拖动 cell"></a>不同 section 间拖动 cell</h3><p>项目中的 Test.swift 是关于不同 section 间拖动 cell 的例子。</p>
+<p>基本原理和在一个 section 内拖动 cell 一样，都是调用那几个方法。</p>
+<p><strong>第一点</strong></p>
+<p>需要注意的还是上面提到的记得修改对应数据源，否则第二次拖动就会报错。因为此时两个 section 内 cell 数量和 numberOfItemInSection 返回值不一样了。</p>
+<p><strong>第二点</strong></p>
+<p>请看一下两个实现方法：</p>
+<p>一，『原始』方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &#123;</span><br><span class="line">    switch sender.state &#123;</span><br><span class="line">    case .Began:</span><br><span class="line">        let location = sender.locationInView(self.collectionView)</span><br><span class="line">        let indexPath = self.collectionView.indexPathForItemAtPoint(location)</span><br><span class="line">        self.originalSectionIndex = (indexPath?.section)!</span><br><span class="line">        self.interactiveItem = self.collectionView.cellForItemAtIndexPath(indexPath!)</span><br><span class="line">        self.collectionView.beginInteractiveMovementForItemAtIndexPath(indexPath!)</span><br><span class="line">        break</span><br><span class="line">    case .Changed:</span><br><span class="line">        let location = sender.locationInView(self.collectionView)</span><br><span class="line">        print(location)</span><br><span class="line">        let indexPath = self.collectionView.indexPathForItemAtPoint(location)</span><br><span class="line">        print(indexPath)</span><br><span class="line">        self.collectionView.updateInteractiveMovementTargetPosition(location)</span><br><span class="line">    case .Ended:</span><br><span class="line">        self.collectionView.endInteractiveMovement()</span><br><span class="line">        let currentSectionIndex = (self.collectionView.indexPathForCell(self.interactiveItem)?.section)!</span><br><span class="line">        self.sections[currentSectionIndex]++</span><br><span class="line">        self.sections[self.originalSectionIndex]--</span><br><span class="line">    default:</span><br><span class="line">        self.collectionView.cancelInteractiveMovement()</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>二，借助自带方法的简便方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) &#123;</span><br><span class="line">    self.sections[destinationIndexPath.section]++</span><br><span class="line">    self.sections[sourceIndexPath.section]--</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func longPressGestureRecognizerAction(sender: UILongPressGestureRecognizer) &#123;</span><br><span class="line">    switch sender.state &#123;</span><br><span class="line">    case .Began:</span><br><span class="line">        guard let selectedIndexPath = self.collectionView.indexPathForItemAtPoint(sender.locationInView(self.collectionView)) else &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line">        self.collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath)</span><br><span class="line">        break</span><br><span class="line">    case .Changed:</span><br><span class="line">        self.collectionView.updateInteractiveMovementTargetPosition(sender.locationInView(self.collectionView))</span><br><span class="line">        break</span><br><span class="line">    case .Ended:</span><br><span class="line">        self.collectionView.endInteractiveMovement()</span><br><span class="line">    default:</span><br><span class="line">        self.collectionView.cancelInteractiveMovement()</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第一个方法定义了两个全局变量<code>var originalSectionIndex = 0</code>和<code>var interactiveItem:UICollectionViewCell!</code>来记录初始位置和正在进行移动的 cell。</p>
+<p>而第二个方法，通过使用<code>func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath)</code>，直接就可以使用开始和结束位置 indexPath。非常方便。</p>
+<p>所以当然一定要用第二种方法。</p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#引语"><span class="toc-number">1.</span> <span class="toc-text">引语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#《【译】UICollectionView-轻松重排》"><span class="toc-number">2.</span> <span class="toc-text">《【译】UICollectionView 轻松重排》</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-UICollectionView-必做的事情"><span class="toc-number">3.</span> <span class="toc-text">使用 UICollectionView 必做的事情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入、移动、删除-cell-以及-cell-总数的问题"><span class="toc-number">4.</span> <span class="toc-text">插入、移动、删除 cell 以及 cell 总数的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同-section-间拖动-cell"><span class="toc-number">5.</span> <span class="toc-text">不同 section 间拖动 cell</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2016/04/13/UICollectionView 总结/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&text=UICollectionView 总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&is_video=false&description=UICollectionView 总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UICollectionView 总结&body=Check out this article: https://chengkang.me/2016/04/13/UICollectionView 总结/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&title=UICollectionView 总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2016/04/13/UICollectionView 总结/&name=UICollectionView 总结&description=&lt;blockquote&gt;
+&lt;p&gt;项目源码：&lt;a href=&#34;https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;模拟凤凰新闻 Github 仓库&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;引语&#34;&gt;&lt;a href=&#34;#引语&#34; class=&#34;headerlink&#34; title=&#34;引语&#34;&gt;&lt;/a&gt;引语&lt;/h3&gt;&lt;p&gt;昨天给自己布置这个作业之后，看完文档实践的过程中发现一片很棒的英文总结，于是翻译了一下。这篇总结会简单总结一下我翻译的那篇文章里的内容，以及基于模拟凤凰新闻客户端部分页面的一些 UICollectionView 使用总结。&lt;/p&gt;
+&lt;p&gt;文章主要是总结一些需要注意的内容，具体请看源码。实现的内容及对应文件包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;同一个 section 内拖动 cell&lt;ul&gt;
+&lt;li&gt;直接使用 UICollectionViewController（&lt;code&gt;TestCollectionViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;在 UIViewController 中使用 UICollectionView（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;不同 section 间拖动 cell（&lt;code&gt;Test.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;不同 section 间点击移动 cell（&lt;code&gt;TabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;点击移除 cell（&lt;code&gt;EditTabsViewController.swift&lt;/code&gt;）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;主要内容如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-2.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_fenghuangxinwen-3.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+

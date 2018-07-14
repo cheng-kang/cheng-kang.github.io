@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="原文链接：Core Graphics, Part 1: In the Beginning - Mark Dalrymple  Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit">
+<meta name="keywords" content="iOS,Core Graphics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】Core Graphics，第一部分：序章">
+<meta property="og:url" content="https://chengkang.me/2017/05/23/core-graphics-part-1/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="原文链接：Core Graphics, Part 1: In the Beginning - Mark Dalrymple  Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/10/postscript-code.png">
+<meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/10/stack-trace.png">
+<meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/10/output.png">
+<meta property="og:image" content="https://www.bignerdranch.com/assets/img/blog/2014/10/different-results.png">
+<meta property="og:updated_time" content="2017-05-23T21:21:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】Core Graphics，第一部分：序章">
+<meta name="twitter:description" content="原文链接：Core Graphics, Part 1: In the Beginning - Mark Dalrymple  Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit">
+<meta name="twitter:image" content="https://www.bignerdranch.com/assets/img/blog/2014/10/postscript-code.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>【译】Core Graphics，第一部分：序章</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/05/24/core-graphics-part-2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/04/11/react-native-lahk-marquee-label/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/05/23/core-graphics-part-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&text=【译】Core Graphics，第一部分：序章"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&is_video=false&description=【译】Core Graphics，第一部分：序章"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【译】Core Graphics，第一部分：序章&body=Check out this article: https://chengkang.me/2017/05/23/core-graphics-part-1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&name=【译】Core Graphics，第一部分：序章&description=&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Core Graphics, Part 1: In the Beginning - Mark Dalrymple&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit 让你可以做动画。AVFoundation 让你可以播放视频。&lt;/p&gt;
+&lt;p&gt;Core Graphics，或者它在市场中被人熟知的名字“Quartz”，是这个平台上最老的图形相关 API 之一。Quartz 构建了大多数二维的东西的基础。想要画些图形，给它们填充上渐变并且加上阴影？用 Core Graphics。想要在屏幕上合成图片？Core Graphics 能解决。想要创建 PDF？还是 Core Graphics。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#历史中的-PostScript"><span class="toc-number">1.</span> <span class="toc-text">历史中的 PostScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Companion-CuBEs"><span class="toc-number">2.</span> <span class="toc-text">Companion CuBEs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说说-Quartz"><span class="toc-number">3.</span> <span class="toc-text">说说 Quartz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础架构"><span class="toc-number">4.</span> <span class="toc-text">基础架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接下来"><span class="toc-number">5.</span> <span class="toc-text">接下来</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【译】Core Graphics，第一部分：序章
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-05-24T05:20:01.000Z" itemprop="datePublished">2017-05-23</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Core-Graphics/">Core Graphics</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>原文链接：<a href="https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/" target="_blank" rel="noopener">Core Graphics, Part 1: In the Beginning - Mark Dalrymple</a></p>
+</blockquote>
+<p>Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit 让你可以做动画。AVFoundation 让你可以播放视频。</p>
+<p>Core Graphics，或者它在市场中被人熟知的名字“Quartz”，是这个平台上最老的图形相关 API 之一。Quartz 构建了大多数二维的东西的基础。想要画些图形，给它们填充上渐变并且加上阴影？用 Core Graphics。想要在屏幕上合成图片？Core Graphics 能解决。想要创建 PDF？还是 Core Graphics。</p>
+<a id="more"></a>
+<p>CG 是一个相当大的 API，包括了从基本的几何数据结构（例如：点、大小、向量和矩形）和用于操作它们的方法、用于将像素渲染进图片或者屏幕的东西，一直到事件处理。你可以用 CG 来创建“events taps”，它能帮你监听和操作应用中的事件流（鼠标点击、屏幕点击、任意键盘按键）。</p>
+<p>好吧。最后一项是有点奇怪。为什么一个 graphics API 要处理用户事件呢？这啊和别的一样，还得从历史说起。而且了解一点历史也可以帮助理解为什么 CG 是那样工作的。</p>
+<h2 id="历史中的-PostScript"><a href="#历史中的-PostScript" class="headerlink" title="历史中的 PostScript"></a>历史中的 PostScript</h2><p>从时间的迷雾往回看（二十世纪八十年代，Duran Duran 还在上升期时），graphic API 相比今天还非常初级。你能做的只有从有限的色盘中挑选颜色、绘制独立的像素点、连线和画一些基本的图形比如矩形和椭圆。你可以设置剪切范围来告诉别人，“嘿，这儿不能画，”而且有时候你会有一些不受控的特性比如调整线有多宽。经常会有一些“像素位块传输”的功能用于将像素块到处复制。Mac 上的 QuickDraw 有一个很酷的功能叫做 <code>regions</code>，它能让你创建任意形状的区域然后使用它们来绘制、剪切、绘制轮廓或者 hit -test。不过基本上，当时的 API 都是面向像素的。</p>
+<p>1985 年，Apple 发布了 LaserWriter，一个是其链接的计算机价格两倍的打印机。它包含一个比其链接的计算机更强劲的微处理器，以及一个 12 倍的 RAM。归功于一个叫做 PostScript 的技术，这款打印机（在当时）制作出了魅力惊人的打印制品。</p>
+<p>PostScript 是一个来自 Adobe 的基于栈的计算机语言，与 FORTH 类似。PostScript， 这种技术，是为了创建矢量图（艺术的数学描述）而非基于像素。在 LaserWriter 中内嵌了一个 PostScript 解释器，因此当 Mac 上的程序想要打印什么东西的时候，这个程序（或者某个打印机驱动）将会生成一段程序代码，将其载入打印机并执行。</p>
+<p>下面是一个 PostScript 代码的例子以及结果图像：</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/postscript-code.png" alt=""></p>
+<p>你可以在 <a href="https://github.com/markd2/CGPS" target="_blank" rel="noopener">Github</a> 上找到这个项目。</p>
+<p>将页面用代码形式来展现是一个非常重要的设计上的决策。这使得程序可以以算法的形式展现页面中的内容，因此用于执行这段程序的设备能够用其最大分辨率来绘制页面。对于当时大多数打印机，这个值是 300dpi。对于其他的，1200dpi。它们都是由同样的生成的程序绘制的。</p>
+<p>除了渲染页面，PostScript 是图灵完备的，并且可以被当作通用编程语言。你甚至可以用它写 Web Server。</p>
+<h2 id="Companion-CuBEs"><a href="#Companion-CuBEs" class="headerlink" title="Companion CuBEs"></a>Companion CuBEs</h2><p>NeXT 工程师在设计他们的系统时，他们选择了 PostScript 作为渲染模型。Display PostScript，简称 DPS，扩展了 PostScript 模型，使其能够在窗口化的计算机显示器工作。不过其核心仍是一个 PostScript 解释器。NeXT 的应用可以用 PostScript 代码实现其屏幕绘制，并且用同一段代码进行打印。你同样也可以用 C 函数来包裹 postScript （使用一个叫 pswrap 的程序）以从应用代码中调用。</p>
+<p>Display PostScript 是用户交互的基础。事件（鼠标、键盘、更新等等）通过 DPS 系统然后被分发到应用中去。</p>
+<p>NeXT 并非当时唯一使用 PostScript 的窗口化系统。Sun 的 NeWS（除了名字像之外，和 NeXT 没有一点关系）也有一个用于驱动系统中用户交互的内嵌 PostScript 解释器。</p>
+<h2 id="说说-Quartz"><a href="#说说-Quartz" class="headerlink" title="说说 Quartz"></a>说说 Quartz</h2><p>为什么 OS X 和 iOS 不用 Display PostScript？基本上是钱的原因。Adobe 收取 Display PostScript 证书费用。同时，Apple 也是有名的想要尽可能有更多他们自有的技术栈。通过实现 PostScript 绘制模型，但并不真正使用 PostScript，他们既避免了付证书费也有了 Core Graphics 的代码。</p>
+<p>有一种普遍的说法是 Quartz 是“基于” PDF 的，在某种意义上的确如此。PDF 就是没有任意编程功能的 PostScript 绘制模型。Quartz 被设计成其 API 的典型使用和 PDF 本身支持的非常接近，以至于在这个平台上创建 PDF 几乎不费吹灰之力。</p>
+<p>哪怕 Display PostScript 被 Quartz 取代了，同样的基本原理被保留下来了，包括事件处理。看看 Cocoa 栈轨迹的 18 帧吧。DPS 仍在！</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/stack-trace.png" alt=""></p>
+<h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><p>我会在接下来的几周讲到更多 Quartz 细节的各个方面，但是有一个重点是用于“画东西”的那段代码被从实际图形渲染中抽象出来了。“渲染”可以是“让东西在 NSView 中显示”，或者“让东西显示在 UIImage 里面”，甚至是“让东西显示在 PDF 中”。</p>
+<p>你所有的 CG 绘制都在一个“context（上下文）”中执行，它是数据结构和用于控制如何绘制的方法的指针的集合。</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/output.png" alt=""></p>
+<p>Context 有很多种，比如（在 Mac 上）有 NSWindowGraphicsContext。这一特定 context 获取你的代码安排的绘制指令，然后在你的应用的地址空间里中一块共享内存里绘制出像素。这一段内存也与窗口服务器共享。窗口服务器将所有正在运行的应用的窗口表面样子一起展示在屏幕上。</p>
+<p>另一种 CG Context 是一种图片 context。任何你运行的绘制代码都会将像素布置在一个位图图片中。你可以使用这个图片来绘入其它 context 中或者作为 PNG 或 JPEG 保存在文件系统。同样也有一个 PDF context。运行的绘制代码不会变成像素，而是变成了 PDF 命令并被存进一个文件中。此后，PDF查看器可以使用那些 PDF 命令来渲染成某种可以查看的东西。</p>
+<p><img src="https://www.bignerdranch.com/assets/img/blog/2014/10/different-results.png" alt=""></p>
+<h2 id="接下来"><a href="#接下来" class="headerlink" title="接下来"></a>接下来</h2><p>下一次，更近距离来看看 context，以及一些 Core Graphics 中的便捷 API。</p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#历史中的-PostScript"><span class="toc-number">1.</span> <span class="toc-text">历史中的 PostScript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Companion-CuBEs"><span class="toc-number">2.</span> <span class="toc-text">Companion CuBEs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说说-Quartz"><span class="toc-number">3.</span> <span class="toc-text">说说 Quartz</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础架构"><span class="toc-number">4.</span> <span class="toc-text">基础架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接下来"><span class="toc-number">5.</span> <span class="toc-text">接下来</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/05/23/core-graphics-part-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&text=【译】Core Graphics，第一部分：序章"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&is_video=false&description=【译】Core Graphics，第一部分：序章"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【译】Core Graphics，第一部分：序章&body=Check out this article: https://chengkang.me/2017/05/23/core-graphics-part-1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&title=【译】Core Graphics，第一部分：序章"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/05/23/core-graphics-part-1/&name=【译】Core Graphics，第一部分：序章&description=&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Core Graphics, Part 1: In the Beginning - Mark Dalrymple&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Mac 和 iOS 开发者有许多不同的让东西显示在屏幕上的编程接口。UIKit 和 AppKit 有各种各样的 image、color 和 path 类。Core Animation 让你可以移动 layer。OpenGL 让你可以在三维空间渲染东西。SpriteKit 让你可以做动画。AVFoundation 让你可以播放视频。&lt;/p&gt;
+&lt;p&gt;Core Graphics，或者它在市场中被人熟知的名字“Quartz”，是这个平台上最老的图形相关 API 之一。Quartz 构建了大多数二维的东西的基础。想要画些图形，给它们填充上渐变并且加上阴影？用 Core Graphics。想要在屏幕上合成图片？Core Graphics 能解决。想要创建 PDF？还是 Core Graphics。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="项目首页： DanmuManager Github Repository  使用方法 UsageDanmuManager 和 VideoDanmuManager 有不同的应用场景，后者用于视频弹幕。 你可以运行项目中的测试，来了解二者的使用方法。">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DanmuManager 一个简单的弹幕工具">
+<meta property="og:url" content="https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/index.html">
+<meta property="og:site_name" content="CHENG KANG">
+<meta property="og:description" content="项目首页： DanmuManager Github Repository  使用方法 UsageDanmuManager 和 VideoDanmuManager 有不同的应用场景，后者用于视频弹幕。 你可以运行项目中的测试，来了解二者的使用方法。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-1.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-2.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-3.gif">
+<meta property="og:updated_time" content="2017-01-05T13:54:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DanmuManager 一个简单的弹幕工具">
+<meta name="twitter:description" content="项目首页： DanmuManager Github Repository  使用方法 UsageDanmuManager 和 VideoDanmuManager 有不同的应用场景，后者用于视频弹幕。 你可以运行项目中的测试，来了解二者的使用方法。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-1.gif">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>DanmuManager 一个简单的弹幕工具</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/01/14/QnA，一个 Hexo FAQ 主题/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/01/05/PauseableTimer 一个可暂停的计时器/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&text=DanmuManager 一个简单的弹幕工具"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&is_video=false&description=DanmuManager 一个简单的弹幕工具"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DanmuManager 一个简单的弹幕工具&body=Check out this article: https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&name=DanmuManager 一个简单的弹幕工具&description=&lt;blockquote&gt;
+&lt;p&gt;项目首页： &lt;a href=&#34;https://github.com/cheng-kang/DanmuManager&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;使用方法-Usage&#34;&gt;&lt;a href=&#34;#使用方法-Usage&#34; class=&#34;headerlink&#34; title=&#34;使用方法 Usage&#34;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
+&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;br&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用方法-Usage"><span class="toc-number">1.</span> <span class="toc-text">使用方法 Usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DanmuManager"><span class="toc-number">1.1.</span> <span class="toc-text">DanmuManager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VideoDanmuManager"><span class="toc-number">1.2.</span> <span class="toc-text">VideoDanmuManager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计思路"><span class="toc-number">2.</span> <span class="toc-text">设计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下一步-Next-Step"><span class="toc-number">3.</span> <span class="toc-text">下一步 Next Step</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        DanmuManager 一个简单的弹幕工具
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">CHENG KANG</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-01-06T01:14:32.000Z" itemprop="datePublished">2017-01-05</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>, <a class="tag-link" href="/tags/iOS/">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>项目首页： <a href="https://github.com/cheng-kang/DanmuManager" target="_blank" rel="noopener">DanmuManager Github Repository</a></p>
+</blockquote>
+<h2 id="使用方法-Usage"><a href="#使用方法-Usage" class="headerlink" title="使用方法 Usage"></a>使用方法 Usage</h2><p><code>DanmuManager</code> 和 <code>VideoDanmuManager</code> 有不同的应用场景，后者用于视频弹幕。</p>
+<p>你可以运行项目中的测试，来了解二者的使用方法。<br><a id="more"></a></p>
+<p><img src="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-1.gif" width="200"><br><img src="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-2.gif" width="200"><br><img src="https://raw.githubusercontent.com/cheng-kang/DanmuManager/master/DanmuManager-3.gif" width="200"></p>
+<h3 id="DanmuManager"><a href="#DanmuManager" class="headerlink" title="DanmuManager"></a>DanmuManager</h3><ol>
+<li><p>创建 DanmuManager</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let dm = DanmuManager(with: self.view)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>初始化 `init` 方法允许自定义： 
+
+- `top`、`bottom`弹幕显示在 `view` 中的上下位置范围;
+- `speed` 弹幕的速度;
+- `customFont` 弹幕字体（`UIFont`, 包括字体家族和大小，默认为系统字体，字号 20）。
+</code></pre><ol start="2">
+<li><p>添加一条弹幕 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dm.add(with: “Wow so cool!!!”, at: 4)</span><br></pre></td></tr></table></figure>
+<p> 添加弹幕 <code>add</code> 方法有两个必传参数，<code>text</code>（弹幕文字） 和 <code>line</code>（弹幕所在行）;可选参数 <code>hasBorder</code> 用于设置该条弹幕是否有边框（默认 borderColor = UIColor.black.cgColor，borderWidth = 1）,默认值为 false;可选参数 <code>isAdvance</code> 用于设置该条弹幕是否开启高级功能（目前支持修改 文字颜色 和 背景颜色），默认值为 false。</p>
+<p> 如果需要弹幕出现在随机行，可以使用</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func addRandom(with text: String = &quot;This is a test Danmu.&quot;, at line: Int = 0, hasBorder: Bool = false, isAdvanced: Bool = false)`。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="3">
+<li><p>暂停/继续 弹幕</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dm.pause()</span><br><span class="line">dm.resume()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>你也可以使用 `dm.toggle()` 来快捷切换 暂停/继续。
+</code></pre><h3 id="VideoDanmuManager"><a href="#VideoDanmuManager" class="headerlink" title="VideoDanmuManager"></a>VideoDanmuManager</h3><ol>
+<li><p>创建 VideoDanmuManager</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">let vdm = VideoDanmuManager(view: self.view,</span><br><span class="line">                               videoLength: 10,</span><br><span class="line">                               danmuData: [</span><br><span class="line">                                   (3.4, &quot;3.4 Wowowowowowow!&quot;),</span><br><span class="line">                                   (3.4, &quot;3.4 SOOOO COOOOOOOOOOL!&quot;),</span><br><span class="line">                                   (3.4, &quot;3.4 Amazing!!!!&quot;),</span><br><span class="line">                                   (3.4, &quot;3.4 I love you~&quot;),</span><br><span class="line">                                   (3.4, &quot;3.4 MY BABY!!!!&quot;),</span><br><span class="line">                                   (1.1, &quot;1.1 This is a test Danmu!!!&quot;),</span><br><span class="line">                                   (2.0, &quot;2.0 Another test Danmu.&quot;),</span><br><span class="line">                                   (4.1, &quot;4.1 Amazing!!!!&quot;),</span><br><span class="line">                                   (6.1, &quot;6.1 Test!!!!&quot;),</span><br><span class="line">                                   (8.1, &quot;8.1 Test!!!!&quot;),</span><br><span class="line">                                   (9.1, &quot;9.1 Test!!!!&quot;),</span><br><span class="line">                                   (10, &quot;10 Test!!!!&quot;),</span><br><span class="line">           ],</span><br><span class="line">                               isSorted: false</span><br><span class="line">       )</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>`VideoDanmuManager` 的创建有三个必选参数，`view`（显示弹幕的视图），`videoLength`（视频时长，精确到 0.1 秒）和 `danmuData`（已经存在的弹幕列表）。
+
+可选参数 `videoCurrent` 默认为 0，即开始时刻；你可以通过传入不同的时间值来设置显示弹幕的初始时间（比如在视频从 1 分 15 秒开始播放，则应设置 `videoCurrent` 为 75）。
+可选参数 `isSorted` 默认为 true，即默认数据集已经按照弹幕显示时间从先到后排序；如传入 false，则将自动调用 `func sort()` 对数据进行排序。
+
+可选参数 `top` 和 `bottom` 同 `DanmuManager`。
+</code></pre><ol start="2">
+<li><p>开启弹幕</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vdm.start()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>你需要在视频开始播放的同时，手动开启弹幕。
+</code></pre><ol start="3">
+<li><p>暂停/继续 弹幕</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vdm.pause()</span><br><span class="line">vdm.resume()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>你也可以使用 `vdm.toggle()` 来快捷切换 暂停/继续。
+</code></pre><ol start="4">
+<li><p>中止弹幕</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vdm.stop()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>重新开始弹幕</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vdm.restart()</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<pre><code>你也可以在指定时间点重新开始弹幕：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vdm.restart(at: 75)</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="设计思路"><a href="#设计思路" class="headerlink" title="设计思路"></a>设计思路</h2><p><code>DanmuManager</code> 通过设置的字体大小计算文本显示高度 <code>lineHeight</code>，通过 <code>numberOfLines = Int(floor((bottom - top) / lineHeight))</code> 得到可以显示的弹幕行数；使用 <code>inUsingLines</code>，<code>enteringTimers</code> 和 <code>waitingQueues</code> 来分别记录 正在使用的行（有尾部还没有完全进入视图的弹幕的行），正在进入视图的弹幕的计时器 和 正在等待进入的弹幕队列。</p>
+<p>为了防止弹幕重叠，只有当 当前行中前一条弹幕尾部进入视图 时（之后），下一条弹幕才可以发射。</p>
+<p><code>enteringTimers</code> 中每一个 Timer 都对应一条正在进入视图的弹幕，当计时器结束时，通过 NotificationCenter 发通知将该弹幕所在的行的状态更改为 false。</p>
+<p>因为弹幕存在暂停状态，如果弹幕对应的 Timer 不同时暂停，将导致 弹幕所在行状态 提前更改为 false。为了解决这个问题，我参考他人的想法并改进后创建了 PauseableTimer，并在本项目中使用上了。我的另外一篇博客更详细地介绍了 <a href="http://chengkang.me/2017/01/05/PauseableTimer%20%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%9A%82%E5%81%9C%E7%9A%84%E8%AE%A1%E6%97%B6%E5%99%A8/">《PauseableTimer》</a>。</p>
+<p>为了避免手动发射弹幕和自动发射队列中的弹幕出现冲突（弹幕重叠），所有弹幕通过 <code>taskTimer</code> 定时任务统一调度。</p>
+<h2 id="下一步-Next-Step"><a href="#下一步-Next-Step" class="headerlink" title="下一步 Next Step"></a>下一步 Next Step</h2><p>现在流行的弹幕功能越来越复杂、高级，DanmuManager 只是完成了最基础的滚动文字弹幕功能。未来可能会学习常见的弹幕，添加一些更高级的功能，比如 对滚动弹幕的操作，居中弹幕 等。    </p>
+
+  </div>
+</article>
+
+
+<div class="blog-post-comments">
+  <div class="wildfire_thread"></div>
+</div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用方法-Usage"><span class="toc-number">1.</span> <span class="toc-text">使用方法 Usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DanmuManager"><span class="toc-number">1.1.</span> <span class="toc-text">DanmuManager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VideoDanmuManager"><span class="toc-number">1.2.</span> <span class="toc-text">VideoDanmuManager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计思路"><span class="toc-number">2.</span> <span class="toc-text">设计思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下一步-Next-Step"><span class="toc-number">3.</span> <span class="toc-text">下一步 Next Step</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&text=DanmuManager 一个简单的弹幕工具"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&is_video=false&description=DanmuManager 一个简单的弹幕工具"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DanmuManager 一个简单的弹幕工具&body=Check out this article: https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&title=DanmuManager 一个简单的弹幕工具"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://chengkang.me/2017/01/05/DanmuManager 一个简单的弹幕工具/&name=DanmuManager 一个简单的弹幕工具&description=&lt;blockquote&gt;
+&lt;p&gt;项目首页： &lt;a href=&#34;https://github.com/cheng-kang/DanmuManager&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;DanmuManager Github Repository&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;使用方法-Usage&#34;&gt;&lt;a href=&#34;#使用方法-Usage&#34; class=&#34;headerlink&#34; title=&#34;使用方法 Usage&#34;&gt;&lt;/a&gt;使用方法 Usage&lt;/h2&gt;&lt;p&gt;&lt;code&gt;DanmuManager&lt;/code&gt; 和 &lt;code&gt;VideoDanmuManager&lt;/code&gt; 有不同的应用场景，后者用于视频弹幕。&lt;/p&gt;
+&lt;p&gt;你可以运行项目中的测试，来了解二者的使用方法。&lt;br&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2018 程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/cheng-kang">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75274957-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Wildfire Comments -->
+<script>
+  var wildfireConfig = () => ({
+    useDev: true,
+    version: '0.5.3',
+    databaseProvider: 'firebase',
+    databaseConfig: {
+        apiKey: "AIzaSyA58LRgGkScdEvlJ4UGw5pmq0BI6C_jum0",
+        authDomain: "aggregator-d4b86.firebaseapp.com",
+        databaseURL: "https://aggregator-d4b86.firebaseio.com",
+        projectId: "aggregator-d4b86",
+        storageBucket: "aggregator-d4b86.appspot.com",
+        messagingSenderId: "293195558013"
+    },
+    theme: 'dark',
+    locale: 'en',
+    defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+  })
+</script>
+<script src="https://unpkg.com/wildfire-comment@1.2.3"></script>
+
