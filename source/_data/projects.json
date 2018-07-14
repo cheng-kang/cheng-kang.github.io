@@ -1,0 +1,32 @@
+ [
+      {
+         "name":"Wildfire Comment Plug-in 野火评论插件",
+         "url":"https://wildfire.js.org",
+         "desc":"A drop-in replacement of other comment plug-ins. Give it a try!"
+      },
+      {
+         "name":"记得 - 在那个时区",
+         "url":"https://itunes.apple.com/cn/app/%E8%AE%B0%E5%BE%97-%E5%9C%A8%E9%82%A3%E4%B8%AA%E6%97%B6%E5%8C%BA/id1165393758?l=zh&ls=1&mt=8",
+         "desc":"An iOS alarm clock app for long distance lovers. Created for my life-long love, Catherine."
+      },
+      {
+         "name":"react-native-lahk-marquee-label",
+         "url":"https://github.com/cheng-kang/react-native-lahk-marquee-label",
+         "desc":"A react-native marquee label component."
+      },
+      {
+         "name":"react-native-lahk-marquee-label-vertical",
+         "url":"https://github.com/cheng-kang/react-native-lahk-marquee-label-vertical",
+         "desc":"A react-native marquee(vertical) label component."
+      },
+      {
+         "name":"SlidingForm",
+         "url":"https://github.com/cheng-kang/DanmuManager",
+         "desc":"A lib that generates and manages sliding forms, written in Swift."
+      },
+      {
+         "name":"DoubanFMPlayer",
+         "url":"https://github.com/cheng-kang/DoubanFMPlayer",
+         "desc":"A mimic of Douban.fm player on http://douban.fm."
+      }
+  ]
