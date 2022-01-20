@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Date: 2016-03-30 02:02:07   模仿微博客户端项目源码  我在模仿微博 iOS 客户端。如图：  微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。 思路第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。 第二个想法是用一个 butto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仿微博 iOS 客户端 TabBar 中间按钮">
+<meta property="og:url" content="https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/">
+<meta property="og:site_name" content="CHENGKANG&#39;s Space">
+<meta property="og:description" content="Date: 2016-03-30 02:02:07   模仿微博客户端项目源码  我在模仿微博 iOS 客户端。如图：  微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。 思路第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。 第二个想法是用一个 butto">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.16.31%20AM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.31.34%20AM2.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_weibo-1.gif">
+<meta property="article:published_time" content="1970-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:13:49.657Z">
+<meta property="article:author" content="程康·CHENGKANG">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="UITabBar">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>仿微博 iOS 客户端 TabBar 中间按钮</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/1970/01/01/UICollectionView%20%E6%80%BB%E7%BB%93/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&text=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&is_video=false&description=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=仿微博 iOS 客户端 TabBar 中间按钮&body=Check out this article: https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&name=仿微博 iOS 客户端 TabBar 中间按钮&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-03-30 02:02:07&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/cheng-kang/iosDev/tree/master/Weibo&#34;&gt;模仿微博客户端项目源码&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我在模仿微博 iOS 客户端。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。&lt;/p&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。&lt;/p&gt;
+&lt;p&gt;第二个想法是用一个 button 覆盖 TabBar 中间按钮。无非就是在代码里新建一个&lt;code&gt;UIButton&lt;/code&gt;，用&lt;code&gt;CGRectMake()&lt;/code&gt;定位。&lt;/p&gt;
+&lt;h3 id=&#34;一个错误的尝试&#34;&gt;&lt;a href=&#34;#一个错误的尝试&#34; class=&#34;headerlink&#34; title=&#34;一个错误的尝试&#34;&gt;&lt;/a&gt;一个错误的尝试&lt;/h3&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&t=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">一个错误的尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">解释</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        仿微博 iOS 客户端 TabBar 中间按钮
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">程康·CHENGKANG</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="1970-01-01T08:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Swift/" rel="tag">Swift</a>, <a class="tag-link-link" href="/tags/UITabBar/" rel="tag">UITabBar</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Date: 2016-03-30 02:02:07</p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/cheng-kang/iosDev/tree/master/Weibo">模仿微博客户端项目源码</a></p>
+</blockquote>
+<p>我在模仿微博 iOS 客户端。如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png"></p>
+<p>微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。</p>
+<p>第二个想法是用一个 button 覆盖 TabBar 中间按钮。无非就是在代码里新建一个<code>UIButton</code>，用<code>CGRectMake()</code>定位。</p>
+<h3 id="一个错误的尝试"><a href="#一个错误的尝试" class="headerlink" title="一个错误的尝试"></a>一个错误的尝试</h3><span id="more"></span> 
+<p>有了上面的思路，我就在首页的 ViewController 中的<code>viewDidLoad()</code>方法中添加了如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//100px 高宽随便设置用来测试的。</span><br><span class="line">let postBtn = UIButton()</span><br><span class="line">postBtn.frame = CGRectMake(self.view.frame.width/2 - 50, self.view.frame.height - 100, 100, 100)</span><br><span class="line">postBtn.setBackgroundImage(UIImage(named: &quot;post_btn&quot;), forState: .Normal)</span><br><span class="line">self.view.addSubview(postBtn)</span><br></pre></td></tr></table></figure>
+<p>结果如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.16.31%20AM.png"></p>
+<p><strong>两个问题</strong></p>
+<ul>
+<li>按钮被什么东西挡住了？</li>
+<li>这个按钮添加在首页的 View 里面，所以只有首页有，其他 tab 怎么办？每个 tab 写一个吗？</li>
+</ul>
+<p><strong>问题一</strong></p>
+<p>在 Tabbed Application，底部始终有一个在最上层的 TabBar。每一个 tab 页面的 view 都在 TabBar 下面，所以在 tab 页面的 view 中在 TabBar 所在的位置添加子 subview，subview 会被盖住。</p>
+<p>所以思路二行不通了吗？</p>
+<p><strong>问题二</strong></p>
+<p>重复一点代码倒没什么，不过有没有办法避免呢？</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>我发现作为 Initial View Controller 的这个 Tab Bar View Controller 也可以添加一个自定义的 ViewController。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.31.34%20AM2.png"></p>
+<p>于是我新建了一个 UITabBarController 的子类。在<code>viewDidLoad()</code>中添加了 button。下面的代码是调整过 button 大小位置后的最终代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//  TabBarViewController.swift</span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class TabBarViewController: UITabBarController &#123;</span><br><span class="line"></span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        //  初始化一些要用到的参数</span><br><span class="line">        let WINDOW_HEIGHT = self.view.frame.height</span><br><span class="line">        let TAB_HEIGHT = self.tabBar.frame.height</span><br><span class="line">        let GRID_WIDTH = self.view.frame.width / 5</span><br><span class="line">        let MARGIN_X = CGFloat(2)</span><br><span class="line">        let MARGIN_Y = CGFloat(5)</span><br><span class="line">        let BTN_WIDTH = TAB_HEIGHT - MARGIN_X * 2</span><br><span class="line">        let BTN_HEIGHT = TAB_HEIGHT - MARGIN_Y * 2</span><br><span class="line">        </span><br><span class="line">        //  遮罩层，用于遮挡原本的 TabBarItem</span><br><span class="line">        let modalView = UIView()</span><br><span class="line">        modalView.frame = CGRectMake(GRID_WIDTH * 2, WINDOW_HEIGHT - TAB_HEIGHT, GRID_WIDTH, TAB_HEIGHT)</span><br><span class="line">        self.view.addSubview(modalView)</span><br><span class="line">        </span><br><span class="line">        //  添加自定义按钮</span><br><span class="line">        let postBtn = UIButton()</span><br><span class="line">        postBtn.frame = CGRectMake(GRID_WIDTH * 2 + (GRID_WIDTH - BTN_WIDTH) / 2, WINDOW_HEIGHT - TAB_HEIGHT + MARGIN_Y, BTN_WIDTH, BTN_HEIGHT)</span><br><span class="line">        postBtn.setBackgroundImage(UIImage(named: &quot;post_btn&quot;), forState: .Normal)</span><br><span class="line">        self.view.addSubview(postBtn)</span><br><span class="line">        </span><br><span class="line">        //  给按钮添加事件</span><br><span class="line">        postBtn.addTarget(self, action: &quot;postButtonClicked:&quot;, forControlEvents: .TouchUpInside)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM.png"></p>
+<h3 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h3><p><strong>对于问题一</strong></p>
+<p>因为是直接在 TabBarController 的 view 上添加 subview，所以按钮正常显示。</p>
+<p><strong>对于问题二</strong></p>
+<p>因为 TabBar 是所有 tab 页面公用的，所以不用在每个页面单独添加按钮。</p>
+<p><strong>遮罩层的作用</strong></p>
+<p>因为自定义按钮的大小没有覆盖 TabBar 中间 item 的大小，所以点击边缘部分会进入对应的 tab 页面。而微博客户端这个按钮点击后，应该是出现如下页面，而非进入 tab 页。所以用遮罩层挡住那个 TabBar item。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_weibo-1.gif"></p>
+<p><strong>自定义按钮的点击事件</strong></p>
+<p>这个加号按钮点击完之后应该是出现一个半透明视图，包含一些按钮。所以我在最后给按钮添加了一个点击事件，负责完成显示新视图及其中的动画。</p>
+<p>如果对这个半透明视图和其中动画的实现有兴趣，可以到我 github 下载源码看看。因为都是最基本的 Animation，所以可能不会单独写一篇分享。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/cheng-kang/iosDev/tree/master/Weibo">模拟微博客户端 github 仓库</a></p>
+</blockquote>
+<p>个人觉得值得注意的是，我的解决方案是：这个半透明视图在第一次出现之后就保存在 TabBarViewController 的类成员变量里，之后的关闭和再显示只是将视图的 alpha 值在 0 和 1 之间切换。</p>
+<p>说不定也会总结一次。因为实现过程中踩到一些跟 Animation 有关的坑，比如<strong>有些属性变换是立即执行的，不能用动画渐变实现</strong>。</p>
+<p>基本的 Animation 知识，建议去看 <a target="_blank" rel="noopener" href="http://weibo.com/yongjianlin">@林永坚Jake </a> 在慕课网发布的 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/392">iOS-动画入门</a> 和 <a target="_blank" rel="noopener" href="http://www.imooc.com/learn/395">iOS-动画进阶</a>。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">一个错误的尝试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A"><span class="toc-number">4.</span> <span class="toc-text">解释</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&text=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&is_video=false&description=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=仿微博 iOS 客户端 TabBar 中间按钮&body=Check out this article: https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&title=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&name=仿微博 iOS 客户端 TabBar 中间按钮&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-03-30 02:02:07&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/cheng-kang/iosDev/tree/master/Weibo&#34;&gt;模仿微博客户端项目源码&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我在模仿微博 iOS 客户端。如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-03-30%20at%201.05.03%20AM%20copy.png&#34;&gt;&lt;/p&gt;
+&lt;p&gt;微博客户端 TabBar 中间按钮和其他按钮不一样，一个是样式不一样，一个是点击事件不一样。&lt;/p&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;第一个想法其实是建一个 UITabBarController 的子类，自定义 TabBar 的样式，但是因为还没学习过，所以这次希望另找一个办法。&lt;/p&gt;
+&lt;p&gt;第二个想法是用一个 button 覆盖 TabBar 中间按钮。无非就是在代码里新建一个&lt;code&gt;UIButton&lt;/code&gt;，用&lt;code&gt;CGRectMake()&lt;/code&gt;定位。&lt;/p&gt;
+&lt;h3 id=&#34;一个错误的尝试&#34;&gt;&lt;a href=&#34;#一个错误的尝试&#34; class=&#34;headerlink&#34; title=&#34;一个错误的尝试&#34;&gt;&lt;/a&gt;一个错误的尝试&lt;/h3&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/&t=仿微博 iOS 客户端 TabBar 中间按钮"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1994-2022
+    程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75274957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-75274957-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Date: 2017-06-06 19:20:16   本系列是我学习《Learning AV Foundation：A Hands-on Guide to Matering the AV Foundation Framework》的学习笔记。将以章为单位，对内容进行总结。  AV FoundationAV Foundation 处于上层框架（iOS：AVKit、UIKit，Mac OS：AVK">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础">
+<meta property="og:url" content="https://chengkang.me/1970/01/01/learning-av-foundation-1/">
+<meta property="og:site_name" content="CHENGKANG&#39;s Space">
+<meta property="og:description" content="Date: 2017-06-06 19:20:16   本系列是我学习《Learning AV Foundation：A Hands-on Guide to Matering the AV Foundation Framework》的学习笔记。将以章为单位，对内容进行总结。  AV FoundationAV Foundation 处于上层框架（iOS：AVKit、UIKit，Mac OS：AVK">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="1970-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:17:16.271Z">
+<meta property="article:author" content="程康·CHENGKANG">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="AV Foundation">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/1970/01/01/my-favorite-javascript-pattern/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/1970/01/01/javascript-namespace-by-michaux/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/learning-av-foundation-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&text=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&is_video=false&description=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础&body=Check out this article: https://chengkang.me/1970/01/01/learning-av-foundation-1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&name=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/learning-av-foundation-1/&t=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AV-Foundation"><span class="toc-number">1.</span> <span class="toc-text">AV Foundation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93-%EF%BC%88Digital-Media%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">数字媒体 （Digital Media）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">采样的两种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7"><span class="toc-number">2.2.</span> <span class="toc-text">音频采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93%E5%8E%8B%E7%BC%A9"><span class="toc-number">2.3.</span> <span class="toc-text">数字媒体压缩</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">程康·CHENGKANG</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="1970-01-01T08:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/AV-Foundation/" rel="tag">AV Foundation</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Date: 2017-06-06 19:20:16</p>
+</blockquote>
+<blockquote>
+<p>本系列是我学习《Learning AV Foundation：A Hands-on Guide to Matering the AV Foundation Framework》的学习笔记。将以章为单位，对内容进行总结。</p>
+</blockquote>
+<h2 id="AV-Foundation"><a href="#AV-Foundation" class="headerlink" title="AV Foundation"></a>AV Foundation</h2><p>AV Foundation 处于上层框架（iOS：AVKit、UIKit，Mac OS：AVKit、AppKit）和底层框架（Core Audio、Core Video，Core Media 以及 Core Animation）之间，在 iOS 和 Mac OS 中通用。</p>
+<p>其主要功能包括：</p>
+<ul>
+<li>音频播放和记录（Audio Playback and Recording）</li>
+<li>媒体文件检查（Media Inspection）</li>
+<li>视频播放（Video Playback）</li>
+<li>媒体捕捉（Media Capture）</li>
+<li>媒体编辑（Media Editing）</li>
+<li>媒体处理（Media Processing）</li>
+</ul>
+<h2 id="数字媒体-（Digital-Media）"><a href="#数字媒体-（Digital-Media）" class="headerlink" title="数字媒体 （Digital Media）"></a>数字媒体 （Digital Media）</h2><p>现实中的信号是连续的，数字世界中的信号是离散的。为了储存并传输媒体信息，需要将将连续的<code>模拟信号</code>转换为离散的<code>数字信号</code>，这一过程称之为<code>采样（Sampling）</code>。</p>
+<h3 id="采样的两种方式"><a href="#采样的两种方式" class="headerlink" title="采样的两种方式"></a>采样的两种方式</h3><ol>
+<li>时间采样（Temporal Sampling）：捕捉一个信号在周期内的变化。</li>
+<li>空间采样（Spatial Sampling)：对一幅图片在一定分辨率之下捕捉其亮度和色度，<br>进而创建由该图片的像素点数据所构成的数字化结果。</li>
+</ol>
+<blockquote>
+<p>当对一段视频进行数字化时，这两种方式都可以使用，因为通常的视频信号既有空间属性又有时间属性。</p>
+</blockquote>
+<h3 id="音频采样"><a href="#音频采样" class="headerlink" title="音频采样"></a>音频采样</h3><p>如下两个音频正弦波图，分别是 1Hz （左）和 5Hz （右）。</p>
+<p><img src=""></p>
+<p>我们对信号的两个方面比较感兴趣。一个是<code>振幅</code>，它代表电压的强度或者对应信号的强度。另一个是<code>频率</code>（单位：赫兹 Hz），表示在一定周期内完成循环的次数。</p>
+<blockquote>
+<p>人类可听见的音频范围是 20Hz~20kHz。但具体范围也因人而异。</p>
+</blockquote>
+<p>音频数字化使用到一个编码方法，称为<code>线性脉冲编码调制（linear pulse-code madulation）</code>，也常被称为 <code>Linear PCM</code> 或者 <code>LPCM</code>。这个过程通过一个固定的周期率（<code>采样率（Sampling Rate）</code>）对音频信号进行采样。下图展示了在一秒内对信号进行 7 此采样及信号数字化的结果：</p>
+<p><img src=""></p>
+<p>显然低<code>采样率</code>的数字信号无法很好地表现原始数据。下图是提高<code>采样率</code>之后的结果：</p>
+<p><img src=""></p>
+<p>虽然无法完全准确表现原始信号，但是随着<code>采样率</code>的提高，我们可以找到一个能够生成足够好的数字呈现效果的<code>采样率</code>。这个<code>采样率</code>被称为<code>尼奎斯特率</code>。<strong>Harry Nyquist 发现：想要准确地捕捉一个特定频率，你需要用至少两倍于其最高频率的<code>采样率</code>进行采样。</strong></p>
+<p>数字音频采样另一个重要的方面是我们捕捉每个样本的准确度。因为<code>振幅</code>是线性衡量的，因此也就有了<code>线性脉冲编码调制</code>这个术语。“用于保存样本值的字节数定义了在线性维度上可行的离散度，同时这个信息也被称为音频的<code>位元深度(Bit Depth)</code>。为每个样本的整体量化分配过少的位结果信息会导致数字音频信号产生噪声和扭曲。使用<code>位元深度</code>为8的方法可以提供 256 个离散级别的数据，对于一些音频资源来说，这个级别的<code>采样率</code>已经足够了，但对于大部分音频内容来说还不够高。CD音质的<code>位元深度</code>为 16，可以达到 65536 个离散级别。专业级别的音频录制环境的<code>位元深度</code>可以达到 24 或更高。”</p>
+<h3 id="数字媒体压缩"><a href="#数字媒体压缩" class="headerlink" title="数字媒体压缩"></a>数字媒体压缩</h3><p>视频文件由一系列被称为<code>帧（frame）</code>的图片组成。视频文件一秒钟内所能展现的帧数称为视频的<code>帧率</code>，并用 <code>FPS(frames per second)</code> 作为单位进行测量。常见的帧率是24FPS、25FPS 和 30FPS。以下是不同色彩空间、分辨率及帧率下未压缩视频占用空间打下：</p>
+<p><img src=""></p>
+<p>显然，需要压缩。</p>
+<p>视频数据通常用一个叫做 <code>Y&#39;CbCr</code> 的颜色模型进行加密，其方法是分离色彩通道（UV）和亮度通道（Y）。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AV-Foundation"><span class="toc-number">1.</span> <span class="toc-text">AV Foundation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93-%EF%BC%88Digital-Media%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">数字媒体 （Digital Media）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">采样的两种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7"><span class="toc-number">2.2.</span> <span class="toc-text">音频采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E5%AA%92%E4%BD%93%E5%8E%8B%E7%BC%A9"><span class="toc-number">2.3.</span> <span class="toc-text">数字媒体压缩</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/learning-av-foundation-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&text=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&is_video=false&description=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础&body=Check out this article: https://chengkang.me/1970/01/01/learning-av-foundation-1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&title=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/learning-av-foundation-1/&name=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/learning-av-foundation-1/&t=《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1994-2022
+    程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75274957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-75274957-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

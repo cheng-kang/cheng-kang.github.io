@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Date: 2016-04-06 02:50:01   关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…  目标与成果如图：  思路将多个 TableView 放在 ScrollView 里面，将 ScrollView Paging 设置为 Enabled，实现多个 TableView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）">
+<meta property="og:url" content="https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/">
+<meta property="og:site_name" content="CHENGKANG&#39;s Space">
+<meta property="og:description" content="Date: 2016-04-06 02:50:01   关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…  目标与成果如图：  思路将多个 TableView 放在 ScrollView 里面，将 ScrollView Paging 设置为 Enabled，实现多个 TableView">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-3.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.08.00%20AM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.09.54%20AM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.08.21%20AM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%201.53.58%20AM.png">
+<meta property="article:published_time" content="1970-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:14:55.157Z">
+<meta property="article:author" content="程康·CHENGKANG">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="UITableView">
+<meta property="article:tag" content="UIScrollView">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-3.gif">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/1970/01/01/QnA%EF%BC%8C%E4%B8%80%E4%B8%AA%20Hexo%20FAQ%20%E4%B8%BB%E9%A2%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/1970/01/01/Swift2%20%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%9Atry%EF%BC%8Ccatch%EF%BC%8Cdo%20%E4%BB%A5%E5%8F%8A%20throw/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&text=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&is_video=false&description=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）&body=Check out this article: https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&name=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-04-06 02:50:01&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;目标与成果&#34;&gt;&lt;a href=&#34;#目标与成果&#34; class=&#34;headerlink&#34; title=&#34;目标与成果&#34;&gt;&lt;/a&gt;目标与成果&lt;/h3&gt;&lt;p&gt;如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-3.gif&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;将多个 TableView 放在 ScrollView 里面，将 ScrollView Paging 设置为 Enabled，实现多个 TableView 的侧滑与切换。&lt;/p&gt;
+&lt;p&gt;上方的 tab 标签跟随 ScrollView.offset.x 进行动画，蓝条为单独绘制的一个长方形 UIView。&lt;/p&gt;
+&lt;p&gt;通过 UIButton 的 IBAction 中的动画，实现点击 tab 标签滑动到对应 TableView。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&t=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E4%B8%8E%E6%88%90%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">目标与成果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%87%A0%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">需要注意的几点</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">程康·CHENGKANG</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="1970-01-01T08:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Swift/" rel="tag">Swift</a>, <a class="tag-link-link" href="/tags/UIScrollView/" rel="tag">UIScrollView</a>, <a class="tag-link-link" href="/tags/UITableView/" rel="tag">UITableView</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Date: 2016-04-06 02:50:01</p>
+</blockquote>
+<blockquote>
+<p>关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…</p>
+</blockquote>
+<h3 id="目标与成果"><a href="#目标与成果" class="headerlink" title="目标与成果"></a>目标与成果</h3><p>如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-3.gif"></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>将多个 TableView 放在 ScrollView 里面，将 ScrollView Paging 设置为 Enabled，实现多个 TableView 的侧滑与切换。</p>
+<p>上方的 tab 标签跟随 ScrollView.offset.x 进行动画，蓝条为单独绘制的一个长方形 UIView。</p>
+<p>通过 UIButton 的 IBAction 中的动画，实现点击 tab 标签滑动到对应 TableView。</p>
+<span id="more"></span>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>storyboard</li>
+</ol>
+<p>添加一个 UIView，高度设置为 30px，上左右与 superview 间距为 0。在里面放置两个 UIButton。将两个 UIButton 组合成 StackView，设置 StackView 上下左右与 superview 间距为 0，设置 Distribution 为 Fill Equally。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.08.00%20AM.png"></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.09.54%20AM.png"></p>
+<p>在 storyboard 创建好 ScrollView 和两个 TableView。在 TableView 中创建好 TableViewCell 模板，并且将对应的类和 reuse identifier 设置好（当然你可以新建 xib 文件，然后在代码里设置 reuse identifier）。两个 TableView 应该是 ScrollView 的子视图。</p>
+<p><strong>如果你是在 storyboard 里面给 TableView 添加 Prototype Cells，记得给每个 TableView 添加各自的 Prototype Cells。如果只给其中一个添加 Prototype Cells，那么另一个不会自动添加 reuse identifier。在 cellForRowAtIndexPath 方法中，对未添加 Prototype Cells 的 TableView 调用 dequeReusableCellWithIdentifier 时会报错，因为那个 TableView 本来就没有嘛。</strong></p>
+<p>设置 ScrollView 的约束，本项目为下左右间距均为 0，上间距为 1（用于显示上边 tab 标签栏的阴影）。</p>
+<p>TableView 的约束不用设置，因为我们要在代码中给他们重新定位。</p>
+<p>设置好各个 Prototype Cell 的约束。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%202.08.21%20AM.png"></p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-06%20at%201.53.58%20AM.png"></p>
+<ol start="2">
+<li>FourthViewController.swift（对应的 viewController）</li>
+</ol>
+<p>全部代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line">//</span><br><span class="line">//  FourthViewController.swift</span><br><span class="line">//  Instagram</span><br><span class="line">//</span><br><span class="line">//  Created by Ant on 3/31/16.</span><br><span class="line">//  Copyright © 2016 Ant. All rights reserved.</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class FourthViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate &#123;</span><br><span class="line"></span><br><span class="line">    @IBOutlet weak var tableViewLeft: UITableView!</span><br><span class="line">    @IBOutlet weak var tableViewRight: UITableView!</span><br><span class="line">    @IBOutlet weak var tabPanel: UIView!</span><br><span class="line">    @IBOutlet weak var followBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var youBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var scrollView: UIScrollView!</span><br><span class="line">    </span><br><span class="line">    let scrollBar = UIView()</span><br><span class="line">    var notifications: [Notification] = []</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        //创建模拟数据</span><br><span class="line">        let notification1 = Notification(from: &quot;CHENGKANG&quot;, fromAvatar: UIImage(named: &quot;IMG_8040&quot;)!, to: &quot;Deer&quot;, toAvatar: UIImage(named: &quot;test&quot;)!, type: &quot;like&quot;, images: [UIImage(named: &quot;test&quot;)!, UIImage(named: &quot;test&quot;)!, UIImage(named: &quot;test&quot;)!, UIImage(named: &quot;test&quot;)!, UIImage(named: &quot;test&quot;)!, ], date: &quot;3天前&quot;)</span><br><span class="line">        let notification2 = Notification(from: &quot;CHENGKANG&quot;, fromAvatar: UIImage(named: &quot;IMG_8040&quot;)!, to: &quot;Deer&quot;, toAvatar: UIImage(named: &quot;test&quot;)!, type: &quot;like&quot;, images: [UIImage(named: &quot;test&quot;)!], date: &quot;3天前&quot;)</span><br><span class="line">        </span><br><span class="line">        //添加模拟数据</span><br><span class="line">        self.notifications.append(notification1)</span><br><span class="line">        self.notifications.append(notification2)</span><br><span class="line">        </span><br><span class="line">        //初始化要用到的参数</span><br><span class="line">        let WIDTH = self.view.frame.width</span><br><span class="line">        let HEIGHT = self.view.frame.height - 60 - 30 - 49</span><br><span class="line">        </span><br><span class="line">        //设置 tab 标签面板底部阴影</span><br><span class="line">        self.tabPanel.layer.shadowColor = COLOR_GREY.CGColor</span><br><span class="line">        self.tabPanel.layer.shadowRadius = 0.5</span><br><span class="line">        self.tabPanel.layer.shadowOffset = CGSizeMake(0, 0.5)</span><br><span class="line">        self.tabPanel.layer.shadowOpacity = 1</span><br><span class="line">        </span><br><span class="line">        //添加 tab 标签面板底部蓝条</span><br><span class="line">        self.view.addSubview(self.scrollBar)</span><br><span class="line">        self.scrollBar.backgroundColor = COLOR_LIGHT_BLUE</span><br><span class="line">        self.scrollBar.frame = CGRectMake(0, 87, WIDTH / 2, 3)</span><br><span class="line">        </span><br><span class="line">        //初始化按钮颜色</span><br><span class="line">        self.followBtn.setTitleColor(COLOR_LIGHT_BLUE, forState: .Normal)</span><br><span class="line">        </span><br><span class="line">        //设置 scrollView delegate</span><br><span class="line">        self.scrollView.delegate = self</span><br><span class="line">        </span><br><span class="line">        //设置 tableViewLeft delegate，并消除多余分割线</span><br><span class="line">        self.tableViewLeft.delegate = self</span><br><span class="line">        self.tableViewLeft.dataSource = self</span><br><span class="line">        self.tableViewLeft.tableFooterView = UIView()</span><br><span class="line">        </span><br><span class="line">        //设置 tableViewRight delegate，并消除多余分割线</span><br><span class="line">        self.tableViewRight.delegate = self</span><br><span class="line">        self.tableViewRight.dataSource = self</span><br><span class="line">        self.tableViewRight.tableFooterView = UIView()</span><br><span class="line"></span><br><span class="line">        //设置 scrollView contentSize</span><br><span class="line">        self.scrollView.contentSize = CGSizeMake(WIDTH * 2, HEIGHT)</span><br><span class="line">        //设置两个 tableView 大小位置</span><br><span class="line">        self.tableViewLeft.frame = CGRectMake(8, 0, WIDTH - 16, HEIGHT)</span><br><span class="line">        self.tableViewRight.frame = CGRectMake(WIDTH + 8, 0, WIDTH - 16, HEIGHT)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func numberOfSectionsInTableView(tableView: UITableView) -&gt; Int &#123;</span><br><span class="line">        return 1</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -&gt; UITableViewCell &#123;</span><br><span class="line">        //可以通过判断当前 tableView 是否与某一个 TableView 相同来给定对应内容</span><br><span class="line">//        if tableView == self.tableViewRight &#123;</span><br><span class="line">//            if self.notifications[indexPath.row].images.count == 1 &#123;</span><br><span class="line">//                let cell = LikeWithPicCell()</span><br><span class="line">//                cell.initCell(self.notifications[indexPath.row])</span><br><span class="line">//                return cell</span><br><span class="line">//            &#125; else &#123;</span><br><span class="line">//                let cell = LikeWithPicsCell()</span><br><span class="line">//                cell.initCell(self.notifications[indexPath.row])</span><br><span class="line">//                return cell</span><br><span class="line">//            &#125;</span><br><span class="line">//        &#125;</span><br><span class="line">        </span><br><span class="line">        if self.notifications[indexPath.row].images.count == 1 &#123;</span><br><span class="line">            let cell = tableView.dequeueReusableCellWithIdentifier(&quot;LikeWithPicCell&quot;) as! LikeWithPicCell</span><br><span class="line">            cell.initCell(self.notifications[indexPath.row])</span><br><span class="line">            return cell</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            let cell = tableView.dequeueReusableCellWithIdentifier(&quot;LikeWithPicsCell&quot;) as! LikeWithPicsCell</span><br><span class="line">            cell.initCell(self.notifications[indexPath.row])</span><br><span class="line">            return cell</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;</span><br><span class="line">        </span><br><span class="line">        if tableView == self.tableViewRight &#123;</span><br><span class="line">            //此处 -1 是为了让展示内容有区分，因为用的相同数据</span><br><span class="line">            return self.notifications.count - 1</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return self.notifications.count</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -&gt; CGFloat &#123;</span><br><span class="line">        return UITableViewAutomaticDimension</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -&gt; CGFloat &#123;</span><br><span class="line">        return UITableViewAutomaticDimension</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    func scrollViewDidScroll(scrollView: UIScrollView) &#123;</span><br><span class="line">        //判断当前 scrollView 是我们项目中的 ScrollView 而非那两个 tableView</span><br><span class="line">        if scrollView == self.scrollView &#123;</span><br><span class="line">            //改变 scrollBar x 坐标，达成同步滑动效果。</span><br><span class="line">            let offsetX = scrollView.contentOffset.x</span><br><span class="line">            self.scrollBar.frame = CGRectMake(offsetX / 2, 87, self.view.frame.width / 2, 3)</span><br><span class="line">            </span><br><span class="line">            //对应修改 btn 文字颜色</span><br><span class="line">            if offsetX &gt; self.view.frame.width / 2 &#123;</span><br><span class="line">                self.followBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)</span><br><span class="line">                self.youBtn.setTitleColor(COLOR_LIGHT_BLUE, forState: .Normal)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                self.followBtn.setTitleColor(COLOR_LIGHT_BLUE, forState: .Normal)</span><br><span class="line">                self.youBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @IBAction func followBtnPressed(sender: UIButton) &#123;</span><br><span class="line">        //点击按钮时，通过动画移动到对应 tableView</span><br><span class="line">        UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseInOut], animations: &#123; () -&gt; Void in</span><br><span class="line">            self.scrollView.contentOffset.x = 0</span><br><span class="line">            &#125;, completion: nil)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @IBAction func youBtnPressed(sender: UIButton) &#123;</span><br><span class="line">        //点击按钮时，通过动画移动到对应 tableView</span><br><span class="line">        UIView.animateWithDuration(0.3, delay: 0, options: [.CurveEaseInOut], animations: &#123; () -&gt; Void in</span><br><span class="line">            self.scrollView.contentOffset.x = self.view.frame.width</span><br><span class="line">            &#125;, completion: nil)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个项目中，我懒所以两个 TableView 用的相同的 Prototype Cell 和同一组数据，然后在返回第二个 TableView cell 个数时 -1，好在显示时区分二者。</p>
+<h3 id="需要注意的几点"><a href="#需要注意的几点" class="headerlink" title="需要注意的几点"></a>需要注意的几点</h3><ol>
+<li><p>当在一个 ViewController 里面包含多个 TableView 的时候，使用 TableView Delegate 提供的方法时，可以通过判断参数 tableView 是否与项目中对应 TableView 相同来执行对应操作。如上面代码中提到的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;</span><br><span class="line">    </span><br><span class="line">    if tableView == self.tableViewRight &#123;</span><br><span class="line">        //此处 -1 是为了让展示内容有区分，因为用的相同数据</span><br><span class="line">        return self.notifications.count - 1</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return self.notifications.count</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>同上，有多个 scrollView 时，同样方法判定当前是哪个 scrollView。</p>
+</li>
+<li><p>UITableView 为 UIScrollView 的子类。如果添加了 scrollView delegate，不进行判断的话，可能会出现上下滑动 tableView 时触发 scrollViewDidScroll 方法，导致在第二页时上下滑动时 tab 标签切换到第一个标签。</p>
+</li>
+<li><p>不要忘记设置 scrollView.delegate</p>
+</li>
+<li><p>不要忘记设置 scrollView.contentSize</p>
+</li>
+<li><p>通过设置空白 tableFooterView 为空白 UIView，消除多余分割线。</p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E4%B8%8E%E6%88%90%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">目标与成果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%87%A0%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">需要注意的几点</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&text=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&is_video=false&description=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）&body=Check out this article: https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&name=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-04-06 02:50:01&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;目标与成果&#34;&gt;&lt;a href=&#34;#目标与成果&#34; class=&#34;headerlink&#34; title=&#34;目标与成果&#34;&gt;&lt;/a&gt;目标与成果&lt;/h3&gt;&lt;p&gt;如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-3.gif&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;将多个 TableView 放在 ScrollView 里面，将 ScrollView Paging 设置为 Enabled，实现多个 TableView 的侧滑与切换。&lt;/p&gt;
+&lt;p&gt;上方的 tab 标签跟随 ScrollView.offset.x 进行动画，蓝条为单独绘制的一个长方形 UIView。&lt;/p&gt;
+&lt;p&gt;通过 UIButton 的 IBAction 中的动画，实现点击 tab 标签滑动到对应 TableView。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&t=Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1994-2022
+    程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75274957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-75274957-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

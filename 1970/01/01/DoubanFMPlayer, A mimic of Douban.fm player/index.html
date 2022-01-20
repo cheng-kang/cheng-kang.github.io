@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Date: 2017-02-03 22:31:30   Project Page: https:&#x2F;&#x2F;github.com&#x2F;cheng-kang&#x2F;DoubanFMPlayer  A mimic of Douban.fm player on Douban.fm. Also a Flex practice project. You can use it on your website or embed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DoubanFMPlayer, A mimic of Douban.fm player">
+<meta property="og:url" content="https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/">
+<meta property="og:site_name" content="CHENGKANG&#39;s Space">
+<meta property="og:description" content="Date: 2017-02-03 22:31:30   Project Page: https:&#x2F;&#x2F;github.com&#x2F;cheng-kang&#x2F;DoubanFMPlayer  A mimic of Douban.fm player on Douban.fm. Also a Flex practice project. You can use it on your website or embed">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-1.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-2.gif">
+<meta property="article:published_time" content="1970-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:18:11.593Z">
+<meta property="article:author" content="程康·CHENGKANG">
+<meta property="article:tag" content="程康, CHENGKANG, CHENG KANG, KANG CHENG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-1.gif">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>DoubanFMPlayer, A mimic of Douban.fm player</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/1970/01/01/DanmuManager%20%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BC%B9%E5%B9%95%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/1970/01/01/FireBlog-Instruction/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&text=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&is_video=false&description=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DoubanFMPlayer, A mimic of Douban.fm player&body=Check out this article: https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&name=DoubanFMPlayer, A mimic of Douban.fm player&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2017-02-03 22:31:30&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Project Page: &lt;a href=&#34;https://github.com/cheng-kang/DoubanFMPlayer&#34;&gt;https://github.com/cheng-kang/DoubanFMPlayer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A mimic of Douban.fm player on &lt;a href=&#34;https://douban.fm/&#34;&gt;Douban.fm&lt;/a&gt;. &lt;em&gt;Also a Flex practice project.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;You can use it on your website or &lt;strong&gt;embed it in your Hexo theme&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;Showcase&#34;&gt;&lt;a href=&#34;#Showcase&#34; class=&#34;headerlink&#34; title=&#34;Showcase&#34;&gt;&lt;/a&gt;Showcase&lt;/h2&gt;&lt;p&gt;Click &lt;a href=&#34;http://chengkang.me/DoubanFMPlayer/&#34;&gt;here&lt;/a&gt; to check live demo.&lt;/p&gt;
+&lt;h3 id=&#34;Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page&#34;&gt;&lt;a href=&#34;#Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page&#34; class=&#34;headerlink&#34; title=&#34;Dark Theme (the color of the player is dark, used in light color web page)&#34;&gt;&lt;/a&gt;Dark Theme (the color of the player is dark, used in light color web page)&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-1.gif&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page&#34;&gt;&lt;a href=&#34;#Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page&#34; class=&#34;headerlink&#34; title=&#34;Light Theme (the color of the player is light, used in dark color web page)&#34;&gt;&lt;/a&gt;Light Theme (the color of the player is light, used in dark color web page)&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-2.gif&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&t=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Showcase"><span class="toc-number">1.</span> <span class="toc-text">Showcase</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page"><span class="toc-number">1.1.</span> <span class="toc-text">Dark Theme (the color of the player is dark, used in light color web page)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page"><span class="toc-number">1.2.</span> <span class="toc-text">Light Theme (the color of the player is light, used in dark color web page)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Usage"><span class="toc-number">2.</span> <span class="toc-text">Usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Use-it-on-your-website"><span class="toc-number">2.1.</span> <span class="toc-text">1. Use it on your website</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Embed-it-in-your-Hexo-theme"><span class="toc-number">2.2.</span> <span class="toc-text">2. Embed it in your Hexo theme</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Acknowledgements"><span class="toc-number">3.</span> <span class="toc-text">Acknowledgements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Copyright"><span class="toc-number">4.</span> <span class="toc-text">Copyright</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        DoubanFMPlayer, A mimic of Douban.fm player
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">程康·CHENGKANG</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="1970-01-01T08:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Date: 2017-02-03 22:31:30</p>
+</blockquote>
+<blockquote>
+<p>Project Page: <a target="_blank" rel="noopener" href="https://github.com/cheng-kang/DoubanFMPlayer">https://github.com/cheng-kang/DoubanFMPlayer</a></p>
+</blockquote>
+<p>A mimic of Douban.fm player on <a target="_blank" rel="noopener" href="https://douban.fm/">Douban.fm</a>. <em>Also a Flex practice project.</em></p>
+<p>You can use it on your website or <strong>embed it in your Hexo theme</strong>.</p>
+<h2 id="Showcase"><a href="#Showcase" class="headerlink" title="Showcase"></a>Showcase</h2><p>Click <a href="http://chengkang.me/DoubanFMPlayer/">here</a> to check live demo.</p>
+<h3 id="Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page"><a href="#Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page" class="headerlink" title="Dark Theme (the color of the player is dark, used in light color web page)"></a>Dark Theme (the color of the player is dark, used in light color web page)</h3><p><img src="https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-1.gif"></p>
+<h3 id="Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page"><a href="#Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page" class="headerlink" title="Light Theme (the color of the player is light, used in dark color web page)"></a>Light Theme (the color of the player is light, used in dark color web page)</h3><p><img src="https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-2.gif"></p>
+<span id="more"></span>
+
+<h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>Feel free to download source code from <code>/src</code> folder.</p>
+<p>Alternatively, use the cdn I’ve set up:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbfmplayer.js: http://7u2sl0.com1.z0.glb.clouddn.com/dbfmplayer.js</span><br><span class="line">dbfmplayer.css: http://7u2sl0.com1.z0.glb.clouddn.com/dbfmplayer.css</span><br></pre></td></tr></table></figure>
+<h3 id="1-Use-it-on-your-website"><a href="#1-Use-it-on-your-website" class="headerlink" title="1. Use it on your website"></a>1. Use it on your website</h3><ol>
+<li><p>Add any numbers of <code>dbfmplayer</code> tag to your HTML file.</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dbfmplayer </span><br><span class="line">    title=&quot;茜さす 帰路照らされど…&quot; </span><br><span class="line">    singer=&quot;椎名林檎&quot;</span><br><span class="line">    album=&quot;https://img1.doubanio.com/lpic/s2722629.jpg&quot;</span><br><span class="line">    music=&quot;http://mr3.doubanio.com/ff7730a714d4e3ecbf3f5854f6154532/0/fm/song/p1033017_128k.mp4&quot;</span><br><span class="line">&gt;&lt;/dbfmplayer&gt;</span><br></pre></td></tr></table></figure>
+<p> You <strong>must</strong> set <code>title</code>, <code>singer</code>, <code>album</code> and <code>music</code> attributes of your <code>dbfmplayer</code> tags.</p>
+<ul>
+<li><code>title</code>: name of the music</li>
+<li><code>singer</code>: name of the singer/musician</li>
+<li><code>album</code>: URL of a picture related to this music (both absolute URL or relative URL)</li>
+<li><code>music</code>: URL of the music (both absolute URL or relative URL)</li>
+</ul>
+<p> <strong>Optional</strong> attributes are <code>theme</code> and <code>loop</code>.</p>
+<ul>
+<li><code>theme</code>: “dark” or “light”. Default theme is “dark”, which is suitable for light color background web pages; theme “light” is suitable for dark color background web pages.</li>
+<li><code>loop</code>: “true” or “false”. Default value is “false”. If <code>loop</code> is set to “true”, the music will loop after it ends.</li>
+<li><code>autoplay</code>: “true” or “false”. Default value is “false”. If <code>autoplay</code> is set to “true”, the music will automatically start when it’s loaded.</li>
+</ul>
+<p> You can set <code>loop</code> and <code>autoplay</code> to “true” in a convenient way:</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;dbfmplayer </span><br><span class="line">    title=&quot;茜さす 帰路照らされど…&quot; </span><br><span class="line">    singer=&quot;椎名林檎&quot;</span><br><span class="line">    album=&quot;https://img1.doubanio.com/lpic/s2722629.jpg&quot;</span><br><span class="line">    music=&quot;http://mr3.doubanio.com/ff7730a714d4e3ecbf3f5854f6154532/0/fm/song/p1033017_128k.mp4&quot;</span><br><span class="line">    loop</span><br><span class="line">    autoplay</span><br><span class="line">&gt;&lt;/dbfmplayer&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>Add the following script to your HTML file.</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    (function() &#123; // DON&#x27;T EDIT BELOW THIS LINE</span><br><span class="line">    var d = document, s = d.createElement(&#x27;script&#x27;);</span><br><span class="line">    s.src = &#x27;http://7u2sl0.com1.z0.glb.clouddn.com/dbfmplayer.js&#x27;;</span><br><span class="line">    (d.head || d.body).appendChild(s);</span><br><span class="line">    &#125;)();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-Embed-it-in-your-Hexo-theme"><a href="#2-Embed-it-in-your-Hexo-theme" class="headerlink" title="2. Embed it in your Hexo theme"></a>2. Embed it in your Hexo theme</h3><ol>
+<li><p>Add the following script to your layout file for <strong>Post</strong> (or anywhere else you want):</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    (function() &#123; // DON&#x27;T EDIT BELOW THIS LINE</span><br><span class="line">    var d = document, s = d.createElement(&#x27;script&#x27;);</span><br><span class="line">    s.src = &#x27;http://7u2sl0.com1.z0.glb.clouddn.com/dbfmplayer.js&#x27;;</span><br><span class="line">    (d.head || d.body).appendChild(s);</span><br><span class="line">    &#125;)();</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>Now users can add music to their page by adding the <code>dbfmplayer</code> tag to their articles (markdown files) by following <a href="#1-use-it-on-your-website">1.1 Add any numbers of <code>dbfmplayer</code> tag to your HTML file.</a>. </p>
+</li>
+</ol>
+<h2 id="Acknowledgements"><a href="#Acknowledgements" class="headerlink" title="Acknowledgements"></a>Acknowledgements</h2><p>Most SVG icons come from <a target="_blank" rel="noopener" href="https://icomoon.io/">Iconmoon.io</a>.</p>
+<p>Designed by <a target="_blank" rel="noopener" href="https://douban.fm/">Douban.fm</a>.</p>
+<h2 id="Copyright"><a href="#Copyright" class="headerlink" title="Copyright"></a>Copyright</h2><p><strong>All copyright of the design belongs to who creates it.</strong> </p>
+<p>Any copyright issue, please contact <a href="mailto:hi@chengkang.me">hi@chengkang.me</a>.</p>
+<p>&lt;dbfmplayer<br>    title=”茜さす 帰路照らされど…”<br>    singer=”椎名林檎”<br>    album=”<a target="_blank" rel="noopener" href="https://img1.doubanio.com/lpic/s2722629.jpg&quot;">https://img1.doubanio.com/lpic/s2722629.jpg&quot;</a><br>    music=”<a target="_blank" rel="noopener" href="http://mr3.doubanio.com/ff7730a714d4e3ecbf3f5854f6154532/0/fm/song/p1033017_128k.mp4&quot;">http://mr3.doubanio.com/ff7730a714d4e3ecbf3f5854f6154532/0/fm/song/p1033017_128k.mp4&quot;</a><br>    theme=”dark”<br>    loop<br>    autoplay</p>
+<blockquote>
+</dbfmplayer>
+</blockquote>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Showcase"><span class="toc-number">1.</span> <span class="toc-text">Showcase</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page"><span class="toc-number">1.1.</span> <span class="toc-text">Dark Theme (the color of the player is dark, used in light color web page)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page"><span class="toc-number">1.2.</span> <span class="toc-text">Light Theme (the color of the player is light, used in dark color web page)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Usage"><span class="toc-number">2.</span> <span class="toc-text">Usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Use-it-on-your-website"><span class="toc-number">2.1.</span> <span class="toc-text">1. Use it on your website</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Embed-it-in-your-Hexo-theme"><span class="toc-number">2.2.</span> <span class="toc-text">2. Embed it in your Hexo theme</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Acknowledgements"><span class="toc-number">3.</span> <span class="toc-text">Acknowledgements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Copyright"><span class="toc-number">4.</span> <span class="toc-text">Copyright</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&text=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&is_video=false&description=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DoubanFMPlayer, A mimic of Douban.fm player&body=Check out this article: https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&title=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&name=DoubanFMPlayer, A mimic of Douban.fm player&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2017-02-03 22:31:30&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Project Page: &lt;a href=&#34;https://github.com/cheng-kang/DoubanFMPlayer&#34;&gt;https://github.com/cheng-kang/DoubanFMPlayer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A mimic of Douban.fm player on &lt;a href=&#34;https://douban.fm/&#34;&gt;Douban.fm&lt;/a&gt;. &lt;em&gt;Also a Flex practice project.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;You can use it on your website or &lt;strong&gt;embed it in your Hexo theme&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;Showcase&#34;&gt;&lt;a href=&#34;#Showcase&#34; class=&#34;headerlink&#34; title=&#34;Showcase&#34;&gt;&lt;/a&gt;Showcase&lt;/h2&gt;&lt;p&gt;Click &lt;a href=&#34;http://chengkang.me/DoubanFMPlayer/&#34;&gt;here&lt;/a&gt; to check live demo.&lt;/p&gt;
+&lt;h3 id=&#34;Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page&#34;&gt;&lt;a href=&#34;#Dark-Theme-the-color-of-the-player-is-dark-used-in-light-color-web-page&#34; class=&#34;headerlink&#34; title=&#34;Dark Theme (the color of the player is dark, used in light color web page)&#34;&gt;&lt;/a&gt;Dark Theme (the color of the player is dark, used in light color web page)&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-1.gif&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page&#34;&gt;&lt;a href=&#34;#Light-Theme-the-color-of-the-player-is-light-used-in-dark-color-web-page&#34; class=&#34;headerlink&#34; title=&#34;Light Theme (the color of the player is light, used in dark color web page)&#34;&gt;&lt;/a&gt;Light Theme (the color of the player is light, used in dark color web page)&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/cheng-kang/DoubanFMPlayer/master/DBFMPlayer-2.gif&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/DoubanFMPlayer,%20A%20mimic%20of%20Douban.fm%20player/&t=DoubanFMPlayer, A mimic of Douban.fm player"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1994-2022
+    程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75274957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-75274957-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

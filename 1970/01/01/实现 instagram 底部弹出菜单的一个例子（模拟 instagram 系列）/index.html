@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Date: 2016-04-03 23:51:08  目标和成果instagram 截图如下：  成果如下：  要实现的内容：  黑色半透明遮罩层 弹出动画 点击取消按钮或者背景菜单收回  思路应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。 之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）">
+<meta property="og:url" content="https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/">
+<meta property="og:site_name" content="CHENGKANG&#39;s Space">
+<meta property="og:description" content="Date: 2016-04-03 23:51:08  目标和成果instagram 截图如下：  成果如下：  要实现的内容：  黑色半透明遮罩层 弹出动画 点击取消按钮或者背景菜单收回  思路应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。 之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarC">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.25.13%20PM.png">
+<meta property="og:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.49.49%20PM.png">
+<meta property="article:published_time" content="1970-01-01T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:13:36.841Z">
+<meta property="article:author" content="程康·CHENGKANG">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Swift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/1970/01/01/%E4%BB%BF%E5%BE%AE%E5%8D%9A%20iOS%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20TabBar%20%E4%B8%AD%E9%97%B4%E6%8C%89%E9%92%AE/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/1970/01/01/%E6%A8%A1%E6%8B%9F%E5%87%A4%E5%87%B0%E6%96%B0%E9%97%BB%20%7C%20%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E6%A0%87%E7%AD%BE%E5%8A%A8%E7%94%BB%20-%20Swift%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E4%B8%AA%20TableView%20%E7%9A%84%E4%BE%A7%E6%BB%91%E4%B8%8E%E5%88%87%E6%8D%A2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&text=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&is_video=false&description=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）&body=Check out this article: https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&name=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-04-03 23:51:08&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;目标和成果&#34;&gt;&lt;a href=&#34;#目标和成果&#34; class=&#34;headerlink&#34; title=&#34;目标和成果&#34;&gt;&lt;/a&gt;目标和成果&lt;/h3&gt;&lt;p&gt;instagram 截图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG&#34;&gt;&lt;/p&gt;
+&lt;p&gt;成果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif&#34;&gt;&lt;/p&gt;
+&lt;p&gt;要实现的内容：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;黑色半透明遮罩层&lt;/li&gt;
+&lt;li&gt;弹出动画&lt;/li&gt;
+&lt;li&gt;点击取消按钮或者背景菜单收回&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。&lt;/p&gt;
+&lt;p&gt;之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarController 里面添加 subview。&lt;/p&gt;
+&lt;p&gt;但有两点不同：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;上次是点击 tabBarItem 来执行弹出，这次要点击第一个 tab 页里的按钮。怎么样让 TabBarController 得到消息？&lt;/li&gt;
+&lt;li&gt;上次弹出的按钮是独立的，这次弹出的菜单和指定的图片有关。所以需要有一个标志记录当前点击的是哪一张图片的 more 按钮。"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&t=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E5%92%8C%E6%88%90%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">目标和成果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-1-%E5%88%9B%E5%BB%BA%E8%8F%9C%E5%8D%95%E8%A7%86%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">解决方案 Part.1 创建菜单视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-2-%E7%BB%99-TabBarController-%E4%BC%A0%E9%80%92%E6%B6%88%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">解决方案 Part.2 给 TabBarController 传递消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-3-%E6%98%BE%E7%A4%BA-%E6%94%B6%E5%9B%9E%E8%8F%9C%E5%8D%95%E5%8A%A8%E7%94%BB"><span class="toc-number">5.</span> <span class="toc-text">解决方案 Part.3 显示&#x2F;收回菜单动画</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">程康·CHENGKANG</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="1970-01-01T08:00:00.000Z" itemprop="datePublished">1970-01-01</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Swift/" rel="tag">Swift</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Date: 2016-04-03 23:51:08</p>
+</blockquote>
+<h3 id="目标和成果"><a href="#目标和成果" class="headerlink" title="目标和成果"></a>目标和成果</h3><p>instagram 截图如下：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG"></p>
+<p>成果如下：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif"></p>
+<p>要实现的内容：</p>
+<ol>
+<li>黑色半透明遮罩层</li>
+<li>弹出动画</li>
+<li>点击取消按钮或者背景菜单收回</li>
+</ol>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。</p>
+<p>之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarController 里面添加 subview。</p>
+<p>但有两点不同：</p>
+<ol>
+<li>上次是点击 tabBarItem 来执行弹出，这次要点击第一个 tab 页里的按钮。怎么样让 TabBarController 得到消息？</li>
+<li>上次弹出的按钮是独立的，这次弹出的菜单和指定的图片有关。所以需要有一个标志记录当前点击的是哪一张图片的 more 按钮。<span id="more"></span>
+<h3 id="解决方案-Part-1-创建菜单视图"><a href="#解决方案-Part-1-创建菜单视图" class="headerlink" title="解决方案 Part.1 创建菜单视图"></a>解决方案 Part.1 创建菜单视图</h3></li>
+</ol>
+<p>在 storyboard 拖进一个 ViewController，添加好内容，设置好约束。如图：</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.25.13%20PM.png"></p>
+<p>注意，这个 ViewController 的 root view 要讲背景设置为 黑色、透明度 30%，以模拟遮罩层。</p>
+<p>新建一个视图文件 BottomMenuView.swift，继承 UIViewController。修改刚才新建的 ViewController 类为 BottomMenuView，并设置 StoryboardID 为”BottomMenu”。</p>
+<p><img src="http://7u2sl0.com1.z0.glb.clouddn.com/ios_Screen%20Shot%202016-04-03%20at%2011.49.49%20PM.png"></p>
+<p>关联好 IBOutlet 对象和点击事件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">import Foundation</span><br><span class="line">import UIKit</span><br><span class="line"></span><br><span class="line">class BottomMenuView: UIViewController &#123;</span><br><span class="line"></span><br><span class="line">    @IBOutlet weak var menuBgView: UIView!</span><br><span class="line">    @IBOutlet weak var reportBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var shareToFacebookBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var tweetBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var copyURLBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var noticeBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var dismissBtn: UIButton!</span><br><span class="line">    @IBOutlet weak var buttonPanel: UIView!</span><br><span class="line">    </span><br><span class="line">    override func viewDidLoad() &#123;</span><br><span class="line">        super.viewDidLoad()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    override func viewDidAppear(animated: Bool) &#123;</span><br><span class="line">        //这里是设置颜色、按钮边框形状。</span><br><span class="line">        let maskPathAllCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.BottomLeft, .BottomRight, .TopLeft, .TopRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let maskPathTopCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.TopLeft, .TopRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let maskPathBottomCorner = UIBezierPath(roundedRect: noticeBtn.bounds,</span><br><span class="line">            byRoundingCorners: [.BottomLeft, .BottomRight],</span><br><span class="line">            cornerRadii: CGSize(width: 5, height: 5.0))</span><br><span class="line">        let shapeAllCorner = CAShapeLayer()</span><br><span class="line">        shapeAllCorner.path = maskPathAllCorner.CGPath</span><br><span class="line">        let shapeTopCorner = CAShapeLayer()</span><br><span class="line">        shapeTopCorner.path = maskPathTopCorner.CGPath</span><br><span class="line">        let shapeBottomCorner = CAShapeLayer()</span><br><span class="line">        shapeBottomCorner.path = maskPathBottomCorner.CGPath</span><br><span class="line">        </span><br><span class="line">        reportBtn.layer.mask = shapeTopCorner</span><br><span class="line">        noticeBtn.layer.mask = shapeBottomCorner</span><br><span class="line">        dismissBtn.layer.mask = shapeAllCorner</span><br><span class="line">    &#125;</span><br><span class="line">    @IBAction func bgTapped(sender: UITapGestureRecognizer) &#123;</span><br><span class="line">        //给背景 view 添加一个点击事件</span><br><span class="line">        //当点击时，让菜单收回</span><br><span class="line">    &#125;</span><br><span class="line">    @IBAction func dismissBtnPressed(sender: UIButton) &#123;</span><br><span class="line">		    //点击事件，当点击时，让菜单收回</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 TabBarViewController.swift 中，修改 viewDidLoad 方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">override func viewDidLoad() &#123;</span><br><span class="line">    super.viewDidLoad()</span><br><span class="line">    </span><br><span class="line">    self.tabBar.tintColor = UIColor.whiteColor()</span><br><span class="line">    for it in self.tabBar.items! &#123;</span><br><span class="line">        it.badgeValue = &quot;100&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    self.delegate = self</span><br><span class="line">    </span><br><span class="line">    //找到对应视图，并添加为 TabBarView 的子视图。子视图默认 alpha 值为0。</span><br><span class="line">    //这样每次只用修改 alpha 值来显示和隐藏，不用重新添加子视图。</span><br><span class="line">    self.bottomMenu = self.storyboard?.instantiateViewControllerWithIdentifier(&quot;BottomMenu&quot;) as! BottomMenuView</span><br><span class="line">    self.bottomMenu.modalTransitionStyle = .CoverVertical</span><br><span class="line">    self.view.addSubview(self.bottomMenu.view)</span><br><span class="line">    self.bottomMenu.view.alpha = 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="解决方案-Part-2-给-TabBarController-传递消息"><a href="#解决方案-Part-2-给-TabBarController-传递消息" class="headerlink" title="解决方案 Part.2 给 TabBarController 传递消息"></a>解决方案 Part.2 给 TabBarController 传递消息</h3><p>因为 more 按钮在 tab 页的 viewController 里面，我们暂时没办法直接执行 TabBarController 里面的函数，或者对它的 view 进行操作，所以要想个办法发送通知。</p>
+<p>发送通知当然是用 NSNotification。</p>
+<p><strong>发送显示菜单通知</strong></p>
+<p>在 firstViewController （即第一个 tab 页的 controller）中添加 more 按钮点击事件，在里面发送一个通知。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func moreButtonPressed(sender: UIButton) &#123;</span><br><span class="line">	NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;ShowBottomMenu&quot;, object: sender.tag))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这个通知里面，object 是当前按钮的 tag 值。这是在每个 cell 初始化的时候，给当前 cell 的每个 button 的 tag 赋值为当前图片的 id，保证之后能够判断每个点击事件来自哪个 cell/图片。</p>
+<p><strong>发送收回菜单通知</strong></p>
+<p>回到 BottomMenuView.swift，在两个点击事件添加发送通知：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@IBAction func bgTapped(sender: UITapGestureRecognizer) &#123;</span><br><span class="line">    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;DismissBottomMenu&quot;, object: nil))</span><br><span class="line">&#125;</span><br><span class="line">@IBAction func dismissBtnPressed(sender: UIButton) &#123;</span><br><span class="line">    </span><br><span class="line">    NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: &quot;DismissBottomMenu&quot;, object: nil))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>接收通知</strong></p>
+<p>在 TabBarViewController.swift 的 viewDidLoad 方法中添加一下两行用于接收通知：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSNotificationCenter.defaultCenter().addObserver(self, selector: &quot;showBottomMenu:&quot;, name: &quot;ShowBottomMenu&quot;, object: nil)</span><br><span class="line">NSNotificationCenter.defaultCenter().addObserver(self, selector: &quot;dismissBottomMenu:&quot;, name: &quot;DismissBottomMenu&quot;, object: nil) </span><br></pre></td></tr></table></figure>
+
+<p>经过上面的步骤，TabBarViewController 就能接收到显示或者收回底部菜单的通知了。然后我们可以在自定义的函数里面编写显示和隐藏的动画。</p>
+<h3 id="解决方案-Part-3-显示-收回菜单动画"><a href="#解决方案-Part-3-显示-收回菜单动画" class="headerlink" title="解决方案 Part.3 显示/收回菜单动画"></a>解决方案 Part.3 显示/收回菜单动画</h3><p>这部分很简单啦。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">func showBottomMenu(notification: NSNotification) &#123;</span><br><span class="line">    //获取当前 section id</span><br><span class="line">    let tag = notification.object as! Int</span><br><span class="line">    print(tag)</span><br><span class="line">    </span><br><span class="line">    self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height</span><br><span class="line">    UIView.animateWithDuration(0.3) &#123; () -&gt; Void in</span><br><span class="line">        self.bottomMenu.view.alpha = 1</span><br><span class="line">        self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height - self.bottomMenu.buttonPanel.frame.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func dismissBottomMenu(notification: NSNotification) &#123;</span><br><span class="line">    print(notification.object)</span><br><span class="line">    UIView.animateWithDuration(0.3) &#123; () -&gt; Void in</span><br><span class="line">        self.bottomMenu.view.alpha = 0</span><br><span class="line">        self.bottomMenu.buttonPanel.frame.origin.y = self.view.frame.height</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 showBottomMenu 方法中，获取到了一个 tag 值，这个是留着将来编写对应的菜单按钮点击事件的。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/projects_url">Projects</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E5%92%8C%E6%88%90%E6%9E%9C"><span class="toc-number">1.</span> <span class="toc-text">目标和成果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-1-%E5%88%9B%E5%BB%BA%E8%8F%9C%E5%8D%95%E8%A7%86%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">解决方案 Part.1 创建菜单视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-2-%E7%BB%99-TabBarController-%E4%BC%A0%E9%80%92%E6%B6%88%E6%81%AF"><span class="toc-number">4.</span> <span class="toc-text">解决方案 Part.2 给 TabBarController 传递消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Part-3-%E6%98%BE%E7%A4%BA-%E6%94%B6%E5%9B%9E%E8%8F%9C%E5%8D%95%E5%8A%A8%E7%94%BB"><span class="toc-number">5.</span> <span class="toc-text">解决方案 Part.3 显示&#x2F;收回菜单动画</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&text=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&is_video=false&description=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）&body=Check out this article: https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&title=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&name=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）&description=&lt;blockquote&gt;
+&lt;p&gt;Date: 2016-04-03 23:51:08&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;目标和成果&#34;&gt;&lt;a href=&#34;#目标和成果&#34; class=&#34;headerlink&#34; title=&#34;目标和成果&#34;&gt;&lt;/a&gt;目标和成果&lt;/h3&gt;&lt;p&gt;instagram 截图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_IMG_8669.PNG&#34;&gt;&lt;/p&gt;
+&lt;p&gt;成果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://7u2sl0.com1.z0.glb.clouddn.com/ios_instagram-1.gif&#34;&gt;&lt;/p&gt;
+&lt;p&gt;要实现的内容：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;黑色半透明遮罩层&lt;/li&gt;
+&lt;li&gt;弹出动画&lt;/li&gt;
+&lt;li&gt;点击取消按钮或者背景菜单收回&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;思路&#34;&gt;&lt;a href=&#34;#思路&#34; class=&#34;headerlink&#34; title=&#34;思路&#34;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;p&gt;应该是有一种跟 UIPresentationController 有关的解决方法，但是我还不会，所以这次不用。&lt;/p&gt;
+&lt;p&gt;之前在模拟微博的项目里也用到了弹出层，所以我想这次也义勇和上次同样的方式，在 TabBarController 里面添加 subview。&lt;/p&gt;
+&lt;p&gt;但有两点不同：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;上次是点击 tabBarItem 来执行弹出，这次要点击第一个 tab 页里的按钮。怎么样让 TabBarController 得到消息？&lt;/li&gt;
+&lt;li&gt;上次弹出的按钮是独立的，这次弹出的菜单和指定的图片有关。所以需要有一个标志记录当前点击的是哪一张图片的 more 按钮。"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://chengkang.me/1970/01/01/%E5%AE%9E%E7%8E%B0%20instagram%20%E5%BA%95%E9%83%A8%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E7%9A%84%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%88%E6%A8%A1%E6%8B%9F%20instagram%20%E7%B3%BB%E5%88%97%EF%BC%89/&t=实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    1994-2022
+    程康·CHENGKANG
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75274957-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-75274957-1');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
