@@ -1,10 +1,11 @@
 ---
 title: 【译】Core Graphics，第四部分：Path！Path！
-date: 2017-05-29 21:18:57
+date: 1970-01-01 
 tags:
 - iOS
 - Core Graphics
 ---
+> Date: 2017-05-29 21:18:57
 
 > 原文链接：[Core Graphics, Part 4: A Path! A Path!](https://www.bignerdranch.com/blog/core-graphics-part-4-a-path-a-path/)
 > 看看上一篇吧：[【译】Core Graphics，第三部分：线](http://chengkang.me/2017/05/23/core-graphics-part-3/)

@@ -1,8 +1,9 @@
 ---
 title: DoubanFMPlayer, A mimic of Douban.fm player
-date: 2017-02-03 22:31:30
+date: 1970-01-01 
 tags:
 ---
+> Date: 2017-02-03 22:31:30
 
 > Project Page: [https://github.com/cheng-kang/DoubanFMPlayer](https://github.com/cheng-kang/DoubanFMPlayer)
 

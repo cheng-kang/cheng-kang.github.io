@@ -1,6 +1,6 @@
 ---
 title: UISearchBar（一）修改背景层和输入框层的背景颜色和边框颜色
-date: 2016-03-19 20:51:09
+date: 1970-01-01 
 categories:
 - iOS
 tags: 
@@ -9,6 +9,8 @@ tags:
 - UISearchBar
 - color
 ---
+> Date: 2016-03-19 20:51:09
+
 > 在模仿微博 iOS 客户端的时候，希望将首页上方的搜索框做成和它一样的**整体浅灰色背景+输入框白色背景**，发现直接使用`IBOutlet`建立连接修改`bordercolor`或者`borderwidth`没有用。所以研究了一下如何修改`UIsearchBar`相关的颜色。
 
 > 另外：发现原来微博客户端首页上面的 search bar 大概就是一个图片按钮【白眼】。

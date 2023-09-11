@@ -1,11 +1,13 @@
 ---
 title: FireBlog Instruction
-date: 2016-03-18 12:47:49
+date: 1970-01-01 
 categories:
 - Tech
 tags:
 - fireblog
 ---
+> Date: 2016-03-18 12:47:49
+
 ### Why
 
 `Github` offers the wonderful [Github Pages](https://pages.github.com/) service. With it, you don’t need to worry about server or domain name(you can have customed domain name like: http://username.github.io, http://username.github.com）. It’s super convenient to set up a static blog based on the service.

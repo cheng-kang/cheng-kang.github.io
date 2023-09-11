@@ -1,9 +1,10 @@
 ---
 title: Firebase 实时数据库开发最佳实践
-date: 2017-10-14 08:43:51
+date: 1970-01-01 
 tags:
 - Firebase
 ---
+> Date: 2017-10-14 08:43:51
 
 > 原文链接：[Best Practices for Firebase Realtime Database Development](https://medium.com/@CodeAndBiscuits/best-practices-for-firebase-realtime-database-development-14e8fd133d44)
 

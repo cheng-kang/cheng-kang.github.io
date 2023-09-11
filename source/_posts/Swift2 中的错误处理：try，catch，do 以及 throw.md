@@ -1,6 +1,6 @@
 ---
 title: 【译】Swift2 中的错误处理：try，catch，do 以及 throw
-date: 2016-05-15 23:14:40
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,7 @@ tags:
 - Swift
 - error
 ---
+> Date: 2016-05-15 23:14:40
 
 > 原文链接：[《Error handling in Swift 2: try, catch, do and throw》](https://www.hackingwithswift.com/new-syntax-swift-2-error-handling-try-catch)
 

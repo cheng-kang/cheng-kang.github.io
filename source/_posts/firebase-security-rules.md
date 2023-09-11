@@ -1,9 +1,10 @@
 ---
 title: Firebase 安全与规则
-date: 2017-09-30 21:08:37
+date: 1970-01-01 
 tags:
 - Firebase
 ---
+> Date: 2017-09-30 21:08:37
 
 > 原文链接：[Firebase Security & Rules](https://howtofirebase.com/firebase-security-rules-88d94606ce4a)
 

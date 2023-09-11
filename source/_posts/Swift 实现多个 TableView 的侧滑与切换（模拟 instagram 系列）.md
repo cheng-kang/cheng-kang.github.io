@@ -1,6 +1,6 @@
 ---
 title: Swift 实现多个 TableView 的侧滑与切换（模拟 instagram 系列）
-date: 2016-04-06 02:50:01
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -9,6 +9,8 @@ tags:
 - UITableView
 - UIScrollView
 ---
+> Date: 2016-04-06 02:50:01
+
 > 关键词：Swift，实现多个 TableView 的侧滑与切换，在 ScrollView 中嵌套多个 TableView，一个页面显示两个 tableview…
 
 ### 目标与成果

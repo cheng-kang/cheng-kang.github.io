@@ -1,6 +1,6 @@
 ---
 title: AutoLayout：constraint priority 约束优先级（九宫格续，一个更优方案）
-date: 2016-03-20 22:49:31
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,8 @@ tags:
 - iOS
 - constraint priority
 ---
+> Date: 2016-03-20 22:49:31
+
 > 这两个项目的源码均在我的 github，如有需要直接下载下来试一试。
 > - [模仿微博客户端](https://github.com/cheng-kang/iosDev/tree/master/Weibo)
 > - [自适应高度测试用项目](https://github.com/cheng-kang/iosDev/tree/master/Dynamic%20Table%20View%20Test)

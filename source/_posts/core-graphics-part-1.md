@@ -1,10 +1,11 @@
 ---
 title: 【译】Core Graphics，第一部分：序章
-date: 2017-05-23 22:20:01
+date: 1970-01-01 
 tags:
 - iOS
 - Core Graphics
 ---
+> Date: 2017-05-23 22:20:01
 
 > 原文链接：[Core Graphics, Part 1: In the Beginning - Mark Dalrymple](https://www.bignerdranch.com/blog/core-graphics-part-1-in-the-beginning/)
 

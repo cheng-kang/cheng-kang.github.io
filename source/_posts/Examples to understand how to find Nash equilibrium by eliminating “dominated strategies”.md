@@ -1,10 +1,11 @@
 ---
 title: Examples to understand how to find Nash equilibrium by eliminating “dominated strategies”
-date: 2017-01-18 17:14:22
+date: 1970-01-01 
 tags:
 - Game Theory
 - Dominated Strategies
 ---
+> Date: 2017-01-18 17:14:22
 
 This is a summarization of contents from two different sources. It aims at helping people (at least myself) to understand what `dominated strategies` are and especially what **weakly dominated strategy** is.
 

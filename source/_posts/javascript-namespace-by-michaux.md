@@ -1,6 +1,6 @@
 ---
 title: 【译】JavaScript 命名空间
-date: 2016-06-28 16:07:58
+date: 1970-01-01 
 categories:
 - JavaScript
 tags:
@@ -8,6 +8,8 @@ tags:
 - Namespace
 - Namespacing
 ---
+> Date: 2016-06-28 16:07:58
+
 > 原文链接：[《JavaScript Namespacing》](http://peter.michaux.ca/articles/javascript-namespacing)
 
 # JavaScript 命名空间

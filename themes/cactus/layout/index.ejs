@@ -9,17 +9,21 @@
       <% var i = 0 %>
       <% for(var link in theme.social_links) { %>
         <% if (link == 'mail') { %>
-          <a class="icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
+          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>" aria-label="<%- link %>">
             <i class="fas fa-envelope"></i><!--
-      ---></a><!--
-      ---><% } else { %>
-          <a class="icon" target="_blank" href="<%- url_for(theme.social_links[link]) %>">
+      ---></a>
+        <% } else if (link == 'rss') { %>
+          <a class="icon" target="_blank" rel="noopener" href="<%- theme.social_links[link] %>" aria-label="<%- link %>">
+            <i class="fas fa-rss"></i>
+          </a>
+        <% } else { %>
+          <a class="icon" target="_blank" rel="noopener" href="<%- url_for(theme.social_links[link]) %>" aria-label="<%- link %>">
             <i class="fab fa-<%= link %>"></i><!--
       ---></a><!--
     ---><% } %><!--
-    ---><%= ( nb_links > 0 && i < nb_links-1 ? 
-            ( i == nb_links-2 ? ' '+__('index.enum_and')+' ' 
-            : __('index.enum_comma')+' ' ) 
+    ---><%= ( nb_links > 0 && i < nb_links-1 ?
+            ( i == nb_links-2 ? ' '+__('index.enum_and')+' '
+            : __('index.enum_comma')+' ' )
             : '.' ) %>
         <% i+=1 %>
       <% } %>
@@ -28,12 +32,20 @@
 </section>
 
 <section id="writing">
-  <span class="h1"><a href="<%- url_for("archives") %>"><%= __('index.articles') %></a></span>
+  <span class="h1"><a href="<%- url_for(theme.nav.articles) %>"><%= __('index.articles') %></a></span>
+  <% if (theme.tags_overview && site.tags.length) { %>
+  <span class="h2"><%= __('index.topics') %></span>
+  <span class="widget tagcloud">
+    <%- tagcloud(theme.tags_overview) %>
+  </span>
+  <span class="h2"><%= __('index.most_recent') %></span>
+  <% } %>
   <ul class="post-list">
+    <% var field_sort = theme.posts_overview.sort_updated ? 'updated' : 'date' %>
     <% if (theme.posts_overview.show_all_posts) { %>
-      <% var show_posts = page.posts.sort('date', 'desc') %>
+      <% var show_posts = page.posts.sort(field_sort, 'desc') %>
     <% } else { %>
-      <% var show_posts = site.posts.sort('date', 'desc').limit(theme.posts_overview.post_count || 5) %>
+      <% var show_posts = site.posts.sort(field_sort, 'desc').limit(theme.posts_overview.post_count || 5) %>
     <% } %>
     <% show_posts.each(function(post, i){ %>
       <li class="post-item">
@@ -56,17 +68,6 @@
         <a href="<%= site.data.projects[obj].url %>"><%= site.data.projects[obj].name %></a>: <%- markdown(site.data.projects[obj].desc) %>
       </li>
     <% } %>
-  </ul>
-</section>
-<% } %>
-
-<% if (site.data.blogroll) { %>
-<section id="blogroll">
-  <span class="h1">Blogroll</span>
-  <ul>
-  <% for(var obj in site.data.blogroll){ %>
-    <a href="<%= site.data.blogroll[obj].url %>"><%= site.data.blogroll[obj].name %></a>&nbsp&nbsp&nbsp&nbsp
-  <% } %>
   </ul>
 </section>
 <% } %>

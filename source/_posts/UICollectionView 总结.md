@@ -1,6 +1,6 @@
 ---
 title: UICollectionView 总结
-date: 2016-04-13 07:13:54
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,8 @@ tags:
 - Swift
 - UICollectionView
 ---
+> Date: 2016-04-13 07:13:54
+
 >项目源码：[模拟凤凰新闻 Github 仓库](https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen)
 
 

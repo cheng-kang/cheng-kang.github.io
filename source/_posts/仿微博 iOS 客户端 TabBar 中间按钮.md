@@ -1,6 +1,6 @@
 ---
 title: 仿微博 iOS 客户端 TabBar 中间按钮
-date: 2016-03-30 02:02:07
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,8 @@ tags:
 - Swift
 - UITabBar
 ---
+> Date: 2016-03-30 02:02:07
+
 > [模仿微博客户端项目源码](https://github.com/cheng-kang/iosDev/tree/master/Weibo)
 
 我在模仿微博 iOS 客户端。如图：

@@ -1,6 +1,6 @@
 ---
 title: 自定义 UITabBar 总结（一个模拟 instagram TabBar 的例子）
-date: 2016-03-31 23:48:38
+date: 1970-01-01
 categories:
 - iOS
 tags:
@@ -11,6 +11,9 @@ tags:
 - UITabBarController
 - UITabBarControllerDelegate
 ---
+
+> Date: 2016-03-31 23:48:38
+
 > 项目 github 仓库：[模拟 instagram](https://github.com/cheng-kang/iosDev/tree/master/Instagram)
 
 ### 引语

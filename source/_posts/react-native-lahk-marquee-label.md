@@ -1,8 +1,9 @@
 ---
 title: react-native-lahk-marquee-label（跑马灯文字组件）
-date: 2017-04-11 18:33:17
+date: 1970-01-01 
 tags:
 ---
+> Date: 2017-04-11 18:33:17
 
 > A react-native marquee label component.
 

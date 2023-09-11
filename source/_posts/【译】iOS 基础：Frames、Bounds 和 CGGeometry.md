@@ -1,6 +1,6 @@
 ---
 title: 【译】iOS 基础：Frames、Bounds 和 CGGeometry
-date: 2016-03-26 19:35:02
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -9,6 +9,9 @@ tags:
 - frame
 - bounds
 ---
+
+> Date: 2016-03-26 19:35:02
+
 > 原文：[《iOS Fundamentals: Frames, Bounds, and CGGeometry》](http://code.tutsplus.com/tutorials/ios-fundamentals-frames-bounds-and-cggeometry--cms-21196)
 > 程康，2016 年 3 月 26 日
 

@@ -1,12 +1,14 @@
 ---
 title: 【译】我最喜欢的 JavaScript 设计模式
-date: 2016-07-02 10:50:25
+date: 1970-01-01 
 categories:
 - JavaScript
 tags:
 - JavaScript
 - Design Pattern
 ---
+> Date: 2016-07-02 10:50:25
+
 > 原文链接：[My Favorite JavaScript Design Pattern](https://www.sitepoint.com/my-favorite-javascript-design-pattern/)
 
 # 我最喜欢的 JavaScript 设计模式

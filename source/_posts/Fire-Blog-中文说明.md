@@ -1,11 +1,13 @@
 ---
 title: Fire Blog 中文说明
-date: 2016-03-18 12:51:29
+date: 1970-01-01 
 categories:
 - Tech
 tags:
 - fireblog
 ---
+> Date: 2016-03-18 12:51:29
+
 ### 起源
 
 `Github`提供了[Github Pages](https://pages.github.com/)服务，相当于为你提供了服务器空间和还算比较好看的域名（如： http://username.github.io, http://username.github.com），你可以利用它建立一个静态博客。

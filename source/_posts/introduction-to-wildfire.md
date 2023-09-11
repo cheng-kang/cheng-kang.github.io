@@ -1,6 +1,6 @@
 ---
 title: Introduction to Wildfire
-date: 2017-12-19 00:34:07
+date: 1970-01-01 
 tags:
 - wildfire
 - comment system
@@ -9,6 +9,7 @@ tags:
 - hexo
 - vue
 ---
+> Date: 2017-12-19 00:34:07
 
 <p align=center>
 [![](https://img.shields.io/npm/v/wildfire.svg?style=flat-square)](https://www.npmjs.com/wildfire)

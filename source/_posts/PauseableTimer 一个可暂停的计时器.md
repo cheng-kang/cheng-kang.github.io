@@ -1,10 +1,11 @@
 ---
 title: Pauseable Timer 一个可暂停的计时器
-date: 2017-01-05 15:31:35
+date: 1970-01-01 
 tags:
 - Swift
 - iOS
 ---
+> Date: 2017-01-05 15:31:35
 
 > 项目主页: [PauseableTimer Github Repository](https://github.com/cheng-kang/PauseableTimer)
 > 英文介绍： [Pauseable Timer](http://chengkang.me/2017/01/04/Pauseable%20Timer/)

@@ -1,9 +1,11 @@
+---
 title: Pauseable Timer
-date: 2017-01-04 22:58:48
+date: 1970-01-01 
 tags:
 - Swift
 - iOS
 ---
+> Date: 2017-01-04 22:58:48
 
 > Project Page: [PauseableTimer Github Repository](https://github.com/cheng-kang/PauseableTimer)
 

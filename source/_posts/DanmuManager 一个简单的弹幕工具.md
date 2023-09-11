@@ -1,10 +1,12 @@
 ---
 title: DanmuManager 一个简单的弹幕工具
-date: 2017-01-05 18:14:32
+date: 1970-01-01 
 tags:
 - iOS
 - Swift
 ---
+> Date: 2017-01-05 18:14:32
+
 > 项目首页： [DanmuManager Github Repository](https://github.com/cheng-kang/DanmuManager)
 
 

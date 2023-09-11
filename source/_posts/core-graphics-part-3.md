@@ -1,10 +1,11 @@
 ---
 title: 【译】Core Graphics，第三部分：线
-date: 2017-05-25 00:23:05
+date: 1970-01-01 
 tags:
 - iOS
 - Core Graphics
 ---
+> Date: 2017-05-25 00:23:05
 
 > 原文链接：[Core Graphics, Part 2: Contextually Speaking](https://www.bignerdranch.com/blog/core-graphics-part-three-lines/)
 > 看看上一篇吧：[【译】Core Graphics, 第二部分：说说 context （上下文）](http://chengkang.me/2017/05/23/core-graphics-part-2/)

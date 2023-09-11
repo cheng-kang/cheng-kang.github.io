@@ -1,32 +1,22 @@
- [
-      {
-         "name":"Wildfire Comment Plug-in 野火评论插件",
-         "url":"https://wildfire.js.org",
-         "desc":"A drop-in replacement of other comment plug-ins. Give it a try!"
-      },
-      {
-         "name":"记得 - 在那个时区",
-         "url":"https://itunes.apple.com/cn/app/%E8%AE%B0%E5%BE%97-%E5%9C%A8%E9%82%A3%E4%B8%AA%E6%97%B6%E5%8C%BA/id1165393758?l=zh&ls=1&mt=8",
-         "desc":"An iOS alarm clock app for long distance lovers. Created for my life-long love, Catherine."
-      },
-      {
-         "name":"react-native-lahk-marquee-label",
-         "url":"https://github.com/cheng-kang/react-native-lahk-marquee-label",
-         "desc":"A react-native marquee label component."
-      },
-      {
-         "name":"react-native-lahk-marquee-label-vertical",
-         "url":"https://github.com/cheng-kang/react-native-lahk-marquee-label-vertical",
-         "desc":"A react-native marquee(vertical) label component."
-      },
-      {
-         "name":"SlidingForm",
-         "url":"https://github.com/cheng-kang/DanmuManager",
-         "desc":"A lib that generates and manages sliding forms, written in Swift."
-      },
-      {
-         "name":"DoubanFMPlayer",
-         "url":"https://github.com/cheng-kang/DoubanFMPlayer",
-         "desc":"A mimic of Douban.fm player on http://douban.fm."
-      }
-  ]
+[
+   {
+      "name":"talktonft.ai",
+      "url":"https://talktonft.ai",
+      "desc":"Create, interact, and evolve with your unique NFTs in our community-driven platform."
+   },
+  {
+     "name":"ENS Layer2 Support (zkSync demo) - HackMoney2022",
+     "url":"https://showcase.ethglobal.com/hackmoney2022/ens-l2-support-zksync-demo-zoqbi",
+     "desc":"Best Application Prize. Live showcase of ENS on L2, less gas and faster transactions."
+  },
+  {
+     "name":"Link - The ACNH Community",
+     "url":"https://acnh.link",
+     "desc":"Link App is a rebranded & extended project from my previous project Turnips Exchange. We focused on “Trusting and Friendly”, and have put a lot of effort into creating a safe and joyful space for the players. We even created a background story for the app about what and how we intend to help."
+  },
+  {
+     "name":"Turnips Exchange",
+     "url":"https://turnips.exchange",
+     "desc":"Turnips Exchange is a website for Animal Crossing: New Horizons players to share in-game information and resources with each other. I started this project as a tool to help myself keep track of in-game information, but it growed up to be helpful to many other players in different ways."
+  }
+]

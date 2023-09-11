@@ -1,12 +1,15 @@
 ---
 title: 实现 instagram 底部弹出菜单的一个例子（模拟 instagram 系列）
-date: 2016-04-03 23:51:08
+date: 1970-01-01
 categories:
 - iOS
 tags:
 - iOS
 - Swift
 ---
+
+> Date: 2016-04-03 23:51:08
+
 ### 目标和成果
 instagram 截图如下：
 

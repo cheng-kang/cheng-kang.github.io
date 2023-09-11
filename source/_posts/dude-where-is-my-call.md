@@ -1,10 +1,11 @@
 ---
 title: 【译】哥们儿，我的方法哪儿去了？
-date: 2017-05-25 20:09:58
+date: 1970-01-01 
 tags:
 - iOS
 - Swift
 ---
+> Date: 2017-05-25 20:09:58
 
 > 原文链接：[Dude, Where's my Call?](https://www.bignerdranch.com/blog/dude-wheres-my-call/)
 

@@ -1,10 +1,11 @@
 ---
 title: 《Learning AV Foundation》学习笔记，第一章：AV Foundation 基础
-date: 2017-06-06 19:20:16
+date: 1970-01-01 
 tags:
 - iOS
 - AV Foundation
 ---
+> Date: 2017-06-06 19:20:16
 
 > 本系列是我学习《Learning AV Foundation：A Hands-on Guide to Matering the AV Foundation Framework》的学习笔记。将以章为单位，对内容进行总结。
 

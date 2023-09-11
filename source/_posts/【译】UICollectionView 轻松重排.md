@@ -1,6 +1,6 @@
 ---
 title: 【译】UICollectionView 轻松重排
-date: 2016-04-12 23:38:28
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,9 @@ tags:
 - Swift
 - UICollectionView
 ---
+
+> Date: 2016-04-12 23:38:28
+
 > 原文链接：[UICollectionViews Now Have Easy Reordering](http://nshint.io/blog/2015/07/16/uicollectionviews-now-have-easy-reordering/)
 
 > 原本打算总结一下 UICollectionView 的一些用法，看到一篇比较好的文章，所以直接翻译了。翻译得比较生硬，见谅。

@@ -1,6 +1,6 @@
 ---
 title: AutoLayout 中需要注意的点
-date: 2016-04-07 00:41:14
+date: 1970-01-01 
 categories:
 - iOS
 tags:
@@ -8,6 +8,8 @@ tags:
 - Swift
 - AutoLayout
 ---
+> Date: 2016-04-07 00:41:14
+
 > 本文用于记录我在使用 AutoLayout 过程中遇到的一些需要注意的事情，一种是容易犯的错误，一种是我找不到原因的情况。
 <!--more-->
 

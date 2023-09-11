@@ -1,6 +1,6 @@
 ---
 title: 模拟凤凰新闻 | 更复杂的标签动画 - Swift 实现多个 TableView 的侧滑与切换
-date: 2016-04-08 20:59:13
+date: 1970-01-01
 categories:
 - iOS
 tags:
@@ -9,6 +9,9 @@ tags:
 - UISrollView
 - UITableView
 ---
+
+> Date: 2016-04-08 20:59:13
+
 > 项目源码：[github 仓库：模拟凤凰新闻首页](https://github.com/cheng-kang/iosDev/tree/master/FenghuangXinwen)
 
 
